@@ -1,3 +1,3 @@
-# Welcome to Microblog!
+# Welcome to Hikanotes!
 
-This is an example application featured in my [Flask Mega-Tutorial](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world). See the tutorial for instructions on how to work with it.
+Hikanotes is a micro-blogging application. Access hikanotes on [here](https://hikanotes.io) and join the community of individuals. Feel free to clone the project and customise to your own preferences.
