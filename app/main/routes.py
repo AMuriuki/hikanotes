@@ -225,3 +225,43 @@ def notifications():
         'data': n.get_data(),
         'timestamp': n.timestamp
     } for n in notifications])
+
+
+@bp.route('/like', methods=['POST', 'GET'])
+@login_required
+def like():
+    if request.method == "POST":
+        post_id = request.form['post_id']
+        post = Post.query.filter_by(id=post_id).first_or_404()
+        current_user.like_post(post)
+        likes = post.likes.count()
+        unlikes = post.unlikes.count()
+        db.session.commit()
+        print(likes)
+    return jsonify({'likes': likes, 'unlikes': unlikes})
+
+
+@bp.route('/unlike', methods=['POST', 'GET'])
+@login_required
+def unlike():
+    if request.method == "POST":
+        post_id = request.form['post_id']
+        post = Post.query.filter_by(id=post_id).first_or_404()
+        current_user.unlike_post(post)
+        unlikes = post.unlikes.count()
+        likes = post.likes.count()
+        db.session.commit()
+        print(unlikes)
+    return jsonify({'unlikes': unlikes, 'likes': likes})
+
+
+@bp.route('/comment', methods=['POST', 'GET'])
+@login_required
+def comment():
+    if request.method == "POST":
+        text = request.form['user_comment']
+        post_id = request.form['post_id']
+        comment = Comment(text=text, user_id=current_user.id, post_id=post_id)
+        db.session.add(comment)
+        db.session.commit()
+    return jsonify({'comment': text})

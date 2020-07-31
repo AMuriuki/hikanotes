@@ -1,32 +1,438 @@
-    <table class="table table-hover">
-        <tr>
-            <td width="70px">
-                <a href="{{ url_for('main.user', username=post.author.username) }}">
-                    <img src="{{ post.author.avatar(70) }}" />
-                </a>
-            </td>
-            <td>
-                {% set user_link %}
-                    <span class="user_popup">
-                        <a href="{{ url_for('main.user', username=post.author.username) }}">
-                            {{ post.author.username }}
-                        </a>
-                    </span>
-                {% endset %}
-                {{ _('%(username)s said %(when)s',
-                    username=user_link, when=moment(post.timestamp).fromNow()) }}
-                <br>
-                <span id="post{{ post.id }}">{{ post.body }}</span>
-                {% if post.language and post.language != g.locale %}
-                <br><br>
-                <span id="translation{{ post.id }}">
-                    <a href="javascript:translate(
-                                '#post{{ post.id }}',
-                                '#translation{{ post.id }}',
-                                '{{ post.language }}',
-                                '{{ g.locale }}');">{{ _('Translate') }}</a>
-                </span>
-                {% endif %}
-            </td>
-        </tr>
-    </table>
+<style>
+    .card-header {
+        background-color: #ffffff;
+    }
+</style>
+<div class="card">
+    <div class="card-content">
+        <div class="card-header user-profile-header">
+            <div class="avatar mr-50 align-top">
+                <img src="{{ post.author.avatar(32) }}" alt="avtar image">
+            </div>
+            <div class="d-inline-block mt-25">
+                <h6 class="mb-0 text-bold-500">{{post.author.fname}} {{post.author.lname}}</h6>
+                <p class="text-muted"><small>{{ moment(post.timestamp).fromNow() }}</small></p>
+            </div>
+        </div>
+        <div class="card-body py-0">
+            <p>{{post.body}}</p>
+        </div>
+        <div class="card-footer d-flex justify-content-between pb-0">
+            <div class="d-flex align-items-center">
+                <a onclick="like('{{post.id}}')" class="cursor-pointer bx bx-like user-profile-like font-medium-4"></a>
+                <p id="p_likes" class="mb-0 ml-25">{{ post.likes.count() }}</p>
+                <a onclick="unlike('{{post.id}}')" style="margin-left: 5%;"
+                    class="cursor-pointer bx bx-dislike user-profile-like font-medium-4"></a>
+                <p id="p_unlikes" class="mb-0 ml-25">{{ post.unlikes.count() }}</p>
+            </div>
+            <div class="d-flex align-items-center">
+                <a onclick="focus_text_area()" class="cursor-pointer bx bx-comment-dots font-medium-4"></a>
+                <span class="ml-25">{{post.comments.count()}}</span>
+                <!-- user profile likes avatar start -->
+                <div class="d-none d-sm-block">
+                    <ul class="list-unstyled users-list m-0 d-flex align-items-center ml-1">
+                        {% for comment in post.comments[0:2] %}
+                        <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom"
+                            title="{{comment.author.fname}} {{comment.author.lname}}" class="avatar pull-up">
+                            <img src="{{ comment.author.avatar(30) }}" alt="Avatar">
+                        </li>
+                        {% endfor %}
+                        <li class="d-inline-block pl-50">
+                            <p class="text-muted mb-0 font-small-3">+10 more</p>
+                        </li>
+                    </ul>
+                </div>
+                <!-- user profile likes avatar ends -->
+            </div>
+        </div>
+    </div>
+    <hr>
+    <!-- user profile comments start -->
+    {% for comment in post.comments %}
+    <div class="card-header user-profile-header pt-0">
+        <div class="avatar mr-50 align-top">
+            <img src="{{ comment.author.avatar(32) }}" alt="avtar image">
+        </div>
+        <div class="d-inline-block mt-25">
+            <h6 class="mb-0 text-bold-500 font-small-3">{{comment.author.fname}} {{comment.author.lname}}</h6>
+            <p class="text-muted"><small>{{ moment(comment.timestamp).fromNow() }}</small></p>
+        </div>
+    </div>
+    <div class="card-body py-0">
+        <p>{{comment.text}}</p>
+    </div>
+    <hr>
+    {% endfor %}
+    <div id="dv_name_timestamp" style="display: none;" class="card-header user-profile-header pt-0">
+        <div class="avatar mr-50 align-top">
+            <img src="{{ current_user.avatar(32) }}" alt="avtar image">
+        </div>
+        <div class="d-inline-block mt-25">
+            <h6 class="mb-0 text-bold-500 font-small-3">{{current_user.fname}} {{current_user.lname}}</h6>
+            <p class="text-muted"><small>{{ moment(now()).fromNow() }}</small></p>
+        </div>
+    </div>
+    <div id="dv_comment_body" style="display: none;" class="card-body py-0">
+        <p>{{comment.text}}</p>
+    </div>
+    <hr id="hr_" style="display: none;">
+    <div class="d-flex align-items-center" style="padding-left: 10px; padding-right: 10px; padding-bottom: 15px;">
+        <input id="user-comment-textarea" type="text" class="form-control chat-message-send mx-1"
+            placeholder="Type your comment here...">
+        <button type="button" onclick="Comment('{{post.id}}')" class="btn btn-primary glow send d-lg-flex"><i
+                class="bx bx-paper-plane"></i>
+            <span class="d-none d-lg-block ml-1">Send</span></button>
+    </div>
+    <!-- user profile comments ends -->
+</div>
+
+<div style="display: none;">
+    <!-- user profile nav tabs feed middle section user-1 card starts -->
+    <div class="card">
+        <div class="card-content">
+            <div class="card-header user-profile-header">
+                <div class="avatar mr-50 align-top">
+                    <img src="../static/app-assets/images/portrait/small/avatar-s-10.jpg" alt="user avatar" width="32"
+                        height="32">
+                    <span class="avatar-status-online"></span>
+                </div>
+                <div class="d-inline-block mt-25">
+                    <h6 class="mb-0 text-bold-500">Martina Ash <span class="text-bold-400">shared a
+                        </span><a href="JavaScript:void(0);">link</a>
+                    </h6>
+                    <p class="text-muted"><small>7 hours ago</small></p>
+                </div>
+                <i class='cursor-pointer bx bx-dots-vertical-rounded float-right'></i>
+            </div>
+            <div class="card-body py-0">
+                <p>Unlimited color options allows you to set your
+                    application color as per your branding 🤩.</p>
+                <div class="d-flex border rounded">
+                    <div class="user-profile-images"><img src="../static/app-assets/images/banner/banner-29.jpg"
+                            alt="post" class="img-fluid user-profile-card-image">
+                    </div>
+                    <div class="p-1">
+                        <h5>Algolia Integration 😎</h5>
+                        <p class="user-profile-ellipsis">Algolia helps
+                            businesses across industries quickly create
+                            relevant, scalable, and lightning fast
+                            search and discovery experiences.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer d-flex justify-content-between pt-1">
+                <div class="d-flex align-items-center">
+                    <i class="cursor-pointer bx bx-heart user-profile-like font-medium-4"></i>
+                    <p class="mb-0 ml-25">18</p>
+                    <!-- user profile likes avatar start -->
+                    <div class="d-none d-sm-block">
+                        <ul class="list-unstyled users-list m-0 d-flex align-items-center ml-1">
+                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom"
+                                title="Lilian Nenez" class="avatar pull-up">
+                                <img src="../static/app-assets/images/portrait/small/avatar-s-21.jpg" alt="Avatar"
+                                    height="30" width="30">
+                            </li>
+                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom"
+                                title="Alberto Glotzbach" class="avatar pull-up">
+                                <img src="../static/app-assets/images/portrait/small/avatar-s-22.jpg" alt="Avatar"
+                                    height="30" width="30">
+                            </li>
+                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom"
+                                title="Alberto Glotzbach" class="avatar pull-up">
+                                <img src="../static/app-assets/images/portrait/small/avatar-s-23.jpg" alt="Avatar"
+                                    height="30" width="30">
+                            </li>
+                            <li class="d-inline-block pl-50">
+                                <p class="text-muted mb-0 font-small-3">
+                                    +10 more</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- user profile likes avatar ends -->
+                </div>
+                <div class="d-flex align-items-center">
+                    <i class="cursor-pointer bx bx-comment-dots font-medium-4"></i>
+                    <span class="ml-25">52</span>
+                    <i class="cursor-pointer bx bx-share-alt font-medium-4 ml-1"></i>
+                    <span class="ml-25">22</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- user profile nav tabs feed middle section user-1 card ends -->
+    <!-- user profile nav tabs feed middle section story swiper start -->
+    <div class="card">
+        <div class="card-content">
+            <div class="card-body">
+                <h5 class="card-title mb-0">Stories</h5>
+                <div class="user-profile-stories swiper-container pt-1">
+                    <div class="swiper-wrapper user-profile-images">
+                        <div class="swiper-slide">
+                            <img src="../static/app-assets/images/profile/portraits/avatar-portrait-1.jpg"
+                                class="rounded user-profile-stories-image" alt="story image">
+                            <div class="card-img-overlay bg-overlay">
+                                <div class="user-swiper-text">ureka_23
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="../static/app-assets/images/profile/portraits/avatar-portrait-2.jpg"
+                                class="rounded user-profile-stories-image" alt="story image">
+                            <div class="card-img-overlay bg-overlay">
+                                <div class="user-swiper-text">
+                                    devine_lena</div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="../static/app-assets/images/profile/portraits/avatar-portrait-3.jpg"
+                                class="rounded user-profile-stories-image" alt="story image">
+                            <div class="card-img-overlay bg-overlay">
+                                <div class="user-swiper-text">
+                                    venice_like852</div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="../static/app-assets/images/profile/portraits/avatar-portrait-4.jpg"
+                                class="rounded user-profile-stories-image" alt="story image">
+                            <div class="card-img-overlay bg-overlay">
+                                <div class="user-swiper-text">june5211
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="../static/app-assets/images/profile/portraits/avatar-portrait-5.jpg"
+                                class="rounded user-profile-stories-image" alt="story image">
+                            <div class="card-img-overlay bg-overlay">
+                                <div class="user-swiper-text">
+                                    defloya_456</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- user profile nav tabs feed middle section story swiper ends -->
+    <!-- user profile nav tabs feed middle section user-2 card starts -->
+    <div class="card">
+        <div class="card-content">
+            <div class="card-header user-profile-header">
+                <div class="avatar mr-50 align-top">
+                    <img src="../static/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avtar image" width="32"
+                        height="32">
+                    <span class="avatar-status-offline"></span>
+                </div>
+                <div class="d-inline-block mt-25">
+                    <h6 class="mb-0 text-bold-500">Jonny Richie</h6>
+                    <p class="text-muted"><small>2 hours ago</small></p>
+                </div>
+                <i class="cursor-pointer bx bx-dots-vertical-rounded float-right"></i>
+            </div>
+            <div class="card-body py-0">
+                <p>Beautifully crafted, clean & modern designed admin✨
+                    theme with 3 different demos & light -
+                    dark versions. Lifetime updates with new demos and
+                    features is guaranteed</p>
+            </div>
+            <div class="card-footer d-flex justify-content-between pb-0">
+                <div class="d-flex align-items-center">
+                    <i class="cursor-pointer bx bx-heart user-profile-like font-medium-4"></i>
+                    <p class="mb-0 ml-25">49</p>
+                    <!-- user profile likes avatar start -->
+                    <div class="d-none d-sm-block">
+                        <ul class="list-unstyled users-list m-0 d-flex align-items-center ml-1">
+                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom"
+                                title="Lilian Nenez" class="avatar pull-up">
+                                <img src="../static/app-assets/images/portrait/small/avatar-s-24.jpg" alt="Avatar"
+                                    height="30" width="30">
+                            </li>
+                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom"
+                                title="Alberto Glotzbach" class="avatar pull-up">
+                                <img src="../static/app-assets/images/portrait/small/avatar-s-25.jpg" alt="Avatar"
+                                    height="30" width="30">
+                            </li>
+                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom"
+                                title="Alberto Glotzbach" class="avatar pull-up">
+                                <img src="../static/app-assets/images/portrait/small/avatar-s-26.jpg" alt="Avatar"
+                                    height="30" width="30">
+                            </li>
+                            <li class="d-inline-block pl-50">
+                                <p class="text-muted mb-0 font-small-3">
+                                    +10 more</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- user profile likes avatar ends -->
+                </div>
+                <div class="d-flex align-items-center">
+                    <i class="cursor-pointer bx bx-comment-dots font-medium-4"></i>
+                    <span class="ml-25">45</span>
+                    <i class="cursor-pointer bx bx-share-alt font-medium-4 ml-1"></i>
+                    <span class="ml-25">1</span>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <!-- user profile comments start -->
+        <div class="card-header user-profile-header pt-0">
+            <div class="avatar mr-50 align-top">
+                <img src="../static/app-assets/images/portrait/small/avatar-s-12.jpg" alt="avtar image" width="32"
+                    height="32">
+                <span class="avatar-status-away"></span>
+            </div>
+            <div class="d-inline-block mt-25">
+                <h6 class="mb-0 text-bold-500 font-small-3">Ananbella
+                    Queen</h6>
+                <p class="text-muted"><small>24 mins ago</small></p>
+            </div>
+            <i class='cursor-pointer bx bx-dots-vertical-rounded float-right'></i>
+        </div>
+        <div class="card-body py-0">
+            <p>Easy & smart fuzzy search🕵🏻 functionality which enables
+                users to search quickly.</p>
+        </div>
+        <div class="card-footer user-comment-footer pb-0">
+            <i class="cursor-pointer bx bx-heart user-profile-like font-medium-4 align-middle"></i>
+            <span class="ml-25">30</span>
+            <span class="ml-1">reply</span>
+        </div>
+        <hr>
+        <div class="card-header user-profile-header pt-0">
+            <div class="avatar mr-50 align-top">
+                <img src="../static/app-assets/images/portrait/small/avatar-s-13.jpg" alt="avtar images" width="32"
+                    height="32">
+                <span class="avatar-status-busy"></span>
+            </div>
+            <div class="d-inline-block mt-25">
+                <h6 class="mb-0 text-bold-500 font-small-3">Jackey
+                    Potter</h6>
+                <p class="text-muted"><small>1 hours ago</small></p>
+            </div>
+            <i class='cursor-pointer bx bx-dots-vertical-rounded float-right'></i>
+        </div>
+        <div class="card-body py-0">
+            <p>Unlimited color🖌 options allows you to set your
+                application color as per your branding 🤪.</p>
+        </div>
+        <div class="card-footer user-comment-footer pb-0">
+            <i class="cursor-pointer bx bx-heart user-profile-like font-medium-4 align-middle"></i>
+            <span class="ml-25">80</span>
+            <span class="ml-1">reply</span>
+        </div>
+        <hr>
+        <div class="form-group row align-items-center px-1">
+            <div class="col-2 col-sm-1">
+                <div class="avatar">
+                    <img src="../static/app-assets/images/portrait/small/avatar-s-2.jpg" alt="avtar images" width="32"
+                        height="32">
+                    <span class="avatar-status-online"></span>
+                </div>
+            </div>
+            <div class="col-sm-11 col-10">
+                <textarea class="form-control" id="user-comment-textarea" rows="1" placeholder="comment.."></textarea>
+            </div>
+        </div>
+        <!-- user profile comments ends -->
+    </div>
+    <!-- user profile nav tabs feed middle section user-2 card ends -->
+    <!-- user profile nav tabs feed middle section user-3 card starts -->
+    <div class="card">
+        <div class="card-content">
+            <div class="card-header user-profile-header">
+                <div class="avatar mr-50 align-top">
+                    <img src="../static/app-assets/images/portrait/small/avatar-s-14.jpg" alt="avtar images" width="32"
+                        height="32">
+                    <span class="avatar-status-online"></span>
+                </div>
+                <div class="d-inline-block mt-25">
+                    <h6 class="mb-0 text-bold-500">Anna Mull</h6>
+                    <p class="text-muted"><small>7 hours ago</small></p>
+                </div>
+                <i class='cursor-pointer bx bx-dots-vertical-rounded float-right'></i>
+            </div>
+            <div class="card-body py-0">
+                <p>To avoid winding up with a large bundle, it’s good to
+                    get ahead of the problem and use "Code
+                    Splitting 🕹".</p>
+                <img src="../static/app-assets/images/profile/post-media/2.jpg" alt="user image" class="img-fluid">
+            </div>
+            <div class="card-footer d-flex justify-content-between pt-1">
+                <div class="d-flex align-items-center">
+                    <i class="cursor-pointer bx bx-heart user-profile-like font-medium-4"></i>
+                    <p class="mb-0 ml-25">77</p>
+                    <!-- user profile likes avatar start -->
+                    <div class="d-none d-sm-block">
+                        <ul class="list-unstyled users-list m-0 d-flex align-items-center ml-1">
+                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom"
+                                title="Lilian Nenez" class="avatar pull-up">
+                                <img src="../static/app-assets/images/portrait/small/avatar-s-11.jpg" alt="Avatar"
+                                    height="30" width="30">
+                            </li>
+                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom"
+                                title="Alberto Glotzbach" class="avatar pull-up">
+                                <img src="../static/app-assets/images/portrait/small/avatar-s-12.jpg" alt="Avatar"
+                                    height="30" width="30">
+                            </li>
+                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom"
+                                title="Alberto Glotzbach" class="avatar pull-up">
+                                <img src="../static/app-assets/images/portrait/small/avatar-s-13.jpg" alt="Avatar"
+                                    height="30" width="30">
+                            </li>
+                            <li class="d-inline-block pl-50">
+                                <p class="text-muted mb-0 font-small-3">
+                                    +10 more</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- user profile likes avatar ends -->
+                </div>
+                <div class="d-flex align-items-center">
+                    <i class="cursor-pointer bx bx-comment-dots font-medium-4"></i>
+                    <span class="ml-25">12</span>
+                    <i class="cursor-pointer bx bx-share-alt font-medium-4 ml-1"></i>
+                    <span class="ml-25">12</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- user profile nav tabs feed middle section user-3 card ends -->
+    <!-- user profile nav tabs feed middle section user-4 card starts -->
+    <div class="card">
+        <div class="card-content">
+            <div class="card-header user-profile-header">
+                <div class="avatar mr-50 align-top">
+                    <img src="../static/app-assets/images/portrait/small/avatar-s-18.jpg" alt="avtar images" width="32"
+                        height="32">
+                    <span class="avatar-status-online"></span>
+                </div>
+                <div class="d-inline-block mt-25">
+                    <h6 class="mb-0 text-bold-500">Petey Cruiser</h6>
+                    <p class="text-muted"><small>21 hours ago</small>
+                    </p>
+                </div>
+                <i class='cursor-pointer bx bx-dots-vertical-rounded float-right'></i>
+            </div>
+            <div class="card-body py-0">
+                <p>It's more efficient 🙌 to split each route's
+                    components into a separate chunk, and only load them
+                    when the route is visited. Hikanotes comes with
+                    built-in
+                    light and dark layouts, select as per your
+                    preference.</p>
+            </div>
+            <div class="card-footer d-flex justify-content-between pt-1">
+                <div class="d-flex align-items-center">
+                    <i class="cursor-pointer bx bx-heart user-profile-like font-medium-4"></i>
+                    <p class="mb-0 ml-25">0</p>
+                </div>
+                <div class="d-flex align-items-center">
+                    <i class="cursor-pointer bx bx-comment-dots font-medium-4"></i>
+                    <span class="ml-25">0</span>
+                    <i class="cursor-pointer bx bx-share-alt font-medium-4 ml-1"></i>
+                    <span class="ml-25">2</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- user profile nav tabs feed middle section user-4 card ends -->
+</div>

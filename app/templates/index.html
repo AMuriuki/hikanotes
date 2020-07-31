@@ -7,35 +7,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta name="description" content="Hikanotes is an online medium for sharing content">
-    <meta name="keywords" content="Hikanotes, Web App, Social Media, Microblog, Social Platform">
+    <meta name="keywords" content="Hikanotes, Web App, Social Media, Hikanotes, Social Platform">
     <meta name="author" content="https://arnoldnderitu.io">
     <title>Home - Hikanotes</title>
-    <link rel="apple-touch-icon" href="../../static/app-assets/images/ico/apple-icon-120.png">
+    <link rel="apple-touch-icon" href="../static/app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../static/app-assets/images/ico/favicon.png">
     <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600%7CIBM+Plex+Sans:300,400,500,600,700"
         rel="stylesheet">
 
     <!-- BEGIN: Vendor CSS-->
-    <link rel="stylesheet" type="text/css" href="../../static/app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/vendors/css/vendors.min.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
-    <link rel="stylesheet" type="text/css" href="../../static/app-assets/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../../static/app-assets/css/bootstrap-extended.min.css">
-    <link rel="stylesheet" type="text/css" href="../../static/app-assets/css/colors.min.css">
-    <link rel="stylesheet" type="text/css" href="../../static/app-assets/css/components.min.css">
-    <link rel="stylesheet" type="text/css" href="../../static/app-assets/css/themes/dark-layout.min.css">
-    <link rel="stylesheet" type="text/css" href="../../static/app-assets/css/themes/semi-dark-layout.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/bootstrap-extended.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/colors.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/components.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/themes/dark-layout.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/themes/semi-dark-layout.min.css">
     <!-- END: Theme CSS-->
 
     <!-- BEGIN: Page CSS-->
-    <link rel="stylesheet" type="text/css"
-        href="../../static/app-assets/css/core/menu/menu-types/vertical-menu.min.css">
-    <link rel="stylesheet" type="text/css" href="../../static/app-assets/css/pages/authentication.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/core/menu/menu-types/vertical-menu.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/pages/authentication.css">
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="../../static/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../static/assets/css/style.css">
     <!-- END: Custom CSS-->
 
     <style>
@@ -48,6 +47,16 @@
         body.vertical-layout.vertical-menu-modern.menu-collapsed .navbar-static-top .navbar-wrapper {
             margin-left: 0px !important;
         }
+
+        @media screen and (min-width: 1199px) {
+            #dv_side_bar {
+                display: none;
+            }
+
+            #img_logo {
+                display: block;
+            }
+        }
     </style>
 </head>
 <!-- END: Head-->
@@ -55,7 +64,7 @@
 <!-- BEGIN: Body-->
 
 <body class="vertical-layout vertical-menu-modern 2-columns  navbar-sticky footer-static menu-collapsed "
-    data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
+    data-open="click" data-menu="vertical-menu-modern" data-col="2-columns" onload="setup()">
 
     <!-- BEGIN: Header-->
     <div class="header-navbar-shadow"></div>
@@ -70,19 +79,8 @@
                                         class="ficon bx bx-menu"></i></a></li>
                         </ul>
                         <ul class="nav navbar-nav bookmark-icons">
-                            <li style="display: none !important;" class="nav-item d-none d-lg-block"><a class="nav-link"
-                                    href="app-chat.html" data-toggle="tooltip" data-placement="top" title="Chat"><i
-                                        class="ficon bx bx-chat"></i></a></li>
-                            <li class="nav-item d-none d-lg-block"><a class="nav-link" href="app-todo.html"
-                                    data-toggle="tooltip" data-placement="top" title="Home"><i
-                                        style="font-size: 1.7rem;" class="bx bx-home-alt"></i></a></li>
-                            <li class="nav-item d-none d-lg-block"><a class="nav-link" href="app-calendar.html"
-                                    data-toggle="tooltip" data-placement="top" title="Explore"><i
-                                        style="font-size: 1.7rem;" class="bx bx-hash"></i></a></li>
-                            <li class="nav-item d-none d-lg-block"><a class="nav-link" href="#" data-toggle="tooltip"
-                                    data-placement="top" title="Inbox"><i style="font-size: 1.7rem;"
-                                        class="bx bx-message"></i></a></li>
-
+                            <img id="img_logo" style="max-width: 25%;"
+                                src="../static/app-assets/images/logo/hikanotes.png">
                         </ul>
                         <ul class="nav navbar-nav" style="display: none;">
                             <li class="nav-item d-none d-lg-block"><a class="nav-link bookmark-star"><i
@@ -135,7 +133,7 @@
                                         <div class="media d-flex align-items-center">
                                             <div class="media-left pr-0">
                                                 <div class="avatar mr-1 m-0"><img
-                                                        src="../../static/app-assets/images/portrait/small/avatar-s-11.jpg"
+                                                        src="../static/app-assets/images/portrait/small/avatar-s-11.jpg"
                                                         alt="avatar" height="39" width="39"></div>
                                             </div>
                                             <div class="media-body">
@@ -149,7 +147,7 @@
                                         <div class="media d-flex align-items-center">
                                             <div class="media-left pr-0">
                                                 <div class="avatar mr-1 m-0"><img
-                                                        src="../../static/app-assets/images/portrait/small/avatar-s-16.jpg"
+                                                        src="../static/app-assets/images/portrait/small/avatar-s-16.jpg"
                                                         alt="avatar" height="39" width="39"></div>
                                             </div>
                                             <div class="media-body">
@@ -162,7 +160,7 @@
                                     <div class="d-flex justify-content-between cursor-pointer">
                                         <div class="media d-flex align-items-center py-0">
                                             <div class="media-left pr-0"><img class="mr-1"
-                                                    src="../../static/app-assets/images/icon/sketch-mac-icon.png"
+                                                    src="../static/app-assets/images/icon/sketch-mac-icon.png"
                                                     alt="avatar" height="39" width="39"></div>
                                             <div class="media-body">
                                                 <h6 class="media-heading"><span class="text-bold-500">Updates
@@ -230,7 +228,7 @@
                                         <div class="media d-flex align-items-center">
                                             <div class="media-left pr-0">
                                                 <div class="avatar mr-1 m-0"><img
-                                                        src="../../static/app-assets/images/portrait/small/avatar-s-4.jpg"
+                                                        src="../static/app-assets/images/portrait/small/avatar-s-4.jpg"
                                                         alt="avatar" height="39" width="39"></div>
                                             </div>
                                             <div class="media-body">
@@ -259,7 +257,7 @@
                                         <div class="media d-flex align-items-center border-0">
                                             <div class="media-left pr-0">
                                                 <div class="avatar mr-1 m-0"><img
-                                                        src="../../static/app-assets/images/portrait/small/avatar-s-16.jpg"
+                                                        src="../static/app-assets/images/portrait/small/avatar-s-16.jpg"
                                                         alt="avatar" height="39" width="39"></div>
                                             </div>
                                             <div class="media-body">
@@ -300,7 +298,8 @@
     </nav>
     <!-- END: Header-->
 
-    <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow expanded" data-scroll-to-active="true"
+    <div id="dv_side_bar" class="main-menu menu-fixed menu-light menu-accordion menu-shadow expanded"
+        data-scroll-to-active="true"
         style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
         <div class="navbar-header expanded">
             <ul class="nav navbar-nav flex-row">
@@ -319,14 +318,14 @@
         <div class="main-menu-content ps ps--active-y" style="height: 690px;">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation"
                 data-icon-style="lines" style="margin-top: 10%;">
-                <li class="nav-item"><a href="app-email.html"><i
-                    style="font-size: 1.7rem;" class="bx bx-home-alt"></i><span class="menu-title">Home</span></a>
+                <li class="nav-item"><a href="app-email.html"><i style="font-size: 1.7rem;"
+                            class="bx bx-home-alt"></i><span class="menu-title">Home</span></a>
                 </li>
-                <li class="nav-item"><a href="app-email.html"><i
-                    style="font-size: 1.7rem;" class="bx bx-hash"></i><span class="menu-title">Explore</span></a>
+                <li class="nav-item"><a href="app-email.html"><i style="font-size: 1.7rem;" class="bx bx-hash"></i><span
+                            class="menu-title">Explore</span></a>
                 </li>
                 <li class="nav-item"><a href="app-email.html"><i style="font-size: 1.7rem;"
-                    class="bx bx-message"></i><span class="menu-title">Inbox</span></a>
+                            class="bx bx-message"></i><span class="menu-title">Inbox</span></a>
                 </li>
             </ul>
             <div class="ps__rail-x" style="left: 0px; bottom: -278px;">
@@ -364,11 +363,28 @@
                                                     <div class="card">
                                                         <div class="card-content">
                                                             <div class="card-body">
-                                                                <h5 class="card-title mb-1">Info
+                                                                <h5 class="card-title mb-1">Quick Links
                                                                     <i
                                                                         class="cursor-pointer bx bx-dots-vertical-rounded float-right"></i>
                                                                 </h5>
                                                                 <ul class="list-unstyled mb-0">
+                                                                    <li class="d-flex align-items-center mb-25">
+                                                                        <i
+                                                                            class="bx bx-home-alt mr-50 cursor-pointer"></i>
+                                                                        <span><a
+                                                                                href="JavaScript:void(0);">Home</a></span>
+                                                                    </li>
+                                                                    <li class="d-flex align-items-center mb-25">
+                                                                        <i
+                                                                            class="bx bx-hash mr-50 cursor-pointer"></i><span><a
+                                                                                href="JavaScript:void(0);">Explore</a></span>
+                                                                    </li>
+                                                                    <li class="d-flex align-items-center">
+                                                                        <i
+                                                                            class="bx bx-message mr-50 cursor-pointer"></i>
+                                                                        <span><a
+                                                                                href="JavaScript:void(0);">Inbox</a></span>
+                                                                    </li>
                                                                     <li class="d-flex align-items-center mb-25">
                                                                         <i
                                                                             class="bx bx-log-out-circle mr-50 cursor-pointer"></i>
@@ -379,27 +395,6 @@
                                                                         <i
                                                                             class="bx bx-log-in-circle mr-50 cursor-pointer"></i><span>Following<a
                                                                                 href="JavaScript:void(0);">&nbsp;345</a></span>
-                                                                    </li>
-                                                                    <li class="d-flex align-items-center mb-25">
-                                                                        <i
-                                                                            class="bx bx-receipt mr-50 cursor-pointer"></i>
-                                                                        <span>Studied
-                                                                            <a href="JavaScript:void(0);">&nbsp;IT
-                                                                                science</a> at<a
-                                                                                href="JavaScript:void(0);">&nbsp;Torronto</a></span>
-                                                                    </li>
-                                                                    <li class="d-flex align-items-center mb-25">
-                                                                        <i
-                                                                            class="bx bx-receipt mr-50 cursor-pointer"></i><span>Studied
-                                                                            at
-                                                                            <a href="JavaScript:void(0);">&nbsp;College
-                                                                                of new Jersey</a></span>
-                                                                    </li>
-                                                                    <li class="d-flex align-items-center">
-                                                                        <i class="bx bx-rss mr-50 cursor-pointer"></i>
-                                                                        <span>Followed by<a
-                                                                                href="JavaScript:void(0);">&nbsp;338
-                                                                                people</a></span>
                                                                     </li>
                                                                 </ul>
                                                             </div>
@@ -418,51 +413,39 @@
                                                                         <i
                                                                             class="cursor-pointer bx bx-trending-up text-primary mr-50 mt-25"></i><span>
                                                                             <a href="JavaScript:void(0);"
-                                                                                class="mr-50">#ManJonas:</a>Hikanotes
-                                                                            comes
-                                                                            with built-in
+                                                                                class="mr-50">#faucimusttest</a>
                                                                         </span>
                                                                     </li>
                                                                     <li class="d-flex mb-25">
                                                                         <i
                                                                             class="cursor-pointer bx bx-trending-up text-primary mr-50 mt-25"></i><span>
                                                                             <a href="JavaScript:void(0);"
-                                                                                class="mr-50">LadyJonas:</a>dark
-                                                                            layouts, select as</span>
+                                                                                class="mr-50">#wordfest</a></span>
                                                                     </li>
                                                                     <li class="d-flex mb-25">
                                                                         <i
                                                                             class="cursor-pointer bx bx-trending-up text-primary mr-50 mt-25"></i><span>
                                                                             <a href="JavaScript:void(0);"
-                                                                                class="mr-50">#Germany:</a>Hikanotes
-                                                                            comes
-                                                                            with built-in
+                                                                                class="mr-50">#prayingnow</a>
                                                                         </span>
                                                                     </li>
                                                                     <li class="d-flex mb-25">
                                                                         <i
                                                                             class="cursor-pointer bx bx-trending-up text-primary mr-50 mt-25"></i><span>
                                                                             <a href="JavaScript:void(0);"
-                                                                                class="mr-50">#SundayNoon:</a>dark
-                                                                            layouts, select as</span>
+                                                                                class="mr-50">#ror</a></span>
                                                                     </li>
-                                                                    <li class="d-flex">
-                                                                        <i
-                                                                            class="cursor-pointer bx bx-trending-up text-primary mr-50 mt-25"></i><span>
-                                                                            <a href="JavaScript:void(0);"
-                                                                                class="mr-50">NoWorries:</a>heme
-                                                                            navigation with you</span>
-                                                                    </li>
+
                                                                 </ul>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <!-- user profile nav tabs feed left section trending card ends -->
                                                     <!-- user profile nav tabs feed left section like page card start -->
-                                                    <div class="card">
+                                                    <div class="card" style="display: none;">
                                                         <div class="card-content">
                                                             <div class="card-body">
-                                                                <h6><img src="../../static/app-assets/images/profile/pages/pixinvent.jpg"
+                                                                <h6><img src="../static/app-assets/images/profile/pages/pixinvent.jpg"
                                                                         class="mr-25 round" alt="logo" height="28">
                                                                     Pixinvent<span class="text-muted"> (Page)</span>
                                                                     <i
@@ -496,7 +479,7 @@
                                                     </div>
                                                     <!-- user profile nav tabs feed left section like page card ends -->
                                                     <!-- user profile nav tabs feed left section today's events card start -->
-                                                    <div class="card">
+                                                    <div class="card" style="display: none;">
                                                         <div class="card-content">
                                                             <div class="card-body">
                                                                 <h5 class="card-title mb-1">Today's Events<i
@@ -524,7 +507,7 @@
                                                                             data-popup="tooltip-custom"
                                                                             data-placement="bottom" title="Lilian Nenez"
                                                                             class="avatar pull-up">
-                                                                            <img src="../../static/app-assets/images/portrait/small/avatar-s-21.jpg"
+                                                                            <img src="../static/app-assets/images/portrait/small/avatar-s-21.jpg"
                                                                                 alt="Avatar" height="30" width="30">
                                                                         </li>
                                                                         <li data-toggle="tooltip"
@@ -532,7 +515,7 @@
                                                                             data-placement="bottom"
                                                                             title="Alberto Glotzbach"
                                                                             class="avatar pull-up">
-                                                                            <img src="../../static/app-assets/images/portrait/small/avatar-s-22.jpg"
+                                                                            <img src="../static/app-assets/images/portrait/small/avatar-s-22.jpg"
                                                                                 alt="Avatar" height="30" width="30">
                                                                         </li>
                                                                         <li data-toggle="tooltip"
@@ -540,7 +523,7 @@
                                                                             data-placement="bottom"
                                                                             title="Alberto Glotzbach"
                                                                             class="avatar pull-up">
-                                                                            <img src="../../static/app-assets/images/portrait/small/avatar-s-23.jpg"
+                                                                            <img src="../static/app-assets/images/portrait/small/avatar-s-23.jpg"
                                                                                 alt="Avatar" height="30" width="30">
                                                                         </li>
                                                                         <li class="pl-50 text-muted font-small-3">
@@ -590,193 +573,63 @@
                                                         <div class="card-content">
                                                             <div class="card-body">
                                                                 <!-- user profile middle section blogpost nav tabs card start -->
-                                                                <ul class="nav nav-tabs justify-content-center justify-content-sm-start border-bottom-0"
-                                                                    role="tablist">
-                                                                    <li class="nav-item">
-                                                                        <a class="nav-link active d-flex"
-                                                                            id="user-status-tab" data-toggle="tab"
-                                                                            href="#user-status"
-                                                                            aria-controls="user-status" role="tab"
-                                                                            aria-selected="true"><i
-                                                                                class="bx bx-detail align-text-top"></i>
-                                                                            <span
-                                                                                class="d-none d-md-block">Status</span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="nav-item">
-                                                                        <a class="nav-link d-flex" id="multimedia-tab"
-                                                                            data-toggle="tab" href="#user-multimedia"
-                                                                            aria-controls="user-multimedia" role="tab"
-                                                                            aria-selected="false"><i
-                                                                                class="bx bx-movie align-text-top"></i>
-                                                                            <span
-                                                                                class="d-none d-md-block">Multimedia</span>
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="nav-item mr-0">
-                                                                        <a class="nav-link d-flex" id="blog-tab"
-                                                                            data-toggle="tab" href="#user-blog"
-                                                                            aria-controls="user-blog" role="tab"
-                                                                            aria-selected="false"><i
-                                                                                class="bx bx-chat align-text-top"></i>
-                                                                            <span class="d-none d-md-block">Blog
-                                                                                Post</span>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
                                                                 <div class="tab-content pl-0">
                                                                     <div class="tab-pane active" id="user-status"
                                                                         aria-labelledby="user-status-tab"
                                                                         role="tabpanel">
                                                                         <div class="row">
                                                                             <div class="col-12">
-                                                                                <div class="form-group row">
-                                                                                    <div class="col-sm-1 col-2">
-                                                                                        <div class="avatar">
-                                                                                            <img src="../../static/app-assets/images/portrait/small/avatar-s-2.jpg"
-                                                                                                alt="user image"
-                                                                                                width="32" height="32">
-                                                                                            <span
-                                                                                                class="avatar-status-online"></span>
+                                                                                <form method="POST"
+                                                                                    enctype="multipart/form-data">
+                                                                                    <div class="form-group row">
+                                                                                        <div class="col-sm-1 col-2">
+                                                                                            <div class="avatar">
+                                                                                                <img src="{{current_user.avatar(32)}}"
+                                                                                                    alt="user image"
+                                                                                                    width="32"
+                                                                                                    height="32">
+                                                                                                <span
+                                                                                                    class="avatar-status-online"></span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-sm-11 col-10">
+
+                                                                                            {{ form.hidden_tag() }}
+                                                                                            {{form.post(class="form-control border-0 shadow-none", placeholder="Speak your mind...")}}
+
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="col-sm-11 col-10">
-                                                                                        <textarea
-                                                                                            class="form-control border-0 shadow-none"
-                                                                                            id="user-post-textarea"
-                                                                                            rows="3"
-                                                                                            placeholder="Share what you are thinking here..."></textarea>
+                                                                                    <hr>
+                                                                                    <div class="card-footer p-0">
+                                                                                        <button id="btn_upload"
+                                                                                            class="btn btn-light-primary mr-0 my-1 my-sm-0 mr-sm-1"
+                                                                                            type="button">
+                                                                                            <i style="top: 0px; margin-right: 0rem !important;"
+                                                                                                class="cursor-pointer bx bx-camera font-medium-5 text-muted mr-1 pt-50"
+                                                                                                data-toggle="tooltip"
+                                                                                                data-popup="tooltip-custom"
+                                                                                                data-placement="top"
+                                                                                                title="Upload a picture">
+                                                                                            </i>
+                                                                                            <input id='uploadImage'
+                                                                                                type='file' hidden />
+                                                                                        </button>
+                                                                                        <button id="btn_upload"
+                                                                                            class="btn btn-light-primary mr-0 my-1 my-sm-0 mr-sm-1"
+                                                                                            type="button">
+                                                                                            <i class="cursor-pointer bx bx-face font-medium-5 text-muted mr-1 pt-50"
+                                                                                                data-toggle="tooltip"
+                                                                                                data-popup="tooltip-custom"
+                                                                                                data-placement="top"
+                                                                                                title="Tag a friend"
+                                                                                                style="top: 0px; margin-right: 0rem !important"></i>
+                                                                                        </button>
+                                                                                        <span
+                                                                                            class=" float-sm-right d-flex flex-sm-row flex-column justify-content-end">
+                                                                                            {{form.submit(class="btn btn-primary")}}
+                                                                                        </span>
                                                                                     </div>
-                                                                                </div>
-                                                                                <hr>
-                                                                                <div class="card-footer p-0">
-                                                                                    <i class="cursor-pointer bx bx-camera font-medium-5 text-muted mr-1 pt-50"
-                                                                                        data-toggle="tooltip"
-                                                                                        data-popup="tooltip-custom"
-                                                                                        data-placement="top"
-                                                                                        title="Upload a picture"></i>
-                                                                                    <i class="cursor-pointer bx bx-face font-medium-5 text-muted mr-1 pt-50"
-                                                                                        data-toggle="tooltip"
-                                                                                        data-popup="tooltip-custom"
-                                                                                        data-placement="top"
-                                                                                        title="Tag your friend"></i>
-                                                                                    <i class="cursor-pointer bx bx-map font-medium-5 text-muted pt-50"
-                                                                                        data-toggle="tooltip"
-                                                                                        data-popup="tooltip-custom"
-                                                                                        data-placement="top"
-                                                                                        title="Share your location"></i>
-                                                                                    <span
-                                                                                        class=" float-sm-right d-flex flex-sm-row flex-column justify-content-end">
-                                                                                        <button
-                                                                                            class="btn btn-light-primary mr-0 my-1 my-sm-0 mr-sm-1">Preview</button>
-                                                                                        <button
-                                                                                            class="btn btn-primary">Post
-                                                                                            Status</button>
-                                                                                    </span>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="tab-pane" id="user-multimedia"
-                                                                        aria-labelledby="multimedia-tab"
-                                                                        role="tabpanel">
-                                                                        <div class="row">
-                                                                            <div class="col-12">
-                                                                                <div class="form-group row">
-                                                                                    <div class="col-sm-1 col-2">
-                                                                                        <div class="avatar">
-                                                                                            <img src="../../static/app-assets/images/portrait/small/avatar-s-2.jpg"
-                                                                                                alt="user image"
-                                                                                                width="32" height="32">
-                                                                                            <span
-                                                                                                class="avatar-status-online"></span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-sm-11 col-10">
-                                                                                        <textarea
-                                                                                            class="form-control border-0 shadow-none"
-                                                                                            id="user-postmulti-textarea"
-                                                                                            rows="3"
-                                                                                            placeholder="Share what you are thinking here..."></textarea>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <hr>
-                                                                                <div class="card-footer p-0">
-                                                                                    <i class="cursor-pointer bx bx-camera font-medium-5 text-muted mr-1 pt-50"
-                                                                                        data-toggle="tooltip"
-                                                                                        data-popup="tooltip-custom"
-                                                                                        data-placement="top"
-                                                                                        title="Upload a picture"></i>
-                                                                                    <i class="cursor-pointer bx bx-face font-medium-5 text-muted mr-1 pt-50"
-                                                                                        data-toggle="tooltip"
-                                                                                        data-popup="tooltip-custom"
-                                                                                        data-placement="top"
-                                                                                        title="Tag your friend"></i>
-                                                                                    <i class="cursor-pointer bx bx-map font-medium-5 text-muted pt-50"
-                                                                                        data-toggle="tooltip"
-                                                                                        data-popup="tooltip-custom"
-                                                                                        data-placement="top"
-                                                                                        title="Share your location"></i>
-                                                                                    <span
-                                                                                        class=" float-sm-right d-flex flex-sm-row flex-column justify-content-end">
-                                                                                        <button
-                                                                                            class="btn btn-light-primary mr-0 my-1 my-sm-0 mr-sm-1">Preview</button>
-                                                                                        <button
-                                                                                            class="btn btn-primary">Post
-                                                                                            Status</button>
-                                                                                    </span>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="tab-pane" id="user-blog"
-                                                                        aria-labelledby="blog-tab" role="tabpanel">
-                                                                        <div class="row">
-                                                                            <div class="col-12">
-                                                                                <div class="form-group row">
-                                                                                    <div class="col-sm-1 col-2">
-                                                                                        <div class="avatar">
-                                                                                            <img src="../../static/app-assets/images/portrait/small/avatar-s-2.jpg"
-                                                                                                alt="user image"
-                                                                                                width="32" height="32">
-                                                                                            <span
-                                                                                                class="avatar-status-online"></span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-sm-11 col-10">
-                                                                                        <textarea
-                                                                                            class="form-control border-0 shadow-none"
-                                                                                            id="user-postblog-textarea"
-                                                                                            rows="3"
-                                                                                            placeholder="Share what you are thinking here..."></textarea>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <hr>
-                                                                                <div class="card-footer p-0">
-                                                                                    <i class="cursor-pointer bx bx-camera font-medium-5 text-muted mr-1 pt-50"
-                                                                                        data-toggle="tooltip"
-                                                                                        data-popup="tooltip-custom"
-                                                                                        data-placement="top"
-                                                                                        title="Upload a picture"></i>
-                                                                                    <i class="cursor-pointer bx bx-face font-medium-5 text-muted mr-1 pt-50"
-                                                                                        data-toggle="tooltip"
-                                                                                        data-popup="tooltip-custom"
-                                                                                        data-placement="top"
-                                                                                        title="Tag your friend"></i>
-                                                                                    <i class="cursor-pointer bx bx-map font-medium-5 text-muted pt-50"
-                                                                                        data-toggle="tooltip"
-                                                                                        data-popup="tooltip-custom"
-                                                                                        data-placement="top"
-                                                                                        title="Share your location"></i>
-                                                                                    <span
-                                                                                        class=" float-sm-right d-flex flex-sm-row flex-column justify-content-end">
-                                                                                        <button
-                                                                                            class="btn btn-light-primary mr-0 my-1 my-sm-0 mr-sm-1">Preview</button>
-                                                                                        <button
-                                                                                            class="btn btn-primary">Post
-                                                                                            Status</button>
-                                                                                    </span>
-                                                                                </div>
+                                                                                </form>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -786,419 +639,12 @@
                                                         </div>
                                                     </div>
                                                     <!-- user profile nav tabs feed middle section post card ends -->
-                                                    <!-- user profile nav tabs feed middle section user-1 card starts -->
-                                                    <div class="card">
-                                                        <div class="card-content">
-                                                            <div class="card-header user-profile-header">
-                                                                <div class="avatar mr-50 align-top">
-                                                                    <img src="../../static/app-assets/images/portrait/small/avatar-s-10.jpg"
-                                                                        alt="user avatar" width="32" height="32">
-                                                                    <span class="avatar-status-online"></span>
-                                                                </div>
-                                                                <div class="d-inline-block mt-25">
-                                                                    <h6 class="mb-0 text-bold-500">Martina Ash <span
-                                                                            class="text-bold-400">shared a
-                                                                        </span><a href="JavaScript:void(0);">link</a>
-                                                                    </h6>
-                                                                    <p class="text-muted"><small>7 hours ago</small></p>
-                                                                </div>
-                                                                <i
-                                                                    class='cursor-pointer bx bx-dots-vertical-rounded float-right'></i>
-                                                            </div>
-                                                            <div class="card-body py-0">
-                                                                <p>Unlimited color options allows you to set your
-                                                                    application color as per your branding 🤩.</p>
-                                                                <div class="d-flex border rounded">
-                                                                    <div class="user-profile-images"><img
-                                                                            src="../../static/app-assets/images/banner/banner-29.jpg"
-                                                                            alt="post"
-                                                                            class="img-fluid user-profile-card-image">
-                                                                    </div>
-                                                                    <div class="p-1">
-                                                                        <h5>Algolia Integration 😎</h5>
-                                                                        <p class="user-profile-ellipsis">Algolia helps
-                                                                            businesses across industries quickly create
-                                                                            relevant, scalable, and lightning fast
-                                                                            search and discovery experiences.</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="card-footer d-flex justify-content-between pt-1">
-                                                                <div class="d-flex align-items-center">
-                                                                    <i
-                                                                        class="cursor-pointer bx bx-heart user-profile-like font-medium-4"></i>
-                                                                    <p class="mb-0 ml-25">18</p>
-                                                                    <!-- user profile likes avatar start -->
-                                                                    <div class="d-none d-sm-block">
-                                                                        <ul
-                                                                            class="list-unstyled users-list m-0 d-flex align-items-center ml-1">
-                                                                            <li data-toggle="tooltip"
-                                                                                data-popup="tooltip-custom"
-                                                                                data-placement="bottom"
-                                                                                title="Lilian Nenez"
-                                                                                class="avatar pull-up">
-                                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-21.jpg"
-                                                                                    alt="Avatar" height="30" width="30">
-                                                                            </li>
-                                                                            <li data-toggle="tooltip"
-                                                                                data-popup="tooltip-custom"
-                                                                                data-placement="bottom"
-                                                                                title="Alberto Glotzbach"
-                                                                                class="avatar pull-up">
-                                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-22.jpg"
-                                                                                    alt="Avatar" height="30" width="30">
-                                                                            </li>
-                                                                            <li data-toggle="tooltip"
-                                                                                data-popup="tooltip-custom"
-                                                                                data-placement="bottom"
-                                                                                title="Alberto Glotzbach"
-                                                                                class="avatar pull-up">
-                                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-23.jpg"
-                                                                                    alt="Avatar" height="30" width="30">
-                                                                            </li>
-                                                                            <li class="d-inline-block pl-50">
-                                                                                <p class="text-muted mb-0 font-small-3">
-                                                                                    +10 more</p>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                    <!-- user profile likes avatar ends -->
-                                                                </div>
-                                                                <div class="d-flex align-items-center">
-                                                                    <i
-                                                                        class="cursor-pointer bx bx-comment-dots font-medium-4"></i>
-                                                                    <span class="ml-25">52</span>
-                                                                    <i
-                                                                        class="cursor-pointer bx bx-share-alt font-medium-4 ml-1"></i>
-                                                                    <span class="ml-25">22</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- user profile nav tabs feed middle section user-1 card ends -->
-                                                    <!-- user profile nav tabs feed middle section story swiper start -->
-                                                    <div class="card">
-                                                        <div class="card-content">
-                                                            <div class="card-body">
-                                                                <h5 class="card-title mb-0">Stories</h5>
-                                                                <div class="user-profile-stories swiper-container pt-1">
-                                                                    <div class="swiper-wrapper user-profile-images">
-                                                                        <div class="swiper-slide">
-                                                                            <img src="../../static/app-assets/images/profile/portraits/avatar-portrait-1.jpg"
-                                                                                class="rounded user-profile-stories-image"
-                                                                                alt="story image">
-                                                                            <div class="card-img-overlay bg-overlay">
-                                                                                <div class="user-swiper-text">ureka_23
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="swiper-slide">
-                                                                            <img src="../../static/app-assets/images/profile/portraits/avatar-portrait-2.jpg"
-                                                                                class="rounded user-profile-stories-image"
-                                                                                alt="story image">
-                                                                            <div class="card-img-overlay bg-overlay">
-                                                                                <div class="user-swiper-text">
-                                                                                    devine_lena</div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="swiper-slide">
-                                                                            <img src="../../static/app-assets/images/profile/portraits/avatar-portrait-3.jpg"
-                                                                                class="rounded user-profile-stories-image"
-                                                                                alt="story image">
-                                                                            <div class="card-img-overlay bg-overlay">
-                                                                                <div class="user-swiper-text">
-                                                                                    venice_like852</div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="swiper-slide">
-                                                                            <img src="../../static/app-assets/images/profile/portraits/avatar-portrait-4.jpg"
-                                                                                class="rounded user-profile-stories-image"
-                                                                                alt="story image">
-                                                                            <div class="card-img-overlay bg-overlay">
-                                                                                <div class="user-swiper-text">june5211
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="swiper-slide">
-                                                                            <img src="../../static/app-assets/images/profile/portraits/avatar-portrait-5.jpg"
-                                                                                class="rounded user-profile-stories-image"
-                                                                                alt="story image">
-                                                                            <div class="card-img-overlay bg-overlay">
-                                                                                <div class="user-swiper-text">
-                                                                                    defloya_456</div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- user profile nav tabs feed middle section story swiper ends -->
-                                                    <!-- user profile nav tabs feed middle section user-2 card starts -->
-                                                    <div class="card">
-                                                        <div class="card-content">
-                                                            <div class="card-header user-profile-header">
-                                                                <div class="avatar mr-50 align-top">
-                                                                    <img src="../../static/app-assets/images/portrait/small/avatar-s-11.jpg"
-                                                                        alt="avtar image" width="32" height="32">
-                                                                    <span class="avatar-status-offline"></span>
-                                                                </div>
-                                                                <div class="d-inline-block mt-25">
-                                                                    <h6 class="mb-0 text-bold-500">Jonny Richie</h6>
-                                                                    <p class="text-muted"><small>2 hours ago</small></p>
-                                                                </div>
-                                                                <i
-                                                                    class="cursor-pointer bx bx-dots-vertical-rounded float-right"></i>
-                                                            </div>
-                                                            <div class="card-body py-0">
-                                                                <p>Beautifully crafted, clean & modern designed admin✨
-                                                                    theme with 3 different demos & light -
-                                                                    dark versions. Lifetime updates with new demos and
-                                                                    features is guaranteed</p>
-                                                            </div>
-                                                            <div
-                                                                class="card-footer d-flex justify-content-between pb-0">
-                                                                <div class="d-flex align-items-center">
-                                                                    <i
-                                                                        class="cursor-pointer bx bx-heart user-profile-like font-medium-4"></i>
-                                                                    <p class="mb-0 ml-25">49</p>
-                                                                    <!-- user profile likes avatar start -->
-                                                                    <div class="d-none d-sm-block">
-                                                                        <ul
-                                                                            class="list-unstyled users-list m-0 d-flex align-items-center ml-1">
-                                                                            <li data-toggle="tooltip"
-                                                                                data-popup="tooltip-custom"
-                                                                                data-placement="bottom"
-                                                                                title="Lilian Nenez"
-                                                                                class="avatar pull-up">
-                                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-24.jpg"
-                                                                                    alt="Avatar" height="30" width="30">
-                                                                            </li>
-                                                                            <li data-toggle="tooltip"
-                                                                                data-popup="tooltip-custom"
-                                                                                data-placement="bottom"
-                                                                                title="Alberto Glotzbach"
-                                                                                class="avatar pull-up">
-                                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-25.jpg"
-                                                                                    alt="Avatar" height="30" width="30">
-                                                                            </li>
-                                                                            <li data-toggle="tooltip"
-                                                                                data-popup="tooltip-custom"
-                                                                                data-placement="bottom"
-                                                                                title="Alberto Glotzbach"
-                                                                                class="avatar pull-up">
-                                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-26.jpg"
-                                                                                    alt="Avatar" height="30" width="30">
-                                                                            </li>
-                                                                            <li class="d-inline-block pl-50">
-                                                                                <p class="text-muted mb-0 font-small-3">
-                                                                                    +10 more</p>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                    <!-- user profile likes avatar ends -->
-                                                                </div>
-                                                                <div class="d-flex align-items-center">
-                                                                    <i
-                                                                        class="cursor-pointer bx bx-comment-dots font-medium-4"></i>
-                                                                    <span class="ml-25">45</span>
-                                                                    <i
-                                                                        class="cursor-pointer bx bx-share-alt font-medium-4 ml-1"></i>
-                                                                    <span class="ml-25">1</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <hr>
-                                                        <!-- user profile comments start -->
-                                                        <div class="card-header user-profile-header pt-0">
-                                                            <div class="avatar mr-50 align-top">
-                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-12.jpg"
-                                                                    alt="avtar image" width="32" height="32">
-                                                                <span class="avatar-status-away"></span>
-                                                            </div>
-                                                            <div class="d-inline-block mt-25">
-                                                                <h6 class="mb-0 text-bold-500 font-small-3">Ananbella
-                                                                    Queen</h6>
-                                                                <p class="text-muted"><small>24 mins ago</small></p>
-                                                            </div>
-                                                            <i
-                                                                class='cursor-pointer bx bx-dots-vertical-rounded float-right'></i>
-                                                        </div>
-                                                        <div class="card-body py-0">
-                                                            <p>Easy & smart fuzzy search🕵🏻 functionality which enables
-                                                                users to search quickly.</p>
-                                                        </div>
-                                                        <div class="card-footer user-comment-footer pb-0">
-                                                            <i
-                                                                class="cursor-pointer bx bx-heart user-profile-like font-medium-4 align-middle"></i>
-                                                            <span class="ml-25">30</span>
-                                                            <span class="ml-1">reply</span>
-                                                        </div>
-                                                        <hr>
-                                                        <div class="card-header user-profile-header pt-0">
-                                                            <div class="avatar mr-50 align-top">
-                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-13.jpg"
-                                                                    alt="avtar images" width="32" height="32">
-                                                                <span class="avatar-status-busy"></span>
-                                                            </div>
-                                                            <div class="d-inline-block mt-25">
-                                                                <h6 class="mb-0 text-bold-500 font-small-3">Jackey
-                                                                    Potter</h6>
-                                                                <p class="text-muted"><small>1 hours ago</small></p>
-                                                            </div>
-                                                            <i
-                                                                class='cursor-pointer bx bx-dots-vertical-rounded float-right'></i>
-                                                        </div>
-                                                        <div class="card-body py-0">
-                                                            <p>Unlimited color🖌 options allows you to set your
-                                                                application color as per your branding 🤪.</p>
-                                                        </div>
-                                                        <div class="card-footer user-comment-footer pb-0">
-                                                            <i
-                                                                class="cursor-pointer bx bx-heart user-profile-like font-medium-4 align-middle"></i>
-                                                            <span class="ml-25">80</span>
-                                                            <span class="ml-1">reply</span>
-                                                        </div>
-                                                        <hr>
-                                                        <div class="form-group row align-items-center px-1">
-                                                            <div class="col-2 col-sm-1">
-                                                                <div class="avatar">
-                                                                    <img src="../../static/app-assets/images/portrait/small/avatar-s-2.jpg"
-                                                                        alt="avtar images" width="32" height="32">
-                                                                    <span class="avatar-status-online"></span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-11 col-10">
-                                                                <textarea class="form-control"
-                                                                    id="user-comment-textarea" rows="1"
-                                                                    placeholder="comment.."></textarea>
-                                                            </div>
-                                                        </div>
-                                                        <!-- user profile comments ends -->
-                                                    </div>
-                                                    <!-- user profile nav tabs feed middle section user-2 card ends -->
-                                                    <!-- user profile nav tabs feed middle section user-3 card starts -->
-                                                    <div class="card">
-                                                        <div class="card-content">
-                                                            <div class="card-header user-profile-header">
-                                                                <div class="avatar mr-50 align-top">
-                                                                    <img src="../../static/app-assets/images/portrait/small/avatar-s-14.jpg"
-                                                                        alt="avtar images" width="32" height="32">
-                                                                    <span class="avatar-status-online"></span>
-                                                                </div>
-                                                                <div class="d-inline-block mt-25">
-                                                                    <h6 class="mb-0 text-bold-500">Anna Mull</h6>
-                                                                    <p class="text-muted"><small>7 hours ago</small></p>
-                                                                </div>
-                                                                <i
-                                                                    class='cursor-pointer bx bx-dots-vertical-rounded float-right'></i>
-                                                            </div>
-                                                            <div class="card-body py-0">
-                                                                <p>To avoid winding up with a large bundle, it’s good to
-                                                                    get ahead of the problem and use "Code
-                                                                    Splitting 🕹".</p>
-                                                                <img src="../../static/app-assets/images/profile/post-media/2.jpg"
-                                                                    alt="user image" class="img-fluid">
-                                                            </div>
-                                                            <div
-                                                                class="card-footer d-flex justify-content-between pt-1">
-                                                                <div class="d-flex align-items-center">
-                                                                    <i
-                                                                        class="cursor-pointer bx bx-heart user-profile-like font-medium-4"></i>
-                                                                    <p class="mb-0 ml-25">77</p>
-                                                                    <!-- user profile likes avatar start -->
-                                                                    <div class="d-none d-sm-block">
-                                                                        <ul
-                                                                            class="list-unstyled users-list m-0 d-flex align-items-center ml-1">
-                                                                            <li data-toggle="tooltip"
-                                                                                data-popup="tooltip-custom"
-                                                                                data-placement="bottom"
-                                                                                title="Lilian Nenez"
-                                                                                class="avatar pull-up">
-                                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-11.jpg"
-                                                                                    alt="Avatar" height="30" width="30">
-                                                                            </li>
-                                                                            <li data-toggle="tooltip"
-                                                                                data-popup="tooltip-custom"
-                                                                                data-placement="bottom"
-                                                                                title="Alberto Glotzbach"
-                                                                                class="avatar pull-up">
-                                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-12.jpg"
-                                                                                    alt="Avatar" height="30" width="30">
-                                                                            </li>
-                                                                            <li data-toggle="tooltip"
-                                                                                data-popup="tooltip-custom"
-                                                                                data-placement="bottom"
-                                                                                title="Alberto Glotzbach"
-                                                                                class="avatar pull-up">
-                                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-13.jpg"
-                                                                                    alt="Avatar" height="30" width="30">
-                                                                            </li>
-                                                                            <li class="d-inline-block pl-50">
-                                                                                <p class="text-muted mb-0 font-small-3">
-                                                                                    +10 more</p>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                    <!-- user profile likes avatar ends -->
-                                                                </div>
-                                                                <div class="d-flex align-items-center">
-                                                                    <i
-                                                                        class="cursor-pointer bx bx-comment-dots font-medium-4"></i>
-                                                                    <span class="ml-25">12</span>
-                                                                    <i
-                                                                        class="cursor-pointer bx bx-share-alt font-medium-4 ml-1"></i>
-                                                                    <span class="ml-25">12</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- user profile nav tabs feed middle section user-3 card ends -->
-                                                    <!-- user profile nav tabs feed middle section user-4 card starts -->
-                                                    <div class="card">
-                                                        <div class="card-content">
-                                                            <div class="card-header user-profile-header">
-                                                                <div class="avatar mr-50 align-top">
-                                                                    <img src="../../static/app-assets/images/portrait/small/avatar-s-18.jpg"
-                                                                        alt="avtar images" width="32" height="32">
-                                                                    <span class="avatar-status-online"></span>
-                                                                </div>
-                                                                <div class="d-inline-block mt-25">
-                                                                    <h6 class="mb-0 text-bold-500">Petey Cruiser</h6>
-                                                                    <p class="text-muted"><small>21 hours ago</small>
-                                                                    </p>
-                                                                </div>
-                                                                <i
-                                                                    class='cursor-pointer bx bx-dots-vertical-rounded float-right'></i>
-                                                            </div>
-                                                            <div class="card-body py-0">
-                                                                <p>It's more efficient 🙌 to split each route's
-                                                                    components into a separate chunk, and only load them
-                                                                    when the route is visited. Hikanotes comes with
-                                                                    built-in
-                                                                    light and dark layouts, select as per your
-                                                                    preference.</p>
-                                                            </div>
-                                                            <div
-                                                                class="card-footer d-flex justify-content-between pt-1">
-                                                                <div class="d-flex align-items-center">
-                                                                    <i
-                                                                        class="cursor-pointer bx bx-heart user-profile-like font-medium-4"></i>
-                                                                    <p class="mb-0 ml-25">0</p>
-                                                                </div>
-                                                                <div class="d-flex align-items-center">
-                                                                    <i
-                                                                        class="cursor-pointer bx bx-comment-dots font-medium-4"></i>
-                                                                    <span class="ml-25">0</span>
-                                                                    <i
-                                                                        class="cursor-pointer bx bx-share-alt font-medium-4 ml-1"></i>
-                                                                    <span class="ml-25">2</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- user profile nav tabs feed middle section user-4 card ends -->
+                                                    <!-- post card starts -->
+                                                    {% for post in posts %}
+                                                    {% include "_post.html" %}
+                                                    {% endfor %}
+                                                    <!-- post card ends -->
+
                                                 </div>
                                                 <!-- user profile nav tabs feed middle section ends -->
                                             </div>
@@ -1228,7 +674,7 @@
                                                                 <p class="timeline-text">on <a
                                                                         href="JavaScript:void(0);">Project name</a></p>
                                                                 <div class="timeline-content">
-                                                                    <img src="../../static/app-assets/images/icon/sketch.png"
+                                                                    <img src="../static/app-assets/images/icon/sketch.png"
                                                                         alt="document" height="36" width="27"
                                                                         class="mr-50">Data Folder
                                                                 </div>
@@ -1239,7 +685,7 @@
                                                                 <p class="timeline-text">on <a
                                                                         href="JavaScript:void(0);">Project name</a></p>
                                                                 <div class="timeline-content">
-                                                                    <img src="../../static/app-assets/images/icon/pdf.png"
+                                                                    <img src="../static/app-assets/images/icon/pdf.png"
                                                                         alt="document" height="36" width="27"
                                                                         class="mr-50">Received Pdf
                                                                 </div>
@@ -1290,7 +736,7 @@
                                                                     <li class="media my-50">
                                                                         <a href="JavaScript:void(0);">
                                                                             <div class="avatar mr-1">
-                                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-2.jpg"
+                                                                                <img src="../static/app-assets/images/portrait/small/avatar-s-2.jpg"
                                                                                     alt="avtar images" width="32"
                                                                                     height="32">
                                                                                 <span
@@ -1307,7 +753,7 @@
                                                                     <li class="media my-50">
                                                                         <a href="JavaScript:void(0);">
                                                                             <div class="avatar mr-1">
-                                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-3.jpg"
+                                                                                <img src="../static/app-assets/images/portrait/small/avatar-s-3.jpg"
                                                                                     alt="avtar images" width="32"
                                                                                     height="32">
                                                                                 <span
@@ -1324,7 +770,7 @@
                                                                     <li class="media my-50">
                                                                         <a href="JavaScript:void(0);">
                                                                             <div class="avatar mr-1">
-                                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-4.jpg"
+                                                                                <img src="../static/app-assets/images/portrait/small/avatar-s-4.jpg"
                                                                                     alt="avtar images" width="32"
                                                                                     height="32">
                                                                                 <span class="avatar-status-busy"></span>
@@ -1340,7 +786,7 @@
                                                                     <li class="media my-50">
                                                                         <a href="JavaScript:void(0);">
                                                                             <div class="avatar mr-1">
-                                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-5.jpg"
+                                                                                <img src="../static/app-assets/images/portrait/small/avatar-s-5.jpg"
                                                                                     alt="avtar images" width="32"
                                                                                     height="32">
                                                                                 <span class="avatar-status-busy"></span>
@@ -1356,7 +802,7 @@
                                                                     <li class="media my-50">
                                                                         <a href="JavaScript:void(0);">
                                                                             <div class="avatar mr-1">
-                                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-5.jpg"
+                                                                                <img src="../static/app-assets/images/portrait/small/avatar-s-5.jpg"
                                                                                     alt="avtar images" width="32"
                                                                                     height="32">
                                                                                 <span class="avatar-status-away"></span>
@@ -1376,7 +822,7 @@
                                                                     <li class="media my-50">
                                                                         <a href="JavaScript:void(0);">
                                                                             <div class="avatar mr-1">
-                                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-16.jpg"
+                                                                                <img src="../static/app-assets/images/portrait/small/avatar-s-16.jpg"
                                                                                     alt="avtar images" width="32"
                                                                                     height="32">
                                                                                 <span
@@ -1393,7 +839,7 @@
                                                                     <li class="media my-50">
                                                                         <a href="JavaScript:void(0);">
                                                                             <div class="avatar mr-1">
-                                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-7.jpg"
+                                                                                <img src="../static/app-assets/images/portrait/small/avatar-s-7.jpg"
                                                                                     alt="avtar images" width="32"
                                                                                     height="32">
                                                                                 <span class="avatar-status-busy"></span>
@@ -1409,7 +855,7 @@
                                                                     <li class="media my-50">
                                                                         <a href="JavaScript:void(0);">
                                                                             <div class="avatar mr-1">
-                                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-8.jpg"
+                                                                                <img src="../static/app-assets/images/portrait/small/avatar-s-8.jpg"
                                                                                     alt="avtar images" width="32"
                                                                                     height="32">
                                                                                 <span
@@ -1426,7 +872,7 @@
                                                                     <li class="media my-50">
                                                                         <a href="JavaScript:void(0);">
                                                                             <div class="avatar mr-1">
-                                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-2.jpg"
+                                                                                <img src="../static/app-assets/images/portrait/small/avatar-s-2.jpg"
                                                                                     alt="avtar images" width="32"
                                                                                     height="32">
                                                                                 <span
@@ -1443,7 +889,7 @@
                                                                     <li class="media my-50">
                                                                         <a href="JavaScript:void(0);">
                                                                             <div class="avatar mr-1">
-                                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-3.jpg"
+                                                                                <img src="../static/app-assets/images/portrait/small/avatar-s-3.jpg"
                                                                                     alt="avtar images" width="32"
                                                                                     height="32">
                                                                                 <span
@@ -1467,7 +913,7 @@
                                                                     <li class="media my-50">
                                                                         <a href="JavaScript:void(0);">
                                                                             <div class="avatar mr-1">
-                                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-26.jpg"
+                                                                                <img src="../static/app-assets/images/portrait/small/avatar-s-26.jpg"
                                                                                     alt="avtar images" width="32"
                                                                                     height="32">
                                                                                 <span
@@ -1484,7 +930,7 @@
                                                                     <li class="media my-50">
                                                                         <a href="JavaScript:void(0);">
                                                                             <div class="avatar mr-1">
-                                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-25.jpg"
+                                                                                <img src="../static/app-assets/images/portrait/small/avatar-s-25.jpg"
                                                                                     alt="avtar images" width="32"
                                                                                     height="32">
                                                                                 <span
@@ -1501,7 +947,7 @@
                                                                     <li class="media my-50">
                                                                         <a href="JavaScript:void(0);">
                                                                             <div class="avatar mr-1">
-                                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-24.jpg"
+                                                                                <img src="../static/app-assets/images/portrait/small/avatar-s-24.jpg"
                                                                                     alt="avtar images" width="32"
                                                                                     height="32">
                                                                                 <span class="avatar-status-busy"></span>
@@ -1521,7 +967,7 @@
                                                                     <li class="media my-50">
                                                                         <a href="JavaScript:void(0);">
                                                                             <div class="avatar mr-1">
-                                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-23.jpg"
+                                                                                <img src="../static/app-assets/images/portrait/small/avatar-s-23.jpg"
                                                                                     alt="avtar images" width="32"
                                                                                     height="32">
                                                                                 <span class="avatar-status-busy"></span>
@@ -1537,7 +983,7 @@
                                                                     <li class="media my-50">
                                                                         <a href="JavaScript:void(0);">
                                                                             <div class="avatar mr-1">
-                                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-22.jpg"
+                                                                                <img src="../static/app-assets/images/portrait/small/avatar-s-22.jpg"
                                                                                     alt="avtar images" width="32"
                                                                                     height="32">
                                                                                 <span class="avatar-status-away"></span>
@@ -1553,7 +999,7 @@
                                                                     <li class="media my-50">
                                                                         <a href="JavaScript:void(0);">
                                                                             <div class="avatar mr-1">
-                                                                                <img src="../../static/app-assets/images/portrait/small/avatar-s-21.jpg"
+                                                                                <img src="../static/app-assets/images/portrait/small/avatar-s-21.jpg"
                                                                                     alt="avtar images" width="32"
                                                                                     height="32">
                                                                                 <span
@@ -1586,7 +1032,7 @@
                                                                 <div class="row">
                                                                     <div
                                                                         class="col-12 col-sm-3 text-center mb-1 mb-sm-0">
-                                                                        <img src="../../static/app-assets/images/portrait/small/avatar-s-16.jpg"
+                                                                        <img src="../static/app-assets/images/portrait/small/avatar-s-16.jpg"
                                                                             class="rounded" alt="group image"
                                                                             height="120" width="120" />
                                                                     </div>
@@ -1727,7 +1173,7 @@
                                             <div class="card-body">
                                                 <div class="d-inline-flex">
                                                     <div class="avatar mr-50">
-                                                        <img src="../../static/app-assets/images/portrait/small/avatar-s-20.jpg"
+                                                        <img src="../static/app-assets/images/portrait/small/avatar-s-20.jpg"
                                                             alt="avtar images" height="32" width="32">
                                                     </div>
                                                     <h6 class="mb-0 d-flex align-items-center"> Nile's Birthday!</h6>
@@ -1735,7 +1181,7 @@
                                                 <i class="cursor-pointer bx bx-dots-vertical-rounded float-right"></i>
                                                 <div class="user-profile-birthday-image text-center p-2">
                                                     <img class="img-fluid"
-                                                        src="../../static/app-assets/images/profile/pages/birthday.png"
+                                                        src="../static/app-assets/images/profile/pages/birthday.png"
                                                         alt="image">
                                                 </div>
                                                 <div class="user-profile-birthday-footer text-center text-lg-left">
@@ -1749,7 +1195,7 @@
                                     </div>
                                     <!-- user profile right side content birthday card ends -->
                                     <!-- user profile right side content related groups start -->
-                                    <div class="card">
+                                    <div class="card" style="display: none;">
                                         <div class="card-content">
                                             <div class="card-body">
                                                 <h5 class="card-title mb-1">Related Groups
@@ -1758,7 +1204,7 @@
                                                 </h5>
                                                 <div class="media d-flex align-items-center mb-1">
                                                     <a href="JavaScript:void(0);">
-                                                        <img src="../../static/app-assets/images/banner/banner-30.jpg"
+                                                        <img src="../static/app-assets/images/banner/banner-30.jpg"
                                                             class="rounded" alt="group image" height="64" width="64" />
                                                     </a>
                                                     <div class="media-body ml-1">
@@ -1771,7 +1217,7 @@
                                                 </div>
                                                 <div class="media d-flex align-items-center mb-1">
                                                     <a href="JavaScript:void(0);">
-                                                        <img src="../../static/app-assets/images/banner/banner-31.jpg"
+                                                        <img src="../static/app-assets/images/banner/banner-31.jpg"
                                                             class="rounded" alt="group image" height="64" width="64" />
                                                     </a>
                                                     <div class="media-body ml-1">
@@ -1784,7 +1230,7 @@
                                                 </div>
                                                 <div class="media d-flex align-items-center">
                                                     <a href="JavaScript:void(0);">
-                                                        <img src="../../static/app-assets/images/banner/banner-32.jpg"
+                                                        <img src="../static/app-assets/images/banner/banner-32.jpg"
                                                             class="rounded" alt="group image" height="64" width="64" />
                                                     </a>
                                                     <div class="media-body ml-1">
@@ -1809,39 +1255,39 @@
                                                 </h5>
                                                 <div class="row">
                                                     <div class="col-md-4 col-6 pl-25 pr-0 pb-25">
-                                                        <img src="../../static/app-assets/images/profile/user-uploads/user-10.jpg"
+                                                        <img src="../static/app-assets/images/profile/user-uploads/user-10.jpg"
                                                             class="img-fluid" alt="gallery avtar img">
                                                     </div>
                                                     <div class="col-md-4 col-6 pl-25 pr-0 pb-25">
-                                                        <img src="../../static/app-assets/images/profile/user-uploads/user-11.jpg"
+                                                        <img src="../static/app-assets/images/profile/user-uploads/user-11.jpg"
                                                             class="img-fluid" alt="gallery avtar img">
                                                     </div>
                                                     <div class="col-md-4 col-6 pl-25 pr-0 pb-25">
-                                                        <img src="../../static/app-assets/images/profile/user-uploads/user-12.jpg"
+                                                        <img src="../static/app-assets/images/profile/user-uploads/user-12.jpg"
                                                             class="img-fluid" alt="gallery avtar img">
                                                     </div>
                                                     <div class="col-md-4 col-6 pl-25 pr-0 pb-25">
-                                                        <img src="../../static/app-assets/images/profile/user-uploads/user-13.jpg"
+                                                        <img src="../static/app-assets/images/profile/user-uploads/user-13.jpg"
                                                             class="img-fluid" alt="gallery avtar img">
                                                     </div>
                                                     <div class="col-md-4 col-6 pl-25 pr-0 pb-25">
-                                                        <img src="../../static/app-assets/images/profile/user-uploads/user-05.jpg"
+                                                        <img src="../static/app-assets/images/profile/user-uploads/user-05.jpg"
                                                             class="img-fluid" alt="gallery avtar img">
                                                     </div>
                                                     <div class="col-md-4 col-6 pl-25 pr-0 pb-25">
-                                                        <img src="../../static/app-assets/images/profile/user-uploads/user-06.jpg"
+                                                        <img src="../static/app-assets/images/profile/user-uploads/user-06.jpg"
                                                             class="img-fluid" alt="gallery avtar img">
                                                     </div>
                                                     <div class="col-md-4 col-6 pl-25 pr-0 pb-25">
-                                                        <img src="../../static/app-assets/images/profile/user-uploads/user-07.jpg"
+                                                        <img src="../static/app-assets/images/profile/user-uploads/user-07.jpg"
                                                             class="img-fluid" alt="gallery avtar img">
                                                     </div>
                                                     <div class="col-md-4 col-6 pl-25 pr-0 pb-25">
-                                                        <img src="../../static/app-assets/images/profile/user-uploads/user-08.jpg"
+                                                        <img src="../static/app-assets/images/profile/user-uploads/user-08.jpg"
                                                             class="img-fluid" alt="gallery avtar img">
                                                     </div>
                                                     <div class="col-md-4 col-6 pl-25 pr-0 pb-25">
-                                                        <img src="../../static/app-assets/images/profile/user-uploads/user-09.jpg"
+                                                        <img src="../static/app-assets/images/profile/user-uploads/user-09.jpg"
                                                             class="img-fluid" alt="gallery avtar img">
                                                     </div>
                                                 </div>
@@ -1876,8 +1322,8 @@
                     <div class="media m-75">
                         <a href="JavaScript:void(0);">
                             <div class="avatar mr-75">
-                                <img src="../../static/app-assets/images/portrait/small/avatar-s-2.jpg"
-                                    alt="avtar images" width="32" height="32">
+                                <img src="../static/app-assets/images/portrait/small/avatar-s-2.jpg" alt="avtar images"
+                                    width="32" height="32">
                                 <span class="avatar-status-online"></span>
                             </div>
                         </a>
@@ -1947,27 +1393,32 @@
 
 
     <!-- BEGIN: Vendor JS-->
-    <script src="../../static/app-assets/vendors/js/vendors.min.js"></script>
-    <script src="../../static/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.min.js"></script>
-    <script src="../../static/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.min.js"></script>
-    <script src="../../static/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js"></script>
+    <script src="../static/app-assets/vendors/js/vendors.min.js"></script>
+    <script src="../static/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.min.js"></script>
+    <script src="../static/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.min.js"></script>
+    <script src="../static/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js"></script>
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Page Vendor JS-->
-    <script src="../../static/app-assets/vendors/js/extensions/swiper.min.js"></script>
+    <script src="../static/app-assets/vendors/js/extensions/swiper.min.js"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
-    <script src="../../static/app-assets/js/scripts/configs/vertical-menu-light.min.js"></script>
-    <script src="../../static/app-assets/js/core/app-menu.min.js"></script>
-    <script src="../../static/app-assets/js/core/app.min.js"></script>
-    <script src="../../static/app-assets/js/scripts/components.min.js"></script>
-    <script src="../../static/app-assets/js/scripts/footer.min.js"></script>
-    <script src="../../static/app-assets/js/scripts/customizer.min.js"></script>
+    <script src="../static/app-assets/js/scripts/configs/vertical-menu-light.min.js"></script>
+    <script src="../static/app-assets/js/core/app-menu.min.js"></script>
+    <script src="../static/app-assets/js/core/app.min.js"></script>
+    <script src="../static/app-assets/js/scripts/components.min.js"></script>
+    <script src="../static/app-assets/js/scripts/footer.min.js"></script>
+    <script src="../static/app-assets/js/scripts/customizer.min.js"></script>
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
-    <script src="../../static/app-assets/js/scripts/pages/page-user-profile.min.js"></script>
+    <script src="../static/app-assets/js/scripts/pages/page-user-profile.min.js"></script>
+    <script src="../static/app-assets/js/custom.js"></script>
+    <scripts>
+        {{ moment.include_moment() }}
+        {{ moment.lang(g.locale) }}
+    </scripts>
     <!-- END: Page JS-->
 
 </body>
