@@ -67,7 +67,7 @@ msgid "Please use a different username."
 msgstr "Por favor use un nombre de usuario diferente."
 
 #: app/auth/forms.py:33
-msgid "Please use a different email address."
+msgid "This email is in use. Please use a different one."
 msgstr "Por favor use una dirección de email diferente."
 
 #: app/auth/forms.py:38 app/auth/forms.py:46

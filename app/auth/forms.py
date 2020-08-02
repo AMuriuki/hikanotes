@@ -32,7 +32,7 @@ class RegistrationForm(FlaskForm):
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
-            raise ValidationError(_('Please use a different email address.'))
+            raise ValidationError(_('This email is in use. Please use a different one.'))
 
 
 class ResetPasswordRequestForm(FlaskForm):

@@ -5,25 +5,25 @@
 </style>
 <div class="card">
     <div class="card-content">
-        <div class="card-header user-profile-header">
+        <div class="card-header user-profile-header" style="padding-bottom: 0rem !important;">
             <div class="avatar mr-50 align-top">
                 <img src="{{ post.author.avatar(32) }}" alt="avtar image">
             </div>
             <div class="d-inline-block mt-25">
-                <h6 class="mb-0 text-bold-500">{{post.author.fname}} {{post.author.lname}}</h6>
+                <h6 class="mb-0 text-bold-500"><a href="{{ url_for('main.user', username=post.author.username) }}">{{post.author.fname}} {{post.author.lname}}</a></h6>
                 <p class="text-muted"><small>{{ moment(post.timestamp).fromNow() }}</small></p>
             </div>
         </div>
         <div class="card-body py-0">
             <p>{{post.body}}</p>
         </div>
-        <div class="card-footer d-flex justify-content-between pb-0">
+        <div class="card-footer d-flex justify-content-between pb-0" style="padding-top: 0rem !important;">
             <div class="d-flex align-items-center">
-                <a onclick="like('{{post.id}}')" class="cursor-pointer bx bx-like user-profile-like font-medium-4"></a>
-                <p id="p_likes" class="mb-0 ml-25">{{ post.likes.count() }}</p>
-                <a onclick="unlike('{{post.id}}')" style="margin-left: 5%;"
+                <a onclick="like('{{post.id}}', 'p_likes_{{post.id}}', 'p_unlikes_{{post.id}}')" class="cursor-pointer bx bx-like user-profile-like font-medium-4"></a>
+                <p id="p_likes_{{post.id}}" class="mb-0 ml-25">{{ post.likes.count() }}</p>
+                <a onclick="unlike('{{post.id}}', 'p_likes_{{post.id}}', 'p_unlikes_{{post.id}}')" style="margin-left: 5%;"
                     class="cursor-pointer bx bx-dislike user-profile-like font-medium-4"></a>
-                <p id="p_unlikes" class="mb-0 ml-25">{{ post.unlikes.count() }}</p>
+                <p id="p_unlikes_{{post.id}}" class="mb-0 ml-25">{{ post.unlikes.count() }}</p>
             </div>
             <div class="d-flex align-items-center">
                 <a onclick="focus_text_area()" class="cursor-pointer bx bx-comment-dots font-medium-4"></a>
@@ -31,14 +31,14 @@
                 <!-- user profile likes avatar start -->
                 <div class="d-none d-sm-block">
                     <ul class="list-unstyled users-list m-0 d-flex align-items-center ml-1">
-                        {% for comment in post.comments[0:2] %}
+                        {% for comment in post.comments[0:3] %}
                         <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom"
                             title="{{comment.author.fname}} {{comment.author.lname}}" class="avatar pull-up">
                             <img src="{{ comment.author.avatar(30) }}" alt="Avatar">
                         </li>
                         {% endfor %}
                         <li class="d-inline-block pl-50">
-                            <p class="text-muted mb-0 font-small-3">+10 more</p>
+                            <p class="text-muted mb-0 font-small-3">{{post.comments.count()}}</p>
                         </li>
                     </ul>
                 </div>
@@ -49,7 +49,7 @@
     <hr>
     <!-- user profile comments start -->
     {% for comment in post.comments %}
-    <div class="card-header user-profile-header pt-0">
+    <div class="card-header user-profile-header pt-0" style="padding-bottom: 0rem !important;">
         <div class="avatar mr-50 align-top">
             <img src="{{ comment.author.avatar(32) }}" alt="avtar image">
         </div>
@@ -61,6 +61,16 @@
     <div class="card-body py-0">
         <p>{{comment.text}}</p>
     </div>
+    <div class="card-footer user-comment-footer pb-0" style="padding-top: 0rem !important;">
+        <!-- <i class="cursor-pointer bx user-profile-like font-medium-4 align-middle bxs-heart text-danger"></i> -->
+        <a onclick="like_comment('{{comment.id}}')" style="float: left;" class="cursor-pointer bx bx-like user-profile-like font-medium-4"></a>
+                <p id="c_likes" class="mb-0 ml-25" style="float: left;">1</p>
+                <a onclick="unlike_comment('{{comment.id}}')" style="margin-left: 1%; float: left;"
+                    class="cursor-pointer bx bx-dislike user-profile-like font-medium-4" style="float: left;"></a>
+                <p id="c_unlikes" class="mb-0 ml-25">0</p>
+        <!-- <span class="ml-25">80</span>
+        <span class="ml-1">reply</span> -->
+    </div>
     <hr>
     {% endfor %}
     <div id="dv_name_timestamp" style="display: none;" class="card-header user-profile-header pt-0">
@@ -69,17 +79,19 @@
         </div>
         <div class="d-inline-block mt-25">
             <h6 class="mb-0 text-bold-500 font-small-3">{{current_user.fname}} {{current_user.lname}}</h6>
-            <p class="text-muted"><small>{{ moment(now()).fromNow() }}</small></p>
+            
         </div>
     </div>
+    {% if comment %}
     <div id="dv_comment_body" style="display: none;" class="card-body py-0">
         <p>{{comment.text}}</p>
     </div>
+    {% endif %}
     <hr id="hr_" style="display: none;">
     <div class="d-flex align-items-center" style="padding-left: 10px; padding-right: 10px; padding-bottom: 15px;">
         <input id="user-comment-textarea" type="text" class="form-control chat-message-send mx-1"
             placeholder="Type your comment here...">
-        <button type="button" onclick="Comment('{{post.id}}')" class="btn btn-primary glow send d-lg-flex"><i
+        <button id="btn_post_comment" type="button" onclick="Comment('{{post.id}}')" class="btn btn-primary glow send d-lg-flex"><i
                 class="bx bx-paper-plane"></i>
             <span class="d-none d-lg-block ml-1">Send</span></button>
     </div>
