@@ -31,11 +31,13 @@
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="../static/app-assets/css/core/menu/menu-types/vertical-menu.min.css">
     <link rel="stylesheet" type="text/css" href="../static/app-assets/css/pages/authentication.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/pages/app-chat.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/pages/app-chat.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/pages/page-user-profile.min.css">
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="../static/assets/css/style.css">
-    <link rel="stylesheet" type="text/css" href="../static/app-assets/css/pages/page-user-profile.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/assets/css/style.css">    
     <!-- END: Custom CSS-->
 
     <style>
@@ -58,14 +60,28 @@
                 display: block;
             }
         }
+
+        @media screen and (max-width: 1199px) {
+            #img_logo {
+                display: none;
+            }
+
+            #dv_quick_links{
+                display: none;
+            }
+        }
     </style>
 </head>
 <!-- END: Head-->
 
 <!-- BEGIN: Body-->
-
+{% if title == 'Chats - Hikanotes' %}
+<body class="vertical-layout vertical-menu-modern content-left-sidebar chat-application navbar-sticky footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="content-left-sidebar">
+{% else %}
 <body class="vertical-layout vertical-menu-modern 2-columns  navbar-sticky footer-static menu-collapsed "
     data-open="click" data-menu="vertical-menu-modern" data-col="2-columns" onload="setup()">
+{% endif %}
+
     <!-- BEGIN: Header-->
     <div class="header-navbar-shadow"></div>
     <nav class="header-navbar main-header-navbar navbar-expand-lg navbar navbar-with-menu fixed-top ">
@@ -79,8 +95,9 @@
                                         class="ficon bx bx-menu"></i></a></li>
                         </ul>
                         <ul class="nav navbar-nav bookmark-icons">
-                            <img id="img_logo" style="max-width: 25%;"
+                            <a href="{{url_for('main.index')}}"><img id="img_logo" style="max-width: 25%;"
                                 src="../static/app-assets/images/logo/hikanotes.png">
+                            </a>
                         </ul>
                         <ul class="nav navbar-nav" style="display: none;">
                             <li class="nav-item d-none d-lg-block"><a class="nav-link bookmark-star"><i
@@ -281,13 +298,23 @@
                                 </div><span><img class="round" src="{{current_user.avatar(40)}}" alt="avatar"
                                         height="40" width="40"></span>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right pb-0"><a class="dropdown-item"
+                            <div class="dropdown-menu dropdown-menu-right pb-0">
+                                {% if title == 'User Profile - Hikanotes' %}
+                                <a class="dropdown-item"
+                                    href="{{ url_for('main.index') }}"><i
+                                        class="bx bx-home mr-50"></i> Home</a>
+                                {% else %}
+                                <a class="dropdown-item"
                                     href="{{ url_for('main.user', username=current_user.username) }}"><i
-                                        class="bx bx-user mr-50"></i> My Profile</a><a class="dropdown-item"
+                                        class="bx bx-user mr-50"></i> My Profile</a>
+                                {% endif %}
+                                <!-- <a class="dropdown-item"
                                     href="app-email.html"><i class="bx bx-envelope mr-50"></i> My
-                                    Inbox</a><a class="dropdown-item" href="app-todo.html"><i
-                                        class="bx bx-check-square mr-50"></i> Task</a><a class="dropdown-item"
-                                    href="app-chat.html"><i class="bx bx-message mr-50"></i> Chats</a>
+                                    Inbox</a> -->
+                                <!-- <a class="dropdown-item" href="app-todo.html"><i
+                                        class="bx bx-check-square mr-50"></i> Task</a> -->
+                                <a class="dropdown-item"
+                                    href="{{url_for('main.chats')}}"><i class="bx bx-chat mr-50"></i> Chats</a>
                                 <div class="dropdown-divider mb-0"></div><a class="dropdown-item"
                                     href="{{url_for('auth.logout')}}"><i class="bx bx-power-off mr-50"></i> Logout</a>
                             </div>
@@ -358,24 +385,19 @@
     <script src="../static/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.min.js"></script>
     <script src="../static/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.min.js"></script>
     <script src="../static/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js"></script>
-    <!-- BEGIN Vendor JS-->
-
-    <!-- BEGIN: Page Vendor JS-->
+    
     <script src="../static/app-assets/vendors/js/extensions/swiper.min.js"></script>
-    <!-- END: Page Vendor JS-->
-
-    <!-- BEGIN: Theme JS-->
+    
     <script src="../static/app-assets/js/scripts/configs/vertical-menu-light.min.js"></script>
     <script src="../static/app-assets/js/core/app-menu.min.js"></script>
     <script src="../static/app-assets/js/core/app.min.js"></script>
     <script src="../static/app-assets/js/scripts/components.min.js"></script>
     <script src="../static/app-assets/js/scripts/footer.min.js"></script>
     <script src="../static/app-assets/js/scripts/customizer.min.js"></script>
-    <!-- END: Theme JS-->
-
-    <!-- BEGIN: Page JS-->
     <script src="../static/app-assets/js/scripts/pages/page-user-profile.min.js"></script>
     <script src="../static/app-assets/js/custom.js"></script>
+    <script src="../static/app-assets/js/scripts/pages/app-chat.min.js"></script>
+    <script src="../static/app-assets/js/scripts/pages/app-chat.min.js"></script>
     <scripts>
         {{ moment.include_moment() }}
         {{ moment.lang(g.locale) }}

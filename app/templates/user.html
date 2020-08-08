@@ -35,13 +35,18 @@
                                             <a class=" nav-link d-flex px-1 active" id="feed-tab" data-toggle="tab"
                                                 href="#feed" aria-controls="feed" role="tab" aria-selected="true"><i
                                                     class="bx bx-home"></i><span
-                                                    class="d-none d-md-block">Feed</span></a>
+                                                    class="d-none d-md-block">Feed</span></a>                                            
                                         </li>
                                         <li class="nav-item pb-0">
-                                            <a class="nav-link d-flex px-1" id="activity-tab" data-toggle="tab"
+                                            <!-- <a class="nav-link d-flex px-1" id="activity-tab" data-toggle="tab"
                                                 href="#activity" aria-controls="activity" role="tab"
                                                 aria-selected="false"><i class="bx bx-user"></i><span
-                                                    class="d-none d-md-block">Activity</span></a>
+                                                    class="d-none d-md-block">Activity</span></a> -->
+                                            {% if not current_user.is_following(user) %}
+                                            <a class="nav-link d-flex px-1" id="follow-btn" onclick="follow('{{user.username}}')" style="cursor: pointer;"><i class="bx bx-user-plus"></i><span class="d-none d-md-block">Follow</span></a>
+                                            {% else %}
+                                            <a class=" nav-link d-flex px-1" id="follow-btn" onclick="unfollow('{{user.username}}')" style="cursor: pointer;"><i class="bx bx-user-minus"></i><span class="d-none d-md-block">UnFollow</span></a>
+                                            {% endif %}
                                         </li>
                                         <li class="nav-item pb-0">
                                             <a class="nav-link d-flex px-1" id="friends-tab" data-toggle="tab"
@@ -126,8 +131,10 @@
                                                                             new Jersey</a></span>
                                                                 </li>
                                                                 <li class="d-flex align-items-center">
-                                                                    <i class="bx bx-cloud-download mr-50 cursor-pointer"></i>
-                                                                    <span><a href="{{ url_for('main.export_posts') }}">Download all your posts</a></span>
+                                                                    <i
+                                                                        class="bx bx-cloud-download mr-50 cursor-pointer"></i>
+                                                                    <span><a href="{{ url_for('main.export_posts') }}">Download
+                                                                            all your posts</a></span>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -306,42 +313,18 @@
                                             <!-- user profile nav tabs feed left section ends -->
                                             <!-- user profile nav tabs feed middle section start -->
                                             <div class="col-lg-8">
+                                                <div class="alert alert-primary" role="alert">
+                                                    You are now following....
+                                                    <button type="button" class="close" data-dismiss="alert"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
                                                 <!-- user profile nav tabs feed middle section post card start -->
                                                 <div class="card">
                                                     <div class="card-content">
                                                         <div class="card-body">
                                                             <!-- user profile middle section blogpost nav tabs card start -->
-                                                            <ul class="nav nav-tabs justify-content-center justify-content-sm-start border-bottom-0"
-                                                                role="tablist">
-                                                                <li class="nav-item">
-                                                                    <a class="nav-link active d-flex"
-                                                                        id="user-status-tab" data-toggle="tab"
-                                                                        href="#user-status" aria-controls="user-status"
-                                                                        role="tab" aria-selected="true"><i
-                                                                            class="bx bx-detail align-text-top"></i>
-                                                                        <span class="d-none d-md-block">Status</span>
-                                                                    </a>
-                                                                </li>
-                                                                <li class="nav-item">
-                                                                    <a class="nav-link d-flex" id="multimedia-tab"
-                                                                        data-toggle="tab" href="#user-multimedia"
-                                                                        aria-controls="user-multimedia" role="tab"
-                                                                        aria-selected="false"><i
-                                                                            class="bx bx-movie align-text-top"></i>
-                                                                        <span
-                                                                            class="d-none d-md-block">Multimedia</span>
-                                                                    </a>
-                                                                </li>
-                                                                <li class="nav-item mr-0">
-                                                                    <a class="nav-link d-flex" id="blog-tab"
-                                                                        data-toggle="tab" href="#user-blog"
-                                                                        aria-controls="user-blog" role="tab"
-                                                                        aria-selected="false"><i
-                                                                            class="bx bx-chat align-text-top"></i>
-                                                                        <span class="d-none d-md-block">Blog Post</span>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
                                                             <div class="tab-content pl-0">
                                                                 <div class="tab-pane active" id="user-status"
                                                                     aria-labelledby="user-status-tab" role="tabpanel">
@@ -350,7 +333,7 @@
                                                                             <div class="form-group row">
                                                                                 <div class="col-sm-1 col-2">
                                                                                     <div class="avatar">
-                                                                                        <img src="../static/app-assets/images/portrait/small/avatar-s-2.jpg"
+                                                                                        <img src="{{current_user.avatar(32)}}"
                                                                                             alt="user image" width="32"
                                                                                             height="32">
                                                                                         <span
@@ -361,106 +344,6 @@
                                                                                     <textarea
                                                                                         class="form-control border-0 shadow-none"
                                                                                         id="user-post-textarea" rows="3"
-                                                                                        placeholder="Share what you are thinking here..."></textarea>
-                                                                                </div>
-                                                                            </div>
-                                                                            <hr>
-                                                                            <div class="card-footer p-0">
-                                                                                <i class="cursor-pointer bx bx-camera font-medium-5 text-muted mr-1 pt-50"
-                                                                                    data-toggle="tooltip"
-                                                                                    data-popup="tooltip-custom"
-                                                                                    data-placement="top"
-                                                                                    title="Upload a picture"></i>
-                                                                                <i class="cursor-pointer bx bx-face font-medium-5 text-muted mr-1 pt-50"
-                                                                                    data-toggle="tooltip"
-                                                                                    data-popup="tooltip-custom"
-                                                                                    data-placement="top"
-                                                                                    title="Tag your friend"></i>
-                                                                                <i class="cursor-pointer bx bx-map font-medium-5 text-muted pt-50"
-                                                                                    data-toggle="tooltip"
-                                                                                    data-popup="tooltip-custom"
-                                                                                    data-placement="top"
-                                                                                    title="Share your location"></i>
-                                                                                <span
-                                                                                    class=" float-sm-right d-flex flex-sm-row flex-column justify-content-end">
-                                                                                    <button
-                                                                                        class="btn btn-light-primary mr-0 my-1 my-sm-0 mr-sm-1">Preview</button>
-                                                                                    <button class="btn btn-primary">Post
-                                                                                        Status</button>
-                                                                                </span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="tab-pane" id="user-multimedia"
-                                                                    aria-labelledby="multimedia-tab" role="tabpanel">
-                                                                    <div class="row">
-                                                                        <div class="col-12">
-                                                                            <div class="form-group row">
-                                                                                <div class="col-sm-1 col-2">
-                                                                                    <div class="avatar">
-                                                                                        <img src="../static/app-assets/images/portrait/small/avatar-s-2.jpg"
-                                                                                            alt="user image" width="32"
-                                                                                            height="32">
-                                                                                        <span
-                                                                                            class="avatar-status-online"></span>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-sm-11 col-10">
-                                                                                    <textarea
-                                                                                        class="form-control border-0 shadow-none"
-                                                                                        id="user-postmulti-textarea"
-                                                                                        rows="3"
-                                                                                        placeholder="Share what you are thinking here..."></textarea>
-                                                                                </div>
-                                                                            </div>
-                                                                            <hr>
-                                                                            <div class="card-footer p-0">
-                                                                                <i class="cursor-pointer bx bx-camera font-medium-5 text-muted mr-1 pt-50"
-                                                                                    data-toggle="tooltip"
-                                                                                    data-popup="tooltip-custom"
-                                                                                    data-placement="top"
-                                                                                    title="Upload a picture"></i>
-                                                                                <i class="cursor-pointer bx bx-face font-medium-5 text-muted mr-1 pt-50"
-                                                                                    data-toggle="tooltip"
-                                                                                    data-popup="tooltip-custom"
-                                                                                    data-placement="top"
-                                                                                    title="Tag your friend"></i>
-                                                                                <i class="cursor-pointer bx bx-map font-medium-5 text-muted pt-50"
-                                                                                    data-toggle="tooltip"
-                                                                                    data-popup="tooltip-custom"
-                                                                                    data-placement="top"
-                                                                                    title="Share your location"></i>
-                                                                                <span
-                                                                                    class=" float-sm-right d-flex flex-sm-row flex-column justify-content-end">
-                                                                                    <button
-                                                                                        class="btn btn-light-primary mr-0 my-1 my-sm-0 mr-sm-1">Preview</button>
-                                                                                    <button class="btn btn-primary">Post
-                                                                                        Status</button>
-                                                                                </span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="tab-pane" id="user-blog"
-                                                                    aria-labelledby="blog-tab" role="tabpanel">
-                                                                    <div class="row">
-                                                                        <div class="col-12">
-                                                                            <div class="form-group row">
-                                                                                <div class="col-sm-1 col-2">
-                                                                                    <div class="avatar">
-                                                                                        <img src="../static/app-assets/images/portrait/small/avatar-s-2.jpg"
-                                                                                            alt="user image" width="32"
-                                                                                            height="32">
-                                                                                        <span
-                                                                                            class="avatar-status-online"></span>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-sm-11 col-10">
-                                                                                    <textarea
-                                                                                        class="form-control border-0 shadow-none"
-                                                                                        id="user-postblog-textarea"
-                                                                                        rows="3"
                                                                                         placeholder="Share what you are thinking here..."></textarea>
                                                                                 </div>
                                                                             </div>
@@ -1287,33 +1170,44 @@
                                                                                 <span
                                                                                     class="mr-1">{{user.posts.count()}}
                                                                                     <small>Posts</small></span>
-                                                                                <span class="mr-1">{{user.followers.count()}}
+                                                                                <span
+                                                                                    class="mr-1">{{user.followers.count()}}
                                                                                     <small>Followers</small></span>
-                                                                                <span class="mr-1">{{user.followed.count()}}
+                                                                                <span
+                                                                                    class="mr-1">{{user.followed.count()}}
                                                                                     <small>Following</small></span>
                                                                             </div>
-                                                                            <textarea style="display: none;" id="txt_about_me"
+                                                                            <textarea style="display: none;"
+                                                                                id="txt_about_me"
                                                                                 class="form-control border-1 shadow-none mb-1">
 
                                                                             </textarea>
-                                                                            <button style="display: none" id="btn_post_aboutMe" type="button" onclick="Post_aboutMe()" class="btn btn-primary glow send">
-                                                                                <span class="d-none d-lg-block ml-0">Post</span></button>
+                                                                            <button style="display: none"
+                                                                                id="btn_post_aboutMe" type="button"
+                                                                                onclick="Post_aboutMe()"
+                                                                                class="btn btn-primary glow send">
+                                                                                <span
+                                                                                    class="d-none d-lg-block ml-0">Post</span></button>
                                                                             {% if user.about_me %}
                                                                             <p id="p_jinja_about_me">
                                                                                 {{user.about_me}}
                                                                             </p>
                                                                             {% else %}
                                                                             <p>
-                                                                                <a id="anch_add_bio" href="#" onclick="reveal_aboutMe_editor()">Add Bio</a>
+                                                                                <a id="anch_add_bio" href="#"
+                                                                                    onclick="reveal_aboutMe_editor()">Add
+                                                                                    Bio</a>
                                                                             </p>
                                                                             {% endif %}
                                                                             <p id="p_aboutme" style="display: none;">
 
                                                                             </p>
-                                                                            
+
 
                                                                             {% if user == current_user %}
-                                                                        <button style="display: {% if user.about_me %}; block {% else %} none {% endif %} !important;" onclick="reveal_aboutMe_editor()"
+                                                                            <button id="btn_editbio"
+                                                                                style="display: {% if user.about_me %}; block {% else %} none {% endif %} !important;"
+                                                                                onclick="editbio()"
                                                                                 class="btn btn-sm d-none d-sm-block float-right btn-light-primary">
                                                                                 <i
                                                                                     class="cursor-pointer bx bx-edit font-small-3 mr-50"></i><span>Edit</span>
@@ -1338,47 +1232,78 @@
                                                 <div class="card-body">
                                                     <h5 class="card-title">Basic details</h5>
                                                     <ul class="list-unstyled">
-                                                        <li><i class="cursor-pointer bx bx-map mb-1 mr-50"></i>{% if user.location %} {{user.location}} {% else %} <a id="anchr_add_location" href="#" onclick="edit_info()">Add Location</a>{% endif %}
+                                                        <li><i
+                                                                class="cursor-pointer bx bx-map mb-1 mr-50"></i>{% if user.location %}
+                                                            {{user.location}} {% else %} <a id="anchr_add_location"
+                                                                href="#" onclick="edit_info()">Add
+                                                                Location</a>{% endif %}
                                                         </li>
-                                                        <li ><i
-                                                                class="cursor-pointer bx bx-phone-call mb-1 mr-50"></i>{% if user.phone_no %} {{user.phone_no}} {% else %} <a id="anchr_add_phone_no" href="#" onclick="edit_info()">Add Phone No.</a>{% endif %}</li>
-                                                        <li ><i class="cursor-pointer bx bx-calendar mb-1 mr-50"></i>{% if user.dob %} {{user.dob}} {% else %} <a id="anchr_add_dob" href="#" onclick="edit_info()">Add Date of Birth</a>{% endif %}
+                                                        <li><i
+                                                                class="cursor-pointer bx bx-phone-call mb-1 mr-50"></i>{% if user.phone_no %}
+                                                            {{user.phone_no}} {% else %} <a id="anchr_add_phone_no"
+                                                                href="#" onclick="edit_info()">Add Phone
+                                                                No.</a>{% endif %}</li>
+                                                        <li><i
+                                                                class="cursor-pointer bx bx-calendar mb-1 mr-50"></i>{% if user.dob %}
+                                                            {{user.dob}} {% else %} <a id="anchr_add_dob" href="#"
+                                                                onclick="edit_info()">Add Date of Birth</a>{% endif %}
                                                         </li>
-                                                        <li ><i
+                                                        <li><i
                                                                 class="cursor-pointer bx bx-envelope mb-1 mr-50"></i>{{user.email}}
                                                         </li>
                                                     </ul>
                                                     <div class="row">
                                                         <div class="col-6">
-                                                            <h6><small class="text-muted">Cell Phone</small></h6>
-                                                            <p>(+46) 456 54432</p>
+                                                            <h6><small class="text-muted">Place of Work</small></h6>
+                                                            <p><i
+                                                                    class="cursor-pointer bx bx-briefcase mb-1 mr-50"></i>{% if user.place_of_work %}
+                                                                {{user.place_of_work}} {% else %} <a
+                                                                    id="anchr_place_of_work" href="#"
+                                                                    onclick="edit_info()">Add Place of
+                                                                    Work</a>{% endif %}</p>
                                                         </div>
                                                         <div class="col-6">
-                                                            <h6><small class="text-muted">Family Phone</small></h6>
-                                                            <p>(+46) 454 22432</p>
+                                                            <h6><small class="text-muted">Portfolio (Personal
+                                                                    Website)</small></h6>
+                                                            <p><i
+                                                                    class="cursor-pointer bx bx-link mb-1 mr-50"></i>{% if user.portfolio %}
+                                                                {{user.portfolio}} {% else %} <a id="anchr_portfolio"
+                                                                    href="#" onclick="edit_info()">Add
+                                                                    Porfolio</a>{% endif %}</p>
                                                         </div>
                                                         <div class="col-6">
-                                                            <h6><small class="text-muted">Reporter</small></h6>
-                                                            <p>John Doe</p>
+                                                            <h6><small class="text-muted">Profession</small></h6>
+                                                            <p><i
+                                                                    class="cursor-pointer bx bx-briefcase mb-1 mr-50"></i>{% if user.profession %}
+                                                                {{user.profession}} {% else %} <a id="anchr_profession"
+                                                                    href="#" onclick="edit_info()">Add
+                                                                    Profession</a>{% endif %}</p>
                                                         </div>
                                                         <div class="col-6">
-                                                            <h6><small class="text-muted">Manager</small></h6>
-                                                            <p>Richie Rich</p>
+                                                            <h6><small class="text-muted">Position</small></h6>
+                                                            <p><i
+                                                                    class="cursor-pointer bx bx-briefcase mb-1 mr-50"></i>{% if user.position %}
+                                                                {{user.position}} {% else %} <a id="anchr_position"
+                                                                    href="#" onclick="edit_info()">Add
+                                                                    Position</a>{% endif %}</p>
                                                         </div>
                                                         <div class="col-12">
                                                             <h6><small class="text-muted">Bio</small></h6>
-                                                            <p>{% if user.about_me %} {{user.about_me}} {% else %} <a id="anchr_add_bio" href="#" onclick="edit_info()">Add Bio</a>{% endif %}</p>
+                                                            <p>{% if user.about_me %} {{user.about_me}} {% else %} <a
+                                                                    id="anchr_add_bio" href="#"
+                                                                    onclick="edit_info()">Add Bio</a>{% endif %}</p>
                                                         </div>
                                                     </div>
-                                                    <button
+                                                    <button onclick="edit_info()"
                                                         class="btn btn-sm d-none d-sm-block float-right btn-light-primary mb-2">
                                                         <i
                                                             class="cursor-pointer bx bx-edit font-small-3 mr-50"></i><span>Edit</span>
                                                     </button>
-                                                    <button
+                                                    <button onclick="edit_info()"
                                                         class="btn btn-sm d-block d-sm-none btn-block text-center btn-light-primary">
                                                         <i
-                                                            class="cursor-pointer bx bx-edit font-small-3 mr-25"></i><span>Edit</span></button>
+                                                            class="cursor-pointer bx bx-edit font-small-3 mr-25"></i><span>Edit</span>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -1599,5 +1524,75 @@
 </div>
 <div class="sidenav-overlay"></div>
 <div class="drag-target"></div>
+
+<div class="modal fade text-left" id="modal_editInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33"
+    aria-modal="true" style="padding-right: 17px; display: none;">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel33">Edit Details</h4>
+                <button type="button" class="close" onclick="close_modal('modal_editInfo')" data-dismiss="modal"
+                    aria-label="Close">
+                    <i class="bx bx-x"></i>
+                </button>
+            </div>
+            <form action="#">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <fieldset class="form-group">
+                                <label for="location">Location</label>
+                                <input type="text" class="form-control" id="location" placeholder="City, Country">
+                            </fieldset>
+
+                            <fieldset class="form-group">
+                                <label for="phne_no">Phone No.</label>
+                                <input type="text" class="form-control" id="phne_no" placeholder="07.....">
+                            </fieldset>
+
+                            <fieldset class="form-group">
+                                <label for="dob">Date of Birth</label>
+                                <input type="date" class="form-control" id="dob">
+                            </fieldset>
+
+                            <fieldset class="form-group">
+                                <label for="position">Position</label>
+                                <input type="text" class="form-control" id="position" placeholder="CEO">
+                            </fieldset>
+                        </div>
+                        <div class="col-md-6">
+                            <fieldset class="form-group">
+                                <label for="place_of_work">Place of Work</label>
+                                <input type="text" class="form-control" id="place_of_work">
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <label for="portfolio">Porfolio</label>
+                                <input type="text" class="form-control" id="portfolio"
+                                    placeholder="https://example.com">
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <label for="profession">Profession</label>
+                                <input type="text" class="form-control" id="profession">
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="close_modal('modal_editInfo')" type="button" class="btn btn-light-secondary"
+                        data-dismiss="modal">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Cancel</span>
+                    </button>
+                    <button type="button" class="btn btn-primary ml-1" data-dismiss="modal">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Save</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="modalbackdrop" class="modal-backdrop fade" style="display: none;"></div>
 
 {% endblock %}

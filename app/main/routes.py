@@ -116,20 +116,24 @@ def edit_profile():
                            form=form)
 
 
-@bp.route('/follow/<username>', methods=['POST'])
+@bp.route('/follow', methods=['POST'])
 @login_required
-def follow(username):
+def follow():
     form = EmptyForm()
-    if form.validate_on_submit():
+    if request.method == "POST":
+        username = request.form['username']
         user = User.query.filter_by(username=username).first()
         if user is None:
-            flash(_('User %(username)s not found.', username=username))
-            return redirect(url_for('main.index'))
+            message = 'User %(username)s not found.'
+            return jsonify({'message': message})
         if user == current_user:
             flash(_('You cannot follow yourself!'))
             return redirect(url_for('main.user', username=username))
         current_user.follow(user)
         db.session.commit()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=username).first()
+        
         flash(_('You are following %(username)s!', username=username))
         return redirect(url_for('main.user', username=username))
     else:
@@ -180,21 +184,24 @@ def search():
                            next_url=next_url, prev_url=prev_url)
 
 
-@bp.route('/send_message/<recipient>', methods=['GET', 'POST'])
+# @bp.route('/send_message/<recipient>', methods=['GET', 'POST'])
+@bp.route('/chats', methods=['GET', 'POST'])
 @login_required
-def send_message(recipient):
-    user = User.query.filter_by(username=recipient).first_or_404()
-    form = MessageForm()
-    if form.validate_on_submit():
-        msg = Message(author=current_user, recipient=user,
-                      body=form.message.data)
-        db.session.add(msg)
-        user.add_notification('unread_message_count', user.new_messages())
-        db.session.commit()
-        flash(_('Your message has been sent.'))
-        return redirect(url_for('main.user', username=recipient))
-    return render_template('send_message.html', title=_('Send Message'),
-                           form=form, recipient=recipient)
+# def send_message(recipient):
+def chats():
+    form = EmptyForm()
+    # user = User.query.filter_by(username=recipient).first_or_404()
+    # form = MessageForm()
+    # if form.validate_on_submit():
+    #     msg = Message(author=current_user, recipient=user,
+    #                   body=form.message.data)
+    #     db.session.add(msg)
+    #     user.add_notification('unread_message_count', user.new_messages())
+    #     db.session.commit()
+    #     flash(_('Your message has been sent.'))
+    #     return redirect(url_for('main.user', username=recipient))
+    # return render_template('chats.html', title=_('Send Message'), form=form, recipient=recipient)
+    return render_template('chats.html', title=_('Chats - Hikanotes'), form=form)
 
 
 @bp.route('/messages')
