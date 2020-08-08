@@ -106,7 +106,7 @@ def edit_profile():
         current_user.about_me = request.form['about_me']
         db.session.commit()
         print(current_user.about_me)
-        
+
         # flash(_('Your changes have been saved.'))
     #     return redirect(url_for('main.edit_profile'))
     # elif request.method == 'GET':
@@ -119,25 +119,21 @@ def edit_profile():
 @bp.route('/follow', methods=['POST'])
 @login_required
 def follow():
-    form = EmptyForm()
     if request.method == "POST":
         username = request.form['username']
         user = User.query.filter_by(username=username).first()
         if user is None:
-            message = 'User %(username)s not found.'
+            message = (_('User %(username)s not found.'))
             return jsonify({'message': message})
         if user == current_user:
-            flash(_('You cannot follow yourself!'))
-            return redirect(url_for('main.user', username=username))
+            message = (_('You cannot follow yourself!'))
+            return jsonify({'message': message})
         current_user.follow(user)
         db.session.commit()
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=username).first()
-        
-        flash(_('You are following %(username)s!', username=username))
-        return redirect(url_for('main.user', username=username))
-    else:
-        return redirect(url_for('main.index'))
+        followers = user.followers.count()
+        print(followers)
+        message = (_('You are now following %(username)s!', username=username))
+        return jsonify({'message': message, 'followers': followers})
 
 
 @bp.route('/unfollow/<username>', methods=['POST'])

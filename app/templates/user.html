@@ -45,8 +45,9 @@
                                             {% if not current_user.is_following(user) %}
                                             <a class="nav-link d-flex px-1" id="follow-btn" onclick="follow('{{user.username}}')" style="cursor: pointer;"><i class="bx bx-user-plus"></i><span class="d-none d-md-block">Follow</span></a>
                                             {% else %}
-                                            <a class=" nav-link d-flex px-1" id="follow-btn" onclick="unfollow('{{user.username}}')" style="cursor: pointer;"><i class="bx bx-user-minus"></i><span class="d-none d-md-block">UnFollow</span></a>
+                                            <a class=" nav-link d-flex px-1" onclick="unfollow('{{user.username}}')" style="cursor: pointer;"><i class="bx bx-user-minus"></i><span class="d-none d-md-block">UnFollow</span></a>
                                             {% endif %}
+                                            <a style="display: none !important;" class=" nav-link d-flex px-1" id="unfollow-btn" onclick="unfollow('{{user.username}}')" style="cursor: pointer;"><i id="i_unfollow_icon" style="display: none;" class="bx bx-user-minus"></i><span class="d-none d-md-block">UnFollow</span></a>
                                         </li>
                                         <li class="nav-item pb-0">
                                             <a class="nav-link d-flex px-1" id="friends-tab" data-toggle="tab"
@@ -78,7 +79,7 @@
                                             <!-- user profile nav tabs feed left section start -->
                                             <div class="col-lg-4">
                                                 <!-- user profile nav tabs feed left section info card start -->
-                                                <div class="card">
+                                                <div id="dv_info" class="card">
                                                     <div class="card-content">
                                                         <div class="card-body">
                                                             <h5 class="card-title mb-1">Info
@@ -100,12 +101,12 @@
                                                                 <li class="d-flex align-items-center mb-25">
                                                                     <i
                                                                         class="bx bx-log-out-circle mr-50 cursor-pointer"></i>
-                                                                    <span>Followers<a
+                                                                    <span>Followers<a id="a_followers"
                                                                             href="JavaScript:void(0);">&nbsp;{{user.followers.count()}}</a></span>
                                                                 </li>
                                                                 <li class="d-flex align-items-center mb-25">
                                                                     <i
-                                                                        class="bx bx-log-in-circle mr-50 cursor-pointer"></i><span>Following<a
+                                                                        class="bx bx-log-in-circle mr-50 cursor-pointer"></i><span>Following<a id="a_followed"
                                                                             href="JavaScript:void(0);">&nbsp;{{user.followed.count()}}</a></span>
                                                                 </li>
                                                                 {% endif %}
@@ -142,7 +143,7 @@
                                                 </div>
                                                 <!-- user profile nav tabs feed left section info card ends -->
                                                 <!-- user profile nav tabs feed left section trending card start -->
-                                                <div class="card">
+                                                <div id="dv_trending" class="card">
                                                     <div class="card-content">
                                                         <div class="card-body">
                                                             <h5 class="card-title mb-1">What's trending<i
@@ -153,46 +154,36 @@
                                                                     <i
                                                                         class="cursor-pointer bx bx-trending-up text-primary mr-50 mt-25"></i><span>
                                                                         <a href="JavaScript:void(0);"
-                                                                            class="mr-50">#ManJonas:</a>Frest comes with
-                                                                        built-in
+                                                                            class="mr-50">#faucimusttest</a>
                                                                     </span>
                                                                 </li>
                                                                 <li class="d-flex mb-25">
                                                                     <i
                                                                         class="cursor-pointer bx bx-trending-up text-primary mr-50 mt-25"></i><span>
                                                                         <a href="JavaScript:void(0);"
-                                                                            class="mr-50">LadyJonas:</a>dark layouts,
-                                                                        select as</span>
+                                                                            class="mr-50">#wordfest</a></span>
                                                                 </li>
                                                                 <li class="d-flex mb-25">
                                                                     <i
                                                                         class="cursor-pointer bx bx-trending-up text-primary mr-50 mt-25"></i><span>
                                                                         <a href="JavaScript:void(0);"
-                                                                            class="mr-50">#Germany:</a>Frest comes with
-                                                                        built-in
+                                                                            class="mr-50">#prayingnow</a>
                                                                     </span>
                                                                 </li>
                                                                 <li class="d-flex mb-25">
                                                                     <i
                                                                         class="cursor-pointer bx bx-trending-up text-primary mr-50 mt-25"></i><span>
                                                                         <a href="JavaScript:void(0);"
-                                                                            class="mr-50">#SundayNoon:</a>dark layouts,
-                                                                        select as</span>
+                                                                            class="mr-50">#ror</a></span>
                                                                 </li>
-                                                                <li class="d-flex">
-                                                                    <i
-                                                                        class="cursor-pointer bx bx-trending-up text-primary mr-50 mt-25"></i><span>
-                                                                        <a href="JavaScript:void(0);"
-                                                                            class="mr-50">NoWorries:</a>heme navigation
-                                                                        with you</span>
-                                                                </li>
+
                                                             </ul>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <!-- user profile nav tabs feed left section trending card ends -->
                                                 <!-- user profile nav tabs feed left section like page card start -->
-                                                <div class="card">
+                                                <div id="dv_page" class="card">
                                                     <div class="card-content">
                                                         <div class="card-body">
                                                             <h6><img src="../static/app-assets/images/profile/pages/pixinvent.jpg"
@@ -224,7 +215,7 @@
                                                 </div>
                                                 <!-- user profile nav tabs feed left section like page card ends -->
                                                 <!-- user profile nav tabs feed left section today's events card start -->
-                                                <div class="card">
+                                                <div id="dv_event" class="card">
                                                     <div class="card-content">
                                                         <div class="card-body">
                                                             <h5 class="card-title mb-1">Today's Events<i
@@ -313,7 +304,7 @@
                                             <!-- user profile nav tabs feed left section ends -->
                                             <!-- user profile nav tabs feed middle section start -->
                                             <div class="col-lg-8">
-                                                <div class="alert alert-primary" role="alert">
+                                                <div id="dv_alert" class="alert alert-primary" role="alert" style="display: none;">
                                                     You are now following....
                                                     <button type="button" class="close" data-dismiss="alert"
                                                         aria-label="Close">
@@ -344,7 +335,7 @@
                                                                                     <textarea
                                                                                         class="form-control border-0 shadow-none"
                                                                                         id="user-post-textarea" rows="3"
-                                                                                        placeholder="Share what you are thinking here..."></textarea>
+                                                                                        placeholder="Speak your mind..."></textarea>
                                                                                 </div>
                                                                             </div>
                                                                             <hr>
@@ -366,8 +357,6 @@
                                                                                     title="Share your location"></i>
                                                                                 <span
                                                                                     class=" float-sm-right d-flex flex-sm-row flex-column justify-content-end">
-                                                                                    <button
-                                                                                        class="btn btn-light-primary mr-0 my-1 my-sm-0 mr-sm-1">Preview</button>
                                                                                     <button class="btn btn-primary">Post
                                                                                         Status</button>
                                                                                 </span>

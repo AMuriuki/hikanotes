@@ -136,11 +136,19 @@ function follow(username) {
     $.post('/follow', {
         username: username
     }).done(function (response) {
-        document.getElementById("txt_about_me").style.display = "none";
-        document.getElementById("btn_post_aboutMe").style.display = "none";
-        console.log(response['text']);
-        p_aboutme.innerHTML = about_me;
-        p_aboutme.style.display = "block";
+        console.log(response)
+        if (response['message'] === "You are now following "+ username+"!"){
+            document.getElementById("dv_alert").style.display = "block";
+            document.getElementById("unfollow-btn").style.setProperty("display", "block", "important");
+            document.getElementById("unfollow-btn").style.cursor = "pointer";
+            document.getElementById("follow-btn").style.setProperty("display", "none", "important");
+            document.getElementById("a_followers").innerHTML = response['followers'];
+            document.getElementById("dv_alert").innerHTML = response['message'];
+        }
+        else {
+            document.getElementById("dv_alert").style.display = "block";
+            document.getElementById("dv_alert").innerHTML = response['message'];
+        }
     }).fail(function () {
 
     });
