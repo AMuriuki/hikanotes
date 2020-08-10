@@ -90,6 +90,12 @@
                 display: block !important;
             }
         }
+
+        .col-lg-9{
+            padding-left: 0px !important;
+            padding-right: 0px !important;
+        }
+
     </style>
 </head>
 <!-- END: Head-->
@@ -319,7 +325,7 @@
                                         height="40" width="40"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right pb-0">
-                                {% if title == 'User Profile - Hikanotes' %}
+                                {% if (title == 'User Profile - Hikanotes') and (user == current_user) %}
                                 <a class="dropdown-item"
                                     href="{{ url_for('main.index') }}"><i
                                         class="bx bx-home mr-50"></i> Home</a>
@@ -372,8 +378,8 @@
                 <li class="nav-item"><a href="{{url_for('main.explore')}}"><i style="font-size: 1.7rem;"
                             class="bx bx-hash"></i><span class="menu-title">Explore</span></a>
                 </li>
-                <li class="nav-item"><a href="app-email.html"><i style="font-size: 1.7rem;"
-                            class="bx bx-message"></i><span class="menu-title">Inbox</span></a>
+                <li class="nav-item"><a href="{{url_for('main.chats')}}"><i style="font-size: 1.7rem;" 
+                    class="bx bx-chat"></i><span class="menu-title">Chats</span></a>
                 </li>
             </ul>
             <div class="ps__rail-x" style="left: 0px; bottom: -278px;">
@@ -392,7 +398,7 @@
     <footer class="footer footer-static footer-light">
         <p class="clearfix mb-0"><span class="float-left d-inline-block"><script>document.write(new Date().getFullYear())</script> &copy; Hikanotes</span><span
                 class="float-right d-sm-inline-block d-none">Crafted with<i
-                    class="bx bxs-heart pink mx-50 font-small-3"></i>by<a href="" target="_blank">Springboard - The Art of Code</a></span>
+                    class="bx bxs-heart pink mx-50 font-small-3"></i>by<a href="https://arnoldnderitu.io" target="_blank">Arnold :-)</a></span>
             <button class="btn btn-primary btn-icon scroll-top" type="button"><i
                     class="bx bx-up-arrow-alt"></i></button>
         </p>

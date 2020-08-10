@@ -335,7 +335,7 @@
                                                                                     <textarea
                                                                                         class="form-control border-0 shadow-none"
                                                                                         id="user-post-textarea" rows="3"
-                                                                                        placeholder="Speak your mind..."></textarea>
+                                                                                        placeholder="{% if user == 'current_user' %} Speak your mind... {% else %} Write something to {{user.username}} {% endif %}"></textarea>
                                                                                 </div>
                                                                             </div>
                                                                             <hr>
