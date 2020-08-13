@@ -92,7 +92,7 @@
             </div>
           </div>
           <div class="chat-sidebar-list-wrapper pt-2">
-            <h6 class="px-2 pb-25 mb-0">CHANNELS<i class="bx bx-plus float-right cursor-pointer"></i></h6>
+            <!-- <h6 class="px-2 pb-25 mb-0">CHANNELS<i class="bx bx-plus float-right cursor-pointer"></i></h6>
             <ul class="chat-sidebar-list">
               <li>
                 <h6 class="mb-0"># Devlopers</h6>
@@ -100,45 +100,25 @@
               <li>
                 <h6 class="mb-0"># Designers</h6>
               </li>
-            </ul>
+            </ul> -->
             <h6 class="px-2 pt-2 pb-25 mb-0">CHATS</h6>
             <ul class="chat-sidebar-list">
+              {% for message in messages %}
               <li>
                 <div class="d-flex align-items-center">
-                  <div class="avatar m-0 mr-50"><img src="../static/app-assets/images/portrait/small/avatar-s-26.jpg"
-                      height="36" width="36" alt="sidebar user image">
-                    <span class="avatar-status-busy"></span>
-                  </div>
-                  <div class="chat-sidebar-name">
-                    <h6 class="mb-0">Elizabeth Elliott</h6><span class="text-muted">Cake pie</span>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="d-flex align-items-center">
-                  <div class="avatar m-0 mr-50"><img src="../static/app-assets/images/portrait/small/avatar-s-7.jpg"
-                      height="36" width="36" alt="sidebar user image">
-                    <span class="avatar-status-online"></span>
-                  </div>
-                  <div class="chat-sidebar-name">
-                    <h6 class="mb-0">Kristopher Candy</h6><span class="text-muted">jelly jelly</span>
-                  </div>
-                </div>
-              </li>
-            </ul>
-            <h6 class="px-2 pt-2 pb-25 mb-0">CONTACTS<i class="bx bx-plus float-right cursor-pointer"></i></h6>
-            <ul class="chat-sidebar-list">
-              <li>
-                <div class="d-flex align-items-center">
-                  <div class="avatar m-0 mr-50"><img src="../static/app-assets/images/portrait/small/avatar-s-8.jpg"
+                  <div class="avatar m-0 mr-50"><img src="{{message.author.avatar(36)}}"
                       height="36" width="36" alt="sidebar user image">
                     <span class="avatar-status-away"></span>
                   </div>
                   <div class="chat-sidebar-name">
-                    <h6 class="mb-0">Sarah Woods</h6><span class="text-muted"> lemon drops</span>
+                    <h6 class="mb-0">{{message.author.fname}} {{message.author.lname}}</h6><span class="text-muted"> {{message.author.username}}</span>
                   </div>
                 </div>
               </li>
+              {% endfor %}
+            </ul>
+            <h6 class="px-2 pt-2 pb-25 mb-0">CONTACTS (Followers)<i class="bx bx-plus float-right cursor-pointer"></i></h6>
+            <ul class="chat-sidebar-list">
               <li>
                 <div class="d-flex align-items-center">
                   <div class="avatar bg-info m-0 mr-50">

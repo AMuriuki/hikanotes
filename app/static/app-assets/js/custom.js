@@ -3,14 +3,14 @@ function show_notifications() {
     var ul_notifications = document.getElementById("ul_notifications");
     if (ul_notifications.className === "dropdown-menu dropdown-menu-media dropdown-menu-right") {
         ul_notifications.className = "dropdown-menu dropdown-menu-media dropdown-menu-right show";
-    }
-    else if (ul_notifications.className === "dropdown-menu dropdown-menu-media dropdown-menu-right show") {
+    } else if (ul_notifications.className === "dropdown-menu dropdown-menu-media dropdown-menu-right show") {
         ul_notifications.className = "dropdown-menu dropdown-menu-media dropdown-menu-right";
     }
 }
 
 function setup() {
     document.getElementById('btn_upload').addEventListener('click', openDialog);
+
     function openDialog() {
         document.getElementById('uploadImage').click();
     }
@@ -20,8 +20,7 @@ function openUserMenu() {
     user_dropdown = document.getElementById("user_dropdown");
     if (user_dropdown.className === "dropdown-menu dropdown-menu-right pb-0") {
         user_dropdown.className = "dropdown-menu dropdown-menu-right pb-0 show";
-    }
-    else if (user_dropdown.className === "dropdown-menu dropdown-menu-right pb-0 show") {
+    } else if (user_dropdown.className === "dropdown-menu dropdown-menu-right pb-0 show") {
         user_dropdown.className = "dropdown-menu dropdown-menu-right pb-0";
     }
 }
@@ -31,11 +30,11 @@ function like(post_id, like_post_id, unlike_post_id) {
     var p_unlikes = document.getElementById(unlike_post_id);
     $.post('/like', {
         post_id: post_id
-    }).done(function (response) {
+    }).done(function(response) {
         console.log(response['likes']);
         p_likes.innerHTML = response['likes'];
         p_unlikes.innerHTML = response['unlikes'];
-    }).fail(function () {
+    }).fail(function() {
 
     });
 }
@@ -45,30 +44,31 @@ function unlike(post_id, like_post_id, unlike_post_id) {
     var p_likes = document.getElementById(like_post_id);
     $.post('/unlike', {
         post_id: post_id
-    }).done(function (response) {
+    }).done(function(response) {
         console.log(response['unlikes']);
         p_unlikes.innerHTML = response['unlikes'];
         p_likes.innerHTML = response['likes'];
-    }).fail(function () {
+    }).fail(function() {
 
     });
 }
 
 
-function focus_text_area() {
-    var user_comment_textarea = document.getElementById("user-comment-textarea");
+function focus_text_area(focus) {
+    var user_comment_textarea = document.getElementById(focus);
     user_comment_textarea.focus();
 }
 
 
-function Comment(post_id) {
-    var user_comment = document.getElementById("user-comment-textarea").value;
+function Comment(comment_input_id, post_id) {
+    var user_comment = document.getElementById(comment_input_id).value;
+    console.log(user_comment, post_id);
     $.post('/comment', {
         user_comment: user_comment,
         post_id: post_id
-    }).done(function (response) {
+    }).done(function(response) {
         location.reload(true);
-        document.getElementById("btn_post_comment").focus();
+        document.getElementById(comment_input_id).scrollIntoView();
     })
 }
 
@@ -97,13 +97,13 @@ function Post_aboutMe() {
     console.log(p_aboutme);
     $.post('/edit_profile', {
         about_me: about_me
-    }).done(function (response) {
+    }).done(function(response) {
         document.getElementById("txt_about_me").style.display = "none";
         document.getElementById("btn_post_aboutMe").style.display = "none";
         console.log(response['text']);
         p_aboutme.innerHTML = about_me;
         p_aboutme.style.display = "block";
-    }).fail(function () {
+    }).fail(function() {
 
     });
 }
@@ -135,21 +135,20 @@ function close_modal(modal_id) {
 function follow(username) {
     $.post('/follow', {
         username: username
-    }).done(function (response) {
+    }).done(function(response) {
         console.log(response)
-        if (response['message'] === "You are now following "+ username+"!"){
+        if (response['message'] === "You are now following " + username + "!") {
             document.getElementById("dv_alert").style.display = "block";
             document.getElementById("unfollow-btn").style.setProperty("display", "block", "important");
             document.getElementById("unfollow-btn").style.cursor = "pointer";
             document.getElementById("follow-btn").style.setProperty("display", "none", "important");
             document.getElementById("a_followers").innerHTML = response['followers'];
             document.getElementById("dv_alert").innerHTML = response['message'];
-        }
-        else {
+        } else {
             document.getElementById("dv_alert").style.display = "block";
             document.getElementById("dv_alert").innerHTML = response['message'];
         }
-    }).fail(function () {
+    }).fail(function() {
 
     });
 }

@@ -7,7 +7,7 @@ from guess_language import guess_language
 from app import db
 from app.main.forms import EditProfileForm, EmptyForm, PostForm, SearchForm, \
     MessageForm
-from app.models import User, Post, Message, Notification, Comment
+from app.models import User, Post, Message, Notification, Comment, Chat
 from app.translate import translate
 from app.main import bp
 
@@ -186,6 +186,15 @@ def search():
 # def send_message(recipient):
 def chats():
     form = EmptyForm()
+    # user = User.query.filter_by(username='supernatural').first_or_404()
+    # chat = Chat(author=user, recipient=current_user,
+    #                   body="Test message Two")
+    # print (chat)
+    # db.session.add(chat)
+    # db.session.commit()
+    messages = current_user.messages_received.order_by(
+        Chat.timestamp.desc())
+    print (messages)
     # user = User.query.filter_by(username=recipient).first_or_404()
     # form = MessageForm()
     # if form.validate_on_submit():
@@ -197,7 +206,7 @@ def chats():
     #     flash(_('Your message has been sent.'))
     #     return redirect(url_for('main.user', username=recipient))
     # return render_template('chats.html', title=_('Send Message'), form=form, recipient=recipient)
-    return render_template('chats.html', title=_('Chats - Hikanotes'), form=form)
+    return render_template('chats.html', title=_('Chats - Hikanotes'), form=form, messages=messages)
 
 
 @bp.route('/messages')
@@ -275,8 +284,9 @@ def unlike():
 def comment():
     if request.method == "POST":
         text = request.form['user_comment']
+        print (text)
         post_id = request.form['post_id']
-        comment = Comment(text=text, user_id=current_user.id, post_id=post_id)
+        comment = Comment(comment=text, user_id=current_user.id, post_id=post_id)
         db.session.add(comment)
         db.session.commit()
     return jsonify({'comment': text})

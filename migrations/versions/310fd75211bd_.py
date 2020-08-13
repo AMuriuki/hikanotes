@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 1d2c4b957b4d
+Revision ID: 310fd75211bd
 Revises: 
-Create Date: 2020-07-31 03:07:21.604120
+Create Date: 2020-08-10 20:43:47.319952
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '1d2c4b957b4d'
+revision = '310fd75211bd'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -26,17 +26,34 @@ def upgrade():
     sa.Column('email', sa.String(length=120), nullable=True),
     sa.Column('password_hash', sa.String(length=128), nullable=True),
     sa.Column('about_me', sa.String(length=140), nullable=True),
+    sa.Column('location', sa.String(length=140), nullable=True),
+    sa.Column('phone_no', sa.String(length=140), nullable=True),
+    sa.Column('portfolio', sa.String(length=140), nullable=True),
+    sa.Column('place_of_work', sa.String(length=140), nullable=True),
+    sa.Column('position', sa.String(length=140), nullable=True),
     sa.Column('last_seen', sa.DateTime(), nullable=True),
+    sa.Column('dob', sa.Date(), nullable=True),
     sa.Column('token', sa.String(length=32), nullable=True),
     sa.Column('token_expiration', sa.DateTime(), nullable=True),
     sa.Column('last_message_read_time', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_user_email'), 'user', ['email'], unique=True)
-    op.create_index(op.f('ix_user_fname'), 'user', ['fname'], unique=True)
-    op.create_index(op.f('ix_user_lname'), 'user', ['lname'], unique=True)
+    op.create_index(op.f('ix_user_fname'), 'user', ['fname'], unique=False)
+    op.create_index(op.f('ix_user_lname'), 'user', ['lname'], unique=False)
     op.create_index(op.f('ix_user_token'), 'user', ['token'], unique=True)
     op.create_index(op.f('ix_user_username'), 'user', ['username'], unique=True)
+    op.create_table('chat',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('sender_id', sa.Integer(), nullable=True),
+    sa.Column('recipient_id', sa.Integer(), nullable=True),
+    sa.Column('body', sa.String(length=140), nullable=True),
+    sa.Column('timestamp', sa.DateTime(), nullable=True),
+    sa.ForeignKeyConstraint(['recipient_id'], ['user.id'], ),
+    sa.ForeignKeyConstraint(['sender_id'], ['user.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_index(op.f('ix_chat_timestamp'), 'chat', ['timestamp'], unique=False)
     op.create_table('followers',
     sa.Column('follower_id', sa.Integer(), nullable=True),
     sa.Column('followed_id', sa.Integer(), nullable=True),
@@ -131,6 +148,8 @@ def downgrade():
     op.drop_index(op.f('ix_message_timestamp'), table_name='message')
     op.drop_table('message')
     op.drop_table('followers')
+    op.drop_index(op.f('ix_chat_timestamp'), table_name='chat')
+    op.drop_table('chat')
     op.drop_index(op.f('ix_user_username'), table_name='user')
     op.drop_index(op.f('ix_user_token'), table_name='user')
     op.drop_index(op.f('ix_user_lname'), table_name='user')

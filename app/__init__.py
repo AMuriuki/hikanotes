@@ -13,6 +13,7 @@ from elasticsearch import Elasticsearch
 from redis import Redis
 import rq
 from config import Config
+from flask_socketio import SocketIO
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -23,6 +24,7 @@ mail = Mail()
 bootstrap = Bootstrap()
 moment = Moment()
 babel = Babel()
+socketio = SocketIO()
 
 
 def create_app(config_class=Config):
@@ -40,6 +42,7 @@ def create_app(config_class=Config):
         if app.config['ELASTICSEARCH_URL'] else None
     app.redis = Redis.from_url(app.config['REDIS_URL'])
     app.task_queue = rq.Queue('Hikanotes-tasks', connection=app.redis)
+    socketio.init_app(app)
 
     from app.errors import bp as errors_bp
     app.register_blueprint(errors_bp)

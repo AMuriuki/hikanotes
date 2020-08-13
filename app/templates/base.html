@@ -325,14 +325,17 @@
                                         height="40" width="40"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right pb-0">
-                                {% if (title == 'User Profile - Hikanotes') and (user == current_user) %}
+                                {% if ((title == 'User Profile - Hikanotes') and (user == current_user)) or (title == 'Chats - Hikanotes') %}
                                 <a class="dropdown-item"
                                     href="{{ url_for('main.index') }}"><i
                                         class="bx bx-home mr-50"></i> Home</a>
-                                {% else %}
+                                {% endif %}
+                                {% if (title == 'User Profile - Hikanotes') and (user != current_user) %}
                                 <a class="dropdown-item"
                                     href="{{ url_for('main.user', username=current_user.username) }}"><i
                                         class="bx bx-user mr-50"></i> My Profile</a>
+                                <a class="dropdown-item" href="{{ url_for('main.index') }}"><i
+                                            class="bx bx-home mr-50"></i> Home</a>
                                 {% endif %}
                                 <!-- <a class="dropdown-item"
                                     href="app-email.html"><i class="bx bx-envelope mr-50"></i> My
