@@ -43,7 +43,8 @@
                                                                 </li>
                                                                 <li class="d-flex align-items-center">
                                                                     <i class="bx bx-chat mr-50 cursor-pointer"></i>
-                                                                    <span><a href="{{url_for('main.chats')}}">Chats</a></span>
+                                                                    <span><a
+                                                                            href="{{url_for('main.chats')}}">Chats</a></span>
                                                                 </li>
                                                                 <li class="d-flex align-items-center mb-25">
                                                                     <i
@@ -53,7 +54,7 @@
                                                                 </li>
                                                                 <li class="d-flex align-items-center mb-25">
                                                                     <i
-                                                                        class="bx bx-log-in-circle mr-50 cursor-pointer"></i><span>Following<a
+                                                                        class="bx bx-log-in-circle mr-50 cursor-pointer"></i><span>Following<a id="a_following"
                                                                             href="JavaScript:void(0);">&nbsp;{{current_user.followed.count()}}</a></span>
                                                                 </li>
                                                             </ul>
@@ -898,7 +899,8 @@
                                 </div>
                                 <!-- user profile right side content related groups ends -->
                                 <!-- user profile right side content gallery start -->
-                                <div class="card" style="display: {% if title == 'Explore - Hikanotes' %} none {% else %} block {% endif %};">
+                                <div class="card"
+                                    style="display: {% if title == 'Explore - Hikanotes' %} none {% else %} block {% endif %};">
                                     <div class="card-content">
                                         <div class="card-body">
                                             <h5 class="card-title mb-1">Gallery

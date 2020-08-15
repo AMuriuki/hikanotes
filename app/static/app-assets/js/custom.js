@@ -30,11 +30,11 @@ function like(post_id, like_post_id, unlike_post_id) {
     var p_unlikes = document.getElementById(unlike_post_id);
     $.post('/like', {
         post_id: post_id
-    }).done(function(response) {
+    }).done(function (response) {
         console.log(response['likes']);
         p_likes.innerHTML = response['likes'];
         p_unlikes.innerHTML = response['unlikes'];
-    }).fail(function() {
+    }).fail(function () {
 
     });
 }
@@ -44,11 +44,11 @@ function unlike(post_id, like_post_id, unlike_post_id) {
     var p_likes = document.getElementById(like_post_id);
     $.post('/unlike', {
         post_id: post_id
-    }).done(function(response) {
+    }).done(function (response) {
         console.log(response['unlikes']);
         p_unlikes.innerHTML = response['unlikes'];
         p_likes.innerHTML = response['likes'];
-    }).fail(function() {
+    }).fail(function () {
 
     });
 }
@@ -66,7 +66,7 @@ function Comment(comment_input_id, post_id) {
     $.post('/comment', {
         user_comment: user_comment,
         post_id: post_id
-    }).done(function(response) {
+    }).done(function (response) {
         location.reload(true);
         document.getElementById(comment_input_id).scrollIntoView();
     })
@@ -97,13 +97,13 @@ function Post_aboutMe() {
     console.log(p_aboutme);
     $.post('/edit_profile', {
         about_me: about_me
-    }).done(function(response) {
+    }).done(function (response) {
         document.getElementById("txt_about_me").style.display = "none";
         document.getElementById("btn_post_aboutMe").style.display = "none";
         console.log(response['text']);
         p_aboutme.innerHTML = about_me;
         p_aboutme.style.display = "block";
-    }).fail(function() {
+    }).fail(function () {
 
     });
 }
@@ -135,20 +135,29 @@ function close_modal(modal_id) {
 function follow(username) {
     $.post('/follow', {
         username: username
-    }).done(function(response) {
+    }).done(function (response) {
         console.log(response)
         if (response['message'] === "You are now following " + username + "!") {
-            document.getElementById("dv_alert").style.display = "block";
-            document.getElementById("unfollow-btn").style.setProperty("display", "block", "important");
-            document.getElementById("unfollow-btn").style.cursor = "pointer";
-            document.getElementById("follow-btn").style.setProperty("display", "none", "important");
-            document.getElementById("a_followers").innerHTML = response['followers'];
-            document.getElementById("dv_alert").innerHTML = response['message'];
+            if (document.title == "Explore - Hikanotes") {
+                var follow_btn = "follow-btn"+username
+                console.log(follow_btn);
+                document.getElementById(follow_btn).style.setProperty("display", "none", "important");
+                alert("You are now following " + username + "!");
+                document.getElementById("a_following").innerHTML = response['following'];
+            }
+            else {
+                document.getElementById("unfollow-btn").style.setProperty("display", "block", "important");
+                document.getElementById("dv_alert").style.display = "block";
+                document.getElementById("unfollow-btn").style.cursor = "pointer";
+                document.getElementById("a_followers").innerHTML = response['followers'];
+                document.getElementById("dv_alert").innerHTML = response['message'];
+            }
+
         } else {
             document.getElementById("dv_alert").style.display = "block";
             document.getElementById("dv_alert").innerHTML = response['message'];
         }
-    }).fail(function() {
+    }).fail(function () {
 
     });
 }

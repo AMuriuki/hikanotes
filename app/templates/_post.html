@@ -10,33 +10,91 @@
                 <img src="{{ post.author.avatar(32) }}" alt="avtar image">
             </div>
             <div class="d-inline-block mt-25">
-                <h6 class="mb-0 text-bold-500"><a href="{{ url_for('main.user', username=post.author.username) }}">{{post.author.fname}} {{post.author.lname}}</a></h6>
+                <h6 class="mb-0 text-bold-500">
+                    <a href="{{ url_for('main.user', username=post.author.username) }}">
+                        {{post.author.fname}} {{post.author.lname}}
+                        <table style="display: none;" class="table">
+                            <tr>
+                                <td width="64" style="border: 0px;"><img src="{{ post.author.avatar(64) }}"></td>
+                                <td style="border: 0px;">
+                                    <p>
+                                        <a href="{{ url_for('main.user', username=post.author.username) }}">
+                                            {{ post.author.username }}
+                                        </a>
+                                    </p>
+                                    <small>
+                                        {% if post.author.about_me %}<p>{{ post.author.about_me }}</p>{% endif %}
+                                        {% if post.author.last_seen %}
+                                        <p>{{ _('Last seen on') }}: {{ moment(post.author.last_seen).format('lll') }}
+                                        </p>
+                                        {% endif %}
+                                        <p>{{ _('%(count)d followers', count=post.author.followers.count()) }},
+                                            {{ _('%(count)d following', count=post.author.followed.count()) }}</p>
+                                        {% if post.author != current_user %}
+                                        {% if not current_user.is_following(post.author) %}
+                                        <p>
+                                        <form action="{{ url_for('main.follow', username=post.author.username) }}"
+                                            method="post">
+                                            {{ form.hidden_tag() }}
+                                            {{ form.submit(value=_('Follow'), class_='btn btn-default btn-sm') }}
+                                        </form>
+                                        </p>
+                                        {% else %}
+                                        <p>
+                                        <form action="{{ url_for('main.unfollow', username=post.author.username) }}"
+                                            method="post">
+                                            {{ form.hidden_tag() }}
+                                            {{ form.submit(value=_('Unfollow'), class_='btn btn-default btm-sm') }}
+                                        </form>
+                                        </p>
+                                        {% endif %}
+                                        {% endif %}
+                                    </small>
+                                </td>
+                            </tr>
+                        </table>
+                    </a>
+                </h6>
                 <p class="text-muted"><small>{{ moment(post.timestamp).fromNow() }}</small></p>
             </div>
+            {% if post.author != current_user %}
+            {% if not current_user.is_following(post.author) %}
+            <a style="float: right; color: #ffffff; cursor: pointer" class="btn btn-primary"
+                id="follow-btn{{post.author.username}}" onclick="follow('{{post.author.username}}')"><i id="follow_icon"
+                    style="display: none;" class="bx bx-user-plus"></i><span class="d-none d-md-block">Follow</span></a>
+            {% endif %}
+            {% endif %}
         </div>
         <div class="card-body py-0">
             <p>{{post.body}}</p>
         </div>
         <div class="card-footer d-flex justify-content-between pb-0" style="padding-top: 0rem !important;">
             <div class="d-flex align-items-center">
-                <a onclick="like('{{post.id}}', 'p_likes_{{post.id}}', 'p_unlikes_{{post.id}}')" class="cursor-pointer bx bx-like user-profile-like font-medium-4"></a>
+                <a onclick="like('{{post.id}}', 'p_likes_{{post.id}}', 'p_unlikes_{{post.id}}')"
+                    class="cursor-pointer bx bx-like user-profile-like font-medium-4"></a>
                 <p id="p_likes_{{post.id}}" class="mb-0 ml-25">{{ post.likes.count() }}</p>
-                <a onclick="unlike('{{post.id}}', 'p_likes_{{post.id}}', 'p_unlikes_{{post.id}}')" style="margin-left: 5%;" class="cursor-pointer bx bx-dislike user-profile-like font-medium-4"></a>
+                <a onclick="unlike('{{post.id}}', 'p_likes_{{post.id}}', 'p_unlikes_{{post.id}}')"
+                    style="margin-left: 5%;" class="cursor-pointer bx bx-dislike user-profile-like font-medium-4"></a>
                 <p id="p_unlikes_{{post.id}}" class="mb-0 ml-25">{{ post.unlikes.count() }}</p>
             </div>
             <div class="d-flex align-items-center">
-                <a onclick="focus_text_area('user-comment-textarea{{post.id}}')" class="cursor-pointer bx bx-comment-dots font-medium-4"></a>
+                <a onclick="focus_text_area('user-comment-textarea{{post.id}}')"
+                    class="cursor-pointer bx bx-comment-dots font-medium-4"></a>
                 <span class="ml-25">{{post.comments.count()}}</span>
                 <!-- user profile likes avatar start -->
                 <div class="d-none d-sm-block">
                     <ul class="list-unstyled users-list m-0 d-flex align-items-center ml-1">
                         {% for comment in post.comments[0:3] %}
-                        <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="{{comment.author.fname}} {{comment.author.lname}}" class="avatar pull-up">
+                        <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom"
+                            title="{{comment.author.fname}} {{comment.author.lname}}" class="avatar pull-up">
                             <img src="{{ comment.author.avatar(30) }}" alt="Avatar">
                         </li>
                         {% endfor %}
                         <li class="d-inline-block pl-50">
-                            <p class="text-muted mb-0 font-small-3">{% if post.comments.count() > 3 %} {% set count_comments=post.comments.count() %} {% set additional_comments = count_comments - 3 %} +{{additional_comments}} {% else %} {{post.comments.count()}} {% endif %}</p>
+                            <p class="text-muted mb-0 font-small-3">{% if post.comments.count() > 3 %}
+                                {% set count_comments=post.comments.count() %}
+                                {% set additional_comments = count_comments - 3 %} +{{additional_comments}} {% else %}
+                                {{post.comments.count()}} {% endif %}</p>
                         </li>
                     </ul>
                 </div>
@@ -59,7 +117,7 @@
     <div class="card-body py-0">
         <p>{{comment.comment}}</p>
     </div>
-    <hr style="margin-top: 0 !important"> 
+    <hr style="margin-top: 0 !important">
     {% endfor %}
     <div id="dv_name_timestamp" style="display: none;" class="card-header user-profile-header pt-0">
         <div class="avatar mr-50 align-top">
@@ -77,9 +135,10 @@
     {% endif %}
     <hr id="hr_" style="display: none;">
     <div class="d-flex align-items-center" style="padding-left: 10px; padding-right: 10px; padding-bottom: 15px;">
-        <input id="user-comment-textarea{{post.id}}" type="text" class="form-control chat-message-send mx-1" placeholder="Type your comment here...">
-        <button id="btn_post_comment" type="button" onclick="Comment('user-comment-textarea{{post.id}}','{{post.id}}')" class="btn btn-primary glow send d-lg-flex"><i
-                class="bx bx-paper-plane"></i>
+        <input id="user-comment-textarea{{post.id}}" type="text" class="form-control chat-message-send mx-1"
+            placeholder="Type your comment here...">
+        <button id="btn_post_comment" type="button" onclick="Comment('user-comment-textarea{{post.id}}','{{post.id}}')"
+            class="btn btn-primary glow send d-lg-flex"><i class="bx bx-paper-plane"></i>
             <span class="d-none d-lg-block ml-1">Send</span></button>
     </div>
     <!-- user profile comments ends -->
@@ -91,7 +150,8 @@
         <div class="card-content">
             <div class="card-header user-profile-header">
                 <div class="avatar mr-50 align-top">
-                    <img src="../static/app-assets/images/portrait/small/avatar-s-10.jpg" alt="user avatar" width="32" height="32">
+                    <img src="../static/app-assets/images/portrait/small/avatar-s-10.jpg" alt="user avatar" width="32"
+                        height="32">
                     <span class="avatar-status-online"></span>
                 </div>
                 <div class="d-inline-block mt-25">
@@ -105,11 +165,13 @@
             <div class="card-body py-0">
                 <p>Unlimited color options allows you to set your application color as per your branding 🤩.</p>
                 <div class="d-flex border rounded">
-                    <div class="user-profile-images"><img src="../static/app-assets/images/banner/banner-29.jpg" alt="post" class="img-fluid user-profile-card-image">
+                    <div class="user-profile-images"><img src="../static/app-assets/images/banner/banner-29.jpg"
+                            alt="post" class="img-fluid user-profile-card-image">
                     </div>
                     <div class="p-1">
                         <h5>Algolia Integration 😎</h5>
-                        <p class="user-profile-ellipsis">Algolia helps businesses across industries quickly create relevant, scalable, and lightning fast search and discovery experiences.</p>
+                        <p class="user-profile-ellipsis">Algolia helps businesses across industries quickly create
+                            relevant, scalable, and lightning fast search and discovery experiences.</p>
                     </div>
                 </div>
             </div>
@@ -120,14 +182,20 @@
                     <!-- user profile likes avatar start -->
                     <div class="d-none d-sm-block">
                         <ul class="list-unstyled users-list m-0 d-flex align-items-center ml-1">
-                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="Lilian Nenez" class="avatar pull-up">
-                                <img src="../static/app-assets/images/portrait/small/avatar-s-21.jpg" alt="Avatar" height="30" width="30">
+                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom"
+                                title="Lilian Nenez" class="avatar pull-up">
+                                <img src="../static/app-assets/images/portrait/small/avatar-s-21.jpg" alt="Avatar"
+                                    height="30" width="30">
                             </li>
-                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="Alberto Glotzbach" class="avatar pull-up">
-                                <img src="../static/app-assets/images/portrait/small/avatar-s-22.jpg" alt="Avatar" height="30" width="30">
+                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom"
+                                title="Alberto Glotzbach" class="avatar pull-up">
+                                <img src="../static/app-assets/images/portrait/small/avatar-s-22.jpg" alt="Avatar"
+                                    height="30" width="30">
                             </li>
-                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="Alberto Glotzbach" class="avatar pull-up">
-                                <img src="../static/app-assets/images/portrait/small/avatar-s-23.jpg" alt="Avatar" height="30" width="30">
+                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom"
+                                title="Alberto Glotzbach" class="avatar pull-up">
+                                <img src="../static/app-assets/images/portrait/small/avatar-s-23.jpg" alt="Avatar"
+                                    height="30" width="30">
                             </li>
                             <li class="d-inline-block pl-50">
                                 <p class="text-muted mb-0 font-small-3">
@@ -155,35 +223,40 @@
                 <div class="user-profile-stories swiper-container pt-1">
                     <div class="swiper-wrapper user-profile-images">
                         <div class="swiper-slide">
-                            <img src="../static/app-assets/images/profile/portraits/avatar-portrait-1.jpg" class="rounded user-profile-stories-image" alt="story image">
+                            <img src="../static/app-assets/images/profile/portraits/avatar-portrait-1.jpg"
+                                class="rounded user-profile-stories-image" alt="story image">
                             <div class="card-img-overlay bg-overlay">
                                 <div class="user-swiper-text">ureka_23
                                 </div>
                             </div>
                         </div>
                         <div class="swiper-slide">
-                            <img src="../static/app-assets/images/profile/portraits/avatar-portrait-2.jpg" class="rounded user-profile-stories-image" alt="story image">
+                            <img src="../static/app-assets/images/profile/portraits/avatar-portrait-2.jpg"
+                                class="rounded user-profile-stories-image" alt="story image">
                             <div class="card-img-overlay bg-overlay">
                                 <div class="user-swiper-text">
                                     devine_lena</div>
                             </div>
                         </div>
                         <div class="swiper-slide">
-                            <img src="../static/app-assets/images/profile/portraits/avatar-portrait-3.jpg" class="rounded user-profile-stories-image" alt="story image">
+                            <img src="../static/app-assets/images/profile/portraits/avatar-portrait-3.jpg"
+                                class="rounded user-profile-stories-image" alt="story image">
                             <div class="card-img-overlay bg-overlay">
                                 <div class="user-swiper-text">
                                     venice_like852</div>
                             </div>
                         </div>
                         <div class="swiper-slide">
-                            <img src="../static/app-assets/images/profile/portraits/avatar-portrait-4.jpg" class="rounded user-profile-stories-image" alt="story image">
+                            <img src="../static/app-assets/images/profile/portraits/avatar-portrait-4.jpg"
+                                class="rounded user-profile-stories-image" alt="story image">
                             <div class="card-img-overlay bg-overlay">
                                 <div class="user-swiper-text">june5211
                                 </div>
                             </div>
                         </div>
                         <div class="swiper-slide">
-                            <img src="../static/app-assets/images/profile/portraits/avatar-portrait-5.jpg" class="rounded user-profile-stories-image" alt="story image">
+                            <img src="../static/app-assets/images/profile/portraits/avatar-portrait-5.jpg"
+                                class="rounded user-profile-stories-image" alt="story image">
                             <div class="card-img-overlay bg-overlay">
                                 <div class="user-swiper-text">
                                     defloya_456</div>
@@ -200,7 +273,8 @@
         <div class="card-content">
             <div class="card-header user-profile-header">
                 <div class="avatar mr-50 align-top">
-                    <img src="../static/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avtar image" width="32" height="32">
+                    <img src="../static/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avtar image" width="32"
+                        height="32">
                     <span class="avatar-status-offline"></span>
                 </div>
                 <div class="d-inline-block mt-25">
@@ -210,7 +284,8 @@
                 <i class="cursor-pointer bx bx-dots-vertical-rounded float-right"></i>
             </div>
             <div class="card-body py-0">
-                <p>Beautifully crafted, clean & modern designed admin✨ theme with 3 different demos & light - dark versions. Lifetime updates with new demos and features is guaranteed</p>
+                <p>Beautifully crafted, clean & modern designed admin✨ theme with 3 different demos & light - dark
+                    versions. Lifetime updates with new demos and features is guaranteed</p>
             </div>
             <div class="card-footer d-flex justify-content-between pb-0">
                 <div class="d-flex align-items-center">
@@ -219,14 +294,20 @@
                     <!-- user profile likes avatar start -->
                     <div class="d-none d-sm-block">
                         <ul class="list-unstyled users-list m-0 d-flex align-items-center ml-1">
-                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="Lilian Nenez" class="avatar pull-up">
-                                <img src="../static/app-assets/images/portrait/small/avatar-s-24.jpg" alt="Avatar" height="30" width="30">
+                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom"
+                                title="Lilian Nenez" class="avatar pull-up">
+                                <img src="../static/app-assets/images/portrait/small/avatar-s-24.jpg" alt="Avatar"
+                                    height="30" width="30">
                             </li>
-                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="Alberto Glotzbach" class="avatar pull-up">
-                                <img src="../static/app-assets/images/portrait/small/avatar-s-25.jpg" alt="Avatar" height="30" width="30">
+                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom"
+                                title="Alberto Glotzbach" class="avatar pull-up">
+                                <img src="../static/app-assets/images/portrait/small/avatar-s-25.jpg" alt="Avatar"
+                                    height="30" width="30">
                             </li>
-                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="Alberto Glotzbach" class="avatar pull-up">
-                                <img src="../static/app-assets/images/portrait/small/avatar-s-26.jpg" alt="Avatar" height="30" width="30">
+                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom"
+                                title="Alberto Glotzbach" class="avatar pull-up">
+                                <img src="../static/app-assets/images/portrait/small/avatar-s-26.jpg" alt="Avatar"
+                                    height="30" width="30">
                             </li>
                             <li class="d-inline-block pl-50">
                                 <p class="text-muted mb-0 font-small-3">
@@ -248,7 +329,8 @@
         <!-- user profile comments start -->
         <div class="card-header user-profile-header pt-0">
             <div class="avatar mr-50 align-top">
-                <img src="../static/app-assets/images/portrait/small/avatar-s-12.jpg" alt="avtar image" width="32" height="32">
+                <img src="../static/app-assets/images/portrait/small/avatar-s-12.jpg" alt="avtar image" width="32"
+                    height="32">
                 <span class="avatar-status-away"></span>
             </div>
             <div class="d-inline-block mt-25">
@@ -269,7 +351,8 @@
         <hr>
         <div class="card-header user-profile-header pt-0">
             <div class="avatar mr-50 align-top">
-                <img src="../static/app-assets/images/portrait/small/avatar-s-13.jpg" alt="avtar images" width="32" height="32">
+                <img src="../static/app-assets/images/portrait/small/avatar-s-13.jpg" alt="avtar images" width="32"
+                    height="32">
                 <span class="avatar-status-busy"></span>
             </div>
             <div class="d-inline-block mt-25">
@@ -291,7 +374,8 @@
         <div class="form-group row align-items-center px-1">
             <div class="col-2 col-sm-1">
                 <div class="avatar">
-                    <img src="../static/app-assets/images/portrait/small/avatar-s-2.jpg" alt="avtar images" width="32" height="32">
+                    <img src="../static/app-assets/images/portrait/small/avatar-s-2.jpg" alt="avtar images" width="32"
+                        height="32">
                     <span class="avatar-status-online"></span>
                 </div>
             </div>
@@ -307,7 +391,8 @@
         <div class="card-content">
             <div class="card-header user-profile-header">
                 <div class="avatar mr-50 align-top">
-                    <img src="../static/app-assets/images/portrait/small/avatar-s-14.jpg" alt="avtar images" width="32" height="32">
+                    <img src="../static/app-assets/images/portrait/small/avatar-s-14.jpg" alt="avtar images" width="32"
+                        height="32">
                     <span class="avatar-status-online"></span>
                 </div>
                 <div class="d-inline-block mt-25">
@@ -317,7 +402,8 @@
                 <i class='cursor-pointer bx bx-dots-vertical-rounded float-right'></i>
             </div>
             <div class="card-body py-0">
-                <p>To avoid winding up with a large bundle, it’s good to get ahead of the problem and use "Code Splitting 🕹".</p>
+                <p>To avoid winding up with a large bundle, it’s good to get ahead of the problem and use "Code
+                    Splitting 🕹".</p>
                 <img src="../static/app-assets/images/profile/post-media/2.jpg" alt="user image" class="img-fluid">
             </div>
             <div class="card-footer d-flex justify-content-between pt-1">
@@ -327,14 +413,20 @@
                     <!-- user profile likes avatar start -->
                     <div class="d-none d-sm-block">
                         <ul class="list-unstyled users-list m-0 d-flex align-items-center ml-1">
-                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="Lilian Nenez" class="avatar pull-up">
-                                <img src="../static/app-assets/images/portrait/small/avatar-s-11.jpg" alt="Avatar" height="30" width="30">
+                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom"
+                                title="Lilian Nenez" class="avatar pull-up">
+                                <img src="../static/app-assets/images/portrait/small/avatar-s-11.jpg" alt="Avatar"
+                                    height="30" width="30">
                             </li>
-                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="Alberto Glotzbach" class="avatar pull-up">
-                                <img src="../static/app-assets/images/portrait/small/avatar-s-12.jpg" alt="Avatar" height="30" width="30">
+                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom"
+                                title="Alberto Glotzbach" class="avatar pull-up">
+                                <img src="../static/app-assets/images/portrait/small/avatar-s-12.jpg" alt="Avatar"
+                                    height="30" width="30">
                             </li>
-                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="Alberto Glotzbach" class="avatar pull-up">
-                                <img src="../static/app-assets/images/portrait/small/avatar-s-13.jpg" alt="Avatar" height="30" width="30">
+                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom"
+                                title="Alberto Glotzbach" class="avatar pull-up">
+                                <img src="../static/app-assets/images/portrait/small/avatar-s-13.jpg" alt="Avatar"
+                                    height="30" width="30">
                             </li>
                             <li class="d-inline-block pl-50">
                                 <p class="text-muted mb-0 font-small-3">
@@ -359,7 +451,8 @@
         <div class="card-content">
             <div class="card-header user-profile-header">
                 <div class="avatar mr-50 align-top">
-                    <img src="../static/app-assets/images/portrait/small/avatar-s-18.jpg" alt="avtar images" width="32" height="32">
+                    <img src="../static/app-assets/images/portrait/small/avatar-s-18.jpg" alt="avtar images" width="32"
+                        height="32">
                     <span class="avatar-status-online"></span>
                 </div>
                 <div class="d-inline-block mt-25">
@@ -370,7 +463,9 @@
                 <i class='cursor-pointer bx bx-dots-vertical-rounded float-right'></i>
             </div>
             <div class="card-body py-0">
-                <p>It's more efficient 🙌 to split each route's components into a separate chunk, and only load them when the route is visited. Hikanotes comes with built-in light and dark layouts, select as per your preference.
+                <p>It's more efficient 🙌 to split each route's components into a separate chunk, and only load them
+                    when the route is visited. Hikanotes comes with built-in light and dark layouts, select as per your
+                    preference.
                 </p>
             </div>
             <div class="card-footer d-flex justify-content-between pt-1">

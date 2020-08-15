@@ -37,7 +37,7 @@
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="../static/assets/css/style.css">    
+    <link rel="stylesheet" type="text/css" href="../static/assets/css/style.css">
     <!-- END: Custom CSS-->
 
     <style>
@@ -66,458 +66,477 @@
                 display: none;
             }
 
-            #dv_quick_links{
+            #dv_quick_links {
                 display: none;
             }
 
-            #dv_info{
+            #dv_info {
                 display: none;
             }
 
-            #dv_trending{
+            #dv_trending {
                 display: none;
             }
 
-            #dv_page{
+            #dv_page {
                 display: none;
             }
 
-            #dv_event{
+            #dv_event {
                 display: none;
             }
 
-            #i_unfollow_icon{
+            #follow_icon {
+                display: block !important;
+            }
+
+            #unfollow_icon {
+                display: block !important;
+            }
+
+            #i_unfollow_icon {
                 display: block !important;
             }
         }
 
-        .col-lg-9{
+        .col-lg-9 {
             padding-left: 0px !important;
             padding-right: 0px !important;
         }
-
     </style>
 </head>
 <!-- END: Head-->
 
 <!-- BEGIN: Body-->
 {% if title == 'Chats - Hikanotes' %}
-<body class="vertical-layout vertical-menu-modern content-left-sidebar chat-application navbar-sticky footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="content-left-sidebar">
-{% else %}
-<body class="vertical-layout vertical-menu-modern 2-columns  navbar-sticky footer-static menu-collapsed "
-    data-open="click" data-menu="vertical-menu-modern" data-col="2-columns" onload="setup()">
-{% endif %}
 
-    <!-- BEGIN: Header-->
-    <div class="header-navbar-shadow"></div>
-    <nav class="header-navbar main-header-navbar navbar-expand-lg navbar navbar-with-menu fixed-top ">
-        <div class="navbar-wrapper">
-            <div class="navbar-container content">
-                <div class="navbar-collapse" id="navbar-mobile">
-                    <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
-                        <ul class="nav navbar-nav">
-                            <li class="nav-item mobile-menu d-xl-none mr-auto"><a
-                                    class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i
-                                        class="ficon bx bx-menu"></i></a></li>
-                        </ul>
-                        <ul class="nav navbar-nav bookmark-icons">
-                            <a href="{{url_for('main.index')}}"><img id="img_logo" style="max-width: 25%;"
-                                src="../static/app-assets/images/logo/hikanotes.png">
-                            </a>
-                        </ul>
-                        <ul class="nav navbar-nav" style="display: none;">
-                            <li class="nav-item d-none d-lg-block"><a class="nav-link bookmark-star"><i
-                                        class="ficon bx bx-star warning"></i></a>
-                                <div class="bookmark-input search-input">
-                                    <div class="bookmark-input-icon"><i class="bx bx-search primary"></i></div>
-                                    <input class="form-control input" type="text" placeholder="Explore Hikanotes..."
-                                        tabindex="0" data-search="template-search">
+<body class="vertical-layout vertical-menu-modern content-left-sidebar chat-application navbar-sticky footer-static  "
+    data-open="click" data-menu="vertical-menu-modern" data-col="content-left-sidebar">
+    {% else %}
+
+    <body class="vertical-layout vertical-menu-modern 2-columns  navbar-sticky footer-static menu-collapsed "
+        data-open="click" data-menu="vertical-menu-modern" data-col="2-columns" onload="setup()">
+        {% endif %}
+
+        <!-- BEGIN: Header-->
+        <div class="header-navbar-shadow"></div>
+        <nav class="header-navbar main-header-navbar navbar-expand-lg navbar navbar-with-menu fixed-top ">
+            <div class="navbar-wrapper">
+                <div class="navbar-container content">
+                    <div class="navbar-collapse" id="navbar-mobile">
+                        <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
+                            <ul class="nav navbar-nav">
+                                <li class="nav-item mobile-menu d-xl-none mr-auto"><a
+                                        class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i
+                                            class="ficon bx bx-menu"></i></a></li>
+                            </ul>
+                            <ul class="nav navbar-nav bookmark-icons">
+                                <a href="{{url_for('main.index')}}"><img id="img_logo" style="max-width: 25%;"
+                                        src="../static/app-assets/images/logo/hikanotes.png">
+                                </a>
+                            </ul>
+                            <ul class="nav navbar-nav" style="display: none;">
+                                <li class="nav-item d-none d-lg-block"><a class="nav-link bookmark-star"><i
+                                            class="ficon bx bx-star warning"></i></a>
+                                    <div class="bookmark-input search-input">
+                                        <div class="bookmark-input-icon"><i class="bx bx-search primary"></i></div>
+                                        <input class="form-control input" type="text" placeholder="Explore Hikanotes..."
+                                            tabindex="0" data-search="template-search">
+                                        <ul class="search-list"></ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <ul class="nav navbar-nav float-right">
+                            <li class="dropdown dropdown-language nav-item"><a class="dropdown-toggle nav-link"
+                                    id="dropdown-flag" href="#" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false"><i class="flag-icon flag-icon-us"></i><span
+                                        class="selected-language">English</span></a>
+                                <div class="dropdown-menu" aria-labelledby="dropdown-flag"><a class="dropdown-item"
+                                        href="#" data-language="en"><i class="flag-icon flag-icon-us mr-50"></i>
+                                        English</a><a class="dropdown-item" href="#" data-language="fr"><i
+                                            class="flag-icon flag-icon-fr mr-50"></i> French</a><a class="dropdown-item"
+                                        href="#" data-language="de"><i class="flag-icon flag-icon-de mr-50"></i>
+                                        German</a><a class="dropdown-item" href="#" data-language="pt"><i
+                                            class="flag-icon flag-icon-pt mr-50"></i> Portuguese</a></div>
+                            </li>
+                            <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i
+                                        class="ficon bx bx-fullscreen"></i></a></li>
+                            <li class="nav-item nav-search"><a class="nav-link nav-link-search"><i
+                                        class="ficon bx bx-search"></i></a>
+                                <div class="search-input">
+                                    <div class="search-input-icon"><i class="bx bx-search primary"></i></div>
+                                    <input class="input" type="text" placeholder="Explore Hikanotes..." tabindex="-1"
+                                        data-search="template-search">
+                                    <div class="search-input-close"><i class="bx bx-x"></i></div>
                                     <ul class="search-list"></ul>
+                                </div>
+                            </li>
+                            <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label"
+                                    href="#" data-toggle="dropdown"><i
+                                        class="ficon bx bx-bell bx-tada bx-flip-horizontal"></i><span
+                                        class="badge badge-pill badge-danger badge-up">5</span></a>
+                                <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
+                                    <li class="dropdown-menu-header">
+                                        <div class="dropdown-header px-1 py-75 d-flex justify-content-between"><span
+                                                class="notification-title">7 new Notification</span><span
+                                                class="text-bold-400 cursor-pointer">Mark all as read</span></div>
+                                    </li>
+                                    <li class="scrollable-container media-list"><a
+                                            class="d-flex justify-content-between" href="javascript:void(0)">
+                                            <div class="media d-flex align-items-center">
+                                                <div class="media-left pr-0">
+                                                    <div class="avatar mr-1 m-0"><img
+                                                            src="../static/app-assets/images/portrait/small/avatar-s-11.jpg"
+                                                            alt="avatar" height="39" width="39"></div>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h6 class="media-heading"><span class="text-bold-500">Congratulate
+                                                            Socrates Itumay</span> for work anniversaries</h6><small
+                                                        class="notification-text">Mar 15 12:32pm</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <div class="d-flex justify-content-between read-notification cursor-pointer">
+                                            <div class="media d-flex align-items-center">
+                                                <div class="media-left pr-0">
+                                                    <div class="avatar mr-1 m-0"><img
+                                                            src="../static/app-assets/images/portrait/small/avatar-s-16.jpg"
+                                                            alt="avatar" height="39" width="39"></div>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h6 class="media-heading"><span class="text-bold-500">New
+                                                            Message</span>
+                                                        received</h6><small class="notification-text">You have 18 unread
+                                                        messages</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between cursor-pointer">
+                                            <div class="media d-flex align-items-center py-0">
+                                                <div class="media-left pr-0"><img class="mr-1"
+                                                        src="../static/app-assets/images/icon/sketch-mac-icon.png"
+                                                        alt="avatar" height="39" width="39"></div>
+                                                <div class="media-body">
+                                                    <h6 class="media-heading"><span class="text-bold-500">Updates
+                                                            Available</span></h6><small class="notification-text">Sketch
+                                                        50.2 is currently newly added</small>
+                                                </div>
+                                                <div class="media-right pl-0">
+                                                    <div class="row border-left text-center">
+                                                        <div class="col-12 px-50 py-75 border-bottom">
+                                                            <h6 class="media-heading text-bold-500 mb-0">Update</h6>
+                                                        </div>
+                                                        <div class="col-12 px-50 py-75">
+                                                            <h6 class="media-heading mb-0">Close</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between cursor-pointer">
+                                            <div class="media d-flex align-items-center">
+                                                <div class="media-left pr-0">
+                                                    <div class="avatar bg-primary bg-lighten-5 mr-1 m-0 p-25"><span
+                                                            class="avatar-content text-primary font-medium-2">LD</span>
+                                                    </div>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h6 class="media-heading"><span class="text-bold-500">New
+                                                            customer</span> is registered</h6><small
+                                                        class="notification-text">1 hrs ago</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="cursor-pointer">
+                                            <div class="media d-flex align-items-center justify-content-between">
+                                                <div class="media-left pr-0">
+                                                    <div class="media-body">
+                                                        <h6 class="media-heading">New Offers</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="media-right">
+                                                    <div class="custom-control custom-switch">
+                                                        <input class="custom-control-input" type="checkbox" checked
+                                                            id="notificationSwtich">
+                                                        <label class="custom-control-label"
+                                                            for="notificationSwtich"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between cursor-pointer">
+                                            <div class="media d-flex align-items-center">
+                                                <div class="media-left pr-0">
+                                                    <div class="avatar bg-danger bg-lighten-5 mr-1 m-0 p-25"><span
+                                                            class="avatar-content"><i
+                                                                class="bx bxs-heart text-danger"></i></span></div>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h6 class="media-heading"><span
+                                                            class="text-bold-500">Application</span>
+                                                        has been approved</h6><small class="notification-text">6 hrs
+                                                        ago</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between read-notification cursor-pointer">
+                                            <div class="media d-flex align-items-center">
+                                                <div class="media-left pr-0">
+                                                    <div class="avatar mr-1 m-0"><img
+                                                            src="../static/app-assets/images/portrait/small/avatar-s-4.jpg"
+                                                            alt="avatar" height="39" width="39"></div>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h6 class="media-heading"><span class="text-bold-500">New
+                                                            file</span>
+                                                        has been uploaded</h6><small class="notification-text">4 hrs
+                                                        ago</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between cursor-pointer">
+                                            <div class="media d-flex align-items-center">
+                                                <div class="media-left pr-0">
+                                                    <div class="avatar bg-rgba-danger m-0 mr-1 p-25">
+                                                        <div class="avatar-content"><i
+                                                                class="bx bx-detail text-danger"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h6 class="media-heading"><span class="text-bold-500">Finance
+                                                            report</span> has been generated</h6><small
+                                                        class="notification-text">25 hrs ago</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between cursor-pointer">
+                                            <div class="media d-flex align-items-center border-0">
+                                                <div class="media-left pr-0">
+                                                    <div class="avatar mr-1 m-0"><img
+                                                            src="../static/app-assets/images/portrait/small/avatar-s-16.jpg"
+                                                            alt="avatar" height="39" width="39"></div>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h6 class="media-heading"><span class="text-bold-500">New
+                                                            customer</span> comment recieved</h6><small
+                                                        class="notification-text">2 days ago</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="dropdown-menu-footer"><a
+                                            class="dropdown-item p-50 text-primary justify-content-center"
+                                            href="javascript:void(0)">Read all notifications</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown dropdown-user nav-item">
+                                <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
+                                    <div class="user-nav d-sm-flex d-none">
+                                        <span class="user-name">{{current_user.fname}} {{current_user.lname}}</span>
+                                        <span style="display: none;" class="user-status text-muted">Available</span>
+                                    </div><span><img class="round" src="{{current_user.avatar(40)}}" alt="avatar"
+                                            height="40" width="40"></span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right pb-0">
+                                    {% if ((title == 'User Profile - Hikanotes') and (user == current_user)) or (title == 'Chats - Hikanotes') %}
+                                    <a class="dropdown-item" href="{{ url_for('main.index') }}"><i
+                                            class="bx bx-home mr-50"></i> Home</a>
+                                    {% endif %}
+                                    {% if (title == 'User Profile - Hikanotes') and (user != current_user) %}
+                                    <a class="dropdown-item"
+                                        href="{{ url_for('main.user', username=current_user.username) }}"><i
+                                            class="bx bx-user mr-50"></i> My Profile</a>
+                                    <a class="dropdown-item" href="{{ url_for('main.index') }}"><i
+                                            class="bx bx-home mr-50"></i> Home</a>
+                                    {% endif %}
+                                    <!-- <a class="dropdown-item"
+                                    href="app-email.html"><i class="bx bx-envelope mr-50"></i> My
+                                    Inbox</a> -->
+                                    <!-- <a class="dropdown-item" href="app-todo.html"><i
+                                        class="bx bx-check-square mr-50"></i> Task</a> -->
+                                    <a class="dropdown-item" href="{{url_for('main.chats')}}"><i
+                                            class="bx bx-chat mr-50"></i> Chats</a>
+                                    <div class="dropdown-divider mb-0"></div><a class="dropdown-item"
+                                        href="{{url_for('auth.logout')}}"><i class="bx bx-power-off mr-50"></i>
+                                        Logout</a>
                                 </div>
                             </li>
                         </ul>
                     </div>
-                    <ul class="nav navbar-nav float-right">
-                        <li class="dropdown dropdown-language nav-item"><a class="dropdown-toggle nav-link"
-                                id="dropdown-flag" href="#" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false"><i class="flag-icon flag-icon-us"></i><span
-                                    class="selected-language">English</span></a>
-                            <div class="dropdown-menu" aria-labelledby="dropdown-flag"><a class="dropdown-item" href="#"
-                                    data-language="en"><i class="flag-icon flag-icon-us mr-50"></i> English</a><a
-                                    class="dropdown-item" href="#" data-language="fr"><i
-                                        class="flag-icon flag-icon-fr mr-50"></i> French</a><a class="dropdown-item"
-                                    href="#" data-language="de"><i class="flag-icon flag-icon-de mr-50"></i>
-                                    German</a><a class="dropdown-item" href="#" data-language="pt"><i
-                                        class="flag-icon flag-icon-pt mr-50"></i> Portuguese</a></div>
-                        </li>
-                        <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand"><i
-                                    class="ficon bx bx-fullscreen"></i></a></li>
-                        <li class="nav-item nav-search"><a class="nav-link nav-link-search"><i
-                                    class="ficon bx bx-search"></i></a>
-                            <div class="search-input">
-                                <div class="search-input-icon"><i class="bx bx-search primary"></i></div>
-                                <input class="input" type="text" placeholder="Explore Hikanotes..." tabindex="-1"
-                                    data-search="template-search">
-                                <div class="search-input-close"><i class="bx bx-x"></i></div>
-                                <ul class="search-list"></ul>
+                </div>
+            </div>
+        </nav>
+        <!-- END: Header-->
+
+        <div id="dv_side_bar" class="main-menu menu-fixed menu-light menu-accordion menu-shadow expanded"
+            data-scroll-to-active="true"
+            style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+            <div class="navbar-header expanded">
+                <ul class="nav navbar-nav flex-row">
+                    <li class="nav-item mr-auto"><a class="navbar-brand"
+                            href="../../../html/ltr/vertical-menu-template/index.html">
+                            <div class="brand-logo"><img class="logo" src="../static/app-assets/images/logo/logo.png">
                             </div>
-                        </li>
-                        <li class="dropdown dropdown-notification nav-item"><a class="nav-link nav-link-label" href="#"
-                                data-toggle="dropdown"><i class="ficon bx bx-bell bx-tada bx-flip-horizontal"></i><span
-                                    class="badge badge-pill badge-danger badge-up">5</span></a>
-                            <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
-                                <li class="dropdown-menu-header">
-                                    <div class="dropdown-header px-1 py-75 d-flex justify-content-between"><span
-                                            class="notification-title">7 new Notification</span><span
-                                            class="text-bold-400 cursor-pointer">Mark all as read</span></div>
-                                </li>
-                                <li class="scrollable-container media-list"><a class="d-flex justify-content-between"
-                                        href="javascript:void(0)">
-                                        <div class="media d-flex align-items-center">
-                                            <div class="media-left pr-0">
-                                                <div class="avatar mr-1 m-0"><img
-                                                        src="../static/app-assets/images/portrait/small/avatar-s-11.jpg"
-                                                        alt="avatar" height="39" width="39"></div>
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="media-heading"><span class="text-bold-500">Congratulate
-                                                        Socrates Itumay</span> for work anniversaries</h6><small
-                                                    class="notification-text">Mar 15 12:32pm</small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <div class="d-flex justify-content-between read-notification cursor-pointer">
-                                        <div class="media d-flex align-items-center">
-                                            <div class="media-left pr-0">
-                                                <div class="avatar mr-1 m-0"><img
-                                                        src="../static/app-assets/images/portrait/small/avatar-s-16.jpg"
-                                                        alt="avatar" height="39" width="39"></div>
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="media-heading"><span class="text-bold-500">New Message</span>
-                                                    received</h6><small class="notification-text">You have 18 unread
-                                                    messages</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between cursor-pointer">
-                                        <div class="media d-flex align-items-center py-0">
-                                            <div class="media-left pr-0"><img class="mr-1"
-                                                    src="../static/app-assets/images/icon/sketch-mac-icon.png"
-                                                    alt="avatar" height="39" width="39"></div>
-                                            <div class="media-body">
-                                                <h6 class="media-heading"><span class="text-bold-500">Updates
-                                                        Available</span></h6><small class="notification-text">Sketch
-                                                    50.2 is currently newly added</small>
-                                            </div>
-                                            <div class="media-right pl-0">
-                                                <div class="row border-left text-center">
-                                                    <div class="col-12 px-50 py-75 border-bottom">
-                                                        <h6 class="media-heading text-bold-500 mb-0">Update</h6>
-                                                    </div>
-                                                    <div class="col-12 px-50 py-75">
-                                                        <h6 class="media-heading mb-0">Close</h6>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between cursor-pointer">
-                                        <div class="media d-flex align-items-center">
-                                            <div class="media-left pr-0">
-                                                <div class="avatar bg-primary bg-lighten-5 mr-1 m-0 p-25"><span
-                                                        class="avatar-content text-primary font-medium-2">LD</span>
-                                                </div>
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="media-heading"><span class="text-bold-500">New
-                                                        customer</span> is registered</h6><small
-                                                    class="notification-text">1 hrs ago</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="cursor-pointer">
-                                        <div class="media d-flex align-items-center justify-content-between">
-                                            <div class="media-left pr-0">
-                                                <div class="media-body">
-                                                    <h6 class="media-heading">New Offers</h6>
-                                                </div>
-                                            </div>
-                                            <div class="media-right">
-                                                <div class="custom-control custom-switch">
-                                                    <input class="custom-control-input" type="checkbox" checked
-                                                        id="notificationSwtich">
-                                                    <label class="custom-control-label"
-                                                        for="notificationSwtich"></label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between cursor-pointer">
-                                        <div class="media d-flex align-items-center">
-                                            <div class="media-left pr-0">
-                                                <div class="avatar bg-danger bg-lighten-5 mr-1 m-0 p-25"><span
-                                                        class="avatar-content"><i
-                                                            class="bx bxs-heart text-danger"></i></span></div>
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="media-heading"><span class="text-bold-500">Application</span>
-                                                    has been approved</h6><small class="notification-text">6 hrs
-                                                    ago</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between read-notification cursor-pointer">
-                                        <div class="media d-flex align-items-center">
-                                            <div class="media-left pr-0">
-                                                <div class="avatar mr-1 m-0"><img
-                                                        src="../static/app-assets/images/portrait/small/avatar-s-4.jpg"
-                                                        alt="avatar" height="39" width="39"></div>
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="media-heading"><span class="text-bold-500">New file</span>
-                                                    has been uploaded</h6><small class="notification-text">4 hrs
-                                                    ago</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between cursor-pointer">
-                                        <div class="media d-flex align-items-center">
-                                            <div class="media-left pr-0">
-                                                <div class="avatar bg-rgba-danger m-0 mr-1 p-25">
-                                                    <div class="avatar-content"><i class="bx bx-detail text-danger"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="media-heading"><span class="text-bold-500">Finance
-                                                        report</span> has been generated</h6><small
-                                                    class="notification-text">25 hrs ago</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between cursor-pointer">
-                                        <div class="media d-flex align-items-center border-0">
-                                            <div class="media-left pr-0">
-                                                <div class="avatar mr-1 m-0"><img
-                                                        src="../static/app-assets/images/portrait/small/avatar-s-16.jpg"
-                                                        alt="avatar" height="39" width="39"></div>
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="media-heading"><span class="text-bold-500">New
-                                                        customer</span> comment recieved</h6><small
-                                                    class="notification-text">2 days ago</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="dropdown-menu-footer"><a
-                                        class="dropdown-item p-50 text-primary justify-content-center"
-                                        href="javascript:void(0)">Read all notifications</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown dropdown-user nav-item">
-                            <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                <div class="user-nav d-sm-flex d-none">
-                                    <span class="user-name">{{current_user.fname}} {{current_user.lname}}</span>
-                                    <span style="display: none;" class="user-status text-muted">Available</span>
-                                </div><span><img class="round" src="{{current_user.avatar(40)}}" alt="avatar"
-                                        height="40" width="40"></span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right pb-0">
-                                {% if ((title == 'User Profile - Hikanotes') and (user == current_user)) or (title == 'Chats - Hikanotes') %}
-                                <a class="dropdown-item"
-                                    href="{{ url_for('main.index') }}"><i
-                                        class="bx bx-home mr-50"></i> Home</a>
-                                {% endif %}
-                                {% if (title == 'User Profile - Hikanotes') and (user != current_user) %}
-                                <a class="dropdown-item"
-                                    href="{{ url_for('main.user', username=current_user.username) }}"><i
-                                        class="bx bx-user mr-50"></i> My Profile</a>
-                                <a class="dropdown-item" href="{{ url_for('main.index') }}"><i
-                                            class="bx bx-home mr-50"></i> Home</a>
-                                {% endif %}
-                                <!-- <a class="dropdown-item"
-                                    href="app-email.html"><i class="bx bx-envelope mr-50"></i> My
-                                    Inbox</a> -->
-                                <!-- <a class="dropdown-item" href="app-todo.html"><i
-                                        class="bx bx-check-square mr-50"></i> Task</a> -->
-                                <a class="dropdown-item"
-                                    href="{{url_for('main.chats')}}"><i class="bx bx-chat mr-50"></i> Chats</a>
-                                <div class="dropdown-divider mb-0"></div><a class="dropdown-item"
-                                    href="{{url_for('auth.logout')}}"><i class="bx bx-power-off mr-50"></i> Logout</a>
-                            </div>
-                        </li>
-                    </ul>
+                            <h2 class="brand-text mb-0">Hikanotes</h2>
+                        </a></li>
+                    <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i
+                                class="bx bx-x d-block d-xl-none font-medium-4 primary"></i><i
+                                class="toggle-icon font-medium-4 d-none d-xl-block primary bx bx-circle"
+                                data-ticon="bx-disc"></i></a></li>
+                </ul>
+            </div>
+            <div class="shadow-bottom" style="display: block;"></div>
+            <div class="main-menu-content ps ps--active-y" style="height: 690px;">
+                <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation"
+                    data-icon-style="lines" style="margin-top: 10%;">
+                    <li class="nav-item"><a href="{{url_for('main.index')}}"><i style="font-size: 1.7rem;"
+                                class="bx bx-home-alt"></i><span class="menu-title">Home</span></a>
+                    </li>
+                    <li class="nav-item"><a href="{{url_for('main.explore')}}"><i style="font-size: 1.7rem;"
+                                class="bx bx-hash"></i><span class="menu-title">Explore</span></a>
+                    </li>
+                    <li class="nav-item"><a href="{{url_for('main.chats')}}"><i style="font-size: 1.7rem;"
+                                class="bx bx-chat"></i><span class="menu-title">Chats</span></a>
+                    </li>
+                </ul>
+                <div class="ps__rail-x" style="left: 0px; bottom: -278px;">
+                    <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                </div>
+                <div class="ps__rail-y" style="top: 278px; height: 1190px; right: 0px;">
+                    <div class="ps__thumb-y" tabindex="0" style="top: 129px; height: 555px;"></div>
                 </div>
             </div>
         </div>
-    </nav>
-    <!-- END: Header-->
-
-    <div id="dv_side_bar" class="main-menu menu-fixed menu-light menu-accordion menu-shadow expanded"
-        data-scroll-to-active="true"
-        style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-        <div class="navbar-header expanded">
-            <ul class="nav navbar-nav flex-row">
-                <li class="nav-item mr-auto"><a class="navbar-brand"
-                        href="../../../html/ltr/vertical-menu-template/index.html">
-                        <div class="brand-logo"><img class="logo" src="../static/app-assets/images/logo/logo.png"></div>
-                        <h2 class="brand-text mb-0">Hikanotes</h2>
-                    </a></li>
-                <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i
-                            class="bx bx-x d-block d-xl-none font-medium-4 primary"></i><i
-                            class="toggle-icon font-medium-4 d-none d-xl-block primary bx bx-circle"
-                            data-ticon="bx-disc"></i></a></li>
-            </ul>
-        </div>
-        <div class="shadow-bottom" style="display: block;"></div>
-        <div class="main-menu-content ps ps--active-y" style="height: 690px;">
-            <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation"
-                data-icon-style="lines" style="margin-top: 10%;">
-                <li class="nav-item"><a href="{{url_for('main.index')}}"><i style="font-size: 1.7rem;"
-                            class="bx bx-home-alt"></i><span class="menu-title">Home</span></a>
-                </li>
-                <li class="nav-item"><a href="{{url_for('main.explore')}}"><i style="font-size: 1.7rem;"
-                            class="bx bx-hash"></i><span class="menu-title">Explore</span></a>
-                </li>
-                <li class="nav-item"><a href="{{url_for('main.chats')}}"><i style="font-size: 1.7rem;" 
-                    class="bx bx-chat"></i><span class="menu-title">Chats</span></a>
-                </li>
-            </ul>
-            <div class="ps__rail-x" style="left: 0px; bottom: -278px;">
-                <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
-            </div>
-            <div class="ps__rail-y" style="top: 278px; height: 1190px; right: 0px;">
-                <div class="ps__thumb-y" tabindex="0" style="top: 129px; height: 555px;"></div>
-            </div>
-        </div>
-    </div>
-
-    
-    {% block content %}{% endblock %}
-
-    <!-- BEGIN: Footer-->
-    <footer class="footer footer-static footer-light">
-        <p class="clearfix mb-0"><span class="float-left d-inline-block"><script>document.write(new Date().getFullYear())</script> &copy; Hikanotes</span><span
-                class="float-right d-sm-inline-block d-none">Crafted with<i
-                    class="bx bxs-heart pink mx-50 font-small-3"></i>by<a href="https://arnoldnderitu.io" target="_blank">Arnold :-)</a></span>
-            <button class="btn btn-primary btn-icon scroll-top" type="button"><i
-                    class="bx bx-up-arrow-alt"></i></button>
-        </p>
-    </footer>
-    <!-- END: Footer-->
 
 
-    <!-- BEGIN: Vendor JS-->
-    <script src="../static/app-assets/vendors/js/vendors.min.js"></script>
-    <script src="../static/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.min.js"></script>
-    <script src="../static/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.min.js"></script>
-    <script src="../static/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js"></script>
-    
-    <script src="../static/app-assets/vendors/js/extensions/swiper.min.js"></script>
-    
-    <script src="../static/app-assets/js/scripts/configs/vertical-menu-light.min.js"></script>
-    <script src="../static/app-assets/js/core/app-menu.min.js"></script>
-    <script src="../static/app-assets/js/core/app.min.js"></script>
-    <script src="../static/app-assets/js/scripts/components.min.js"></script>
-    <script src="../static/app-assets/js/scripts/footer.min.js"></script>
-    <script src="../static/app-assets/js/scripts/customizer.min.js"></script>
-    <script src="../static/app-assets/js/scripts/pages/page-user-profile.min.js"></script>
-    <script src="../static/app-assets/js/custom.js"></script>
-    <script src="../static/app-assets/js/scripts/pages/app-chat.min.js"></script>
-    <script src="../static/app-assets/js/scripts/pages/app-chat.min.js"></script>
-    <scripts>
-        {{ moment.include_moment() }}
-        {{ moment.lang(g.locale) }}
-    </scripts>
-    <script>
-        function translate(sourceElem, destElem, sourceLang, destLang) {
-            $(destElem).html('<img src="{{ url_for('static', filename='loading.gif') }}">');
-            $.post('/translate', {
-                text: $(sourceElem).text(),
-                source_language: sourceLang,
-                dest_language: destLang
-            }).done(function(response) {
-                $(destElem).text(response['text'])
-            }).fail(function() {
-                $(destElem).text("{{ _('Error: Could not contact server.') }}");
-            });
-        }
-        $(function () {
-            var timer = null;
-            var xhr = null;
-            $('.user_popup').hover(
-                function(event) {
-                    // mouse in event handler
-                    var elem = $(event.currentTarget);
-                    timer = setTimeout(function() {
-                        timer = null;
-                        xhr = $.ajax(
-                            '/user/' + elem.first().text().trim() + '/popup').done(
-                                function(data) {
-                                    xhr = null;
-                                    elem.popover({
-                                        trigger: 'manual',
-                                        html: true,
-                                        animation: false,
-                                        container: elem,
-                                        content: data
-                                    }).popover('show');
-                                    flask_moment_render_all();
-                                }
-                            );
-                    }, 1000);
-                },
-                function(event) {
-                    // mouse out event handler
-                    var elem = $(event.currentTarget);
-                    if (timer) {
-                        clearTimeout(timer);
-                        timer = null;
-                    }
-                    else if (xhr) {
-                        xhr.abort();
-                        xhr = null;
-                    }
-                    else {
-                        elem.popover('destroy');
-                    }
-                }
-            );
-        });
-        function set_message_count(n) {
-            $('#message_count').text(n);
-            $('#message_count').css('visibility', n ? 'visible' : 'hidden');
-        }
-        function set_task_progress(task_id, progress) {
-            $('#' + task_id + '-progress').text(progress);
-        }
-        {% if current_user.is_authenticated %}
-        $(function() {
-            var since = 0;
-            setInterval(function() {
-                $.ajax('{{ url_for('main.notifications') }}?since=' + since).done(
-                    function(notifications) {
-                        for (var i = 0; i < notifications.length; i++) {
-                            switch (notifications[i].name) {
-                                case 'unread_message_count':
-                                    set_message_count(notifications[i].data);
-                                    break;
-                                case 'task_progress':
-                                    set_task_progress(notifications[i].data.task_id,
-                                        notifications[i].data.progress);
-                                    break;
-                            }
-                            since = notifications[i].timestamp;
+        {% block content %}{% endblock %}
+
+        <!-- BEGIN: Footer-->
+        <footer class="footer footer-static footer-light">
+            <p class="clearfix mb-0"><span class="float-left d-inline-block">
+                    <script>document.write(new Date().getFullYear())</script> &copy; Hikanotes</span><span
+                    class="float-right d-sm-inline-block d-none">Crafted with<i
+                        class="bx bxs-heart pink mx-50 font-small-3"></i>by<a href="https://arnoldnderitu.io"
+                        target="_blank">Arnold :-)</a></span>
+                <button class="btn btn-primary btn-icon scroll-top" type="button"><i
+                        class="bx bx-up-arrow-alt"></i></button>
+            </p>
+        </footer>
+        <!-- END: Footer-->
+
+
+        <!-- BEGIN: Vendor JS-->
+        <script src="../static/app-assets/vendors/js/vendors.min.js"></script>
+        <script src="../static/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.min.js"></script>
+        <script src="../static/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.min.js"></script>
+        <script src="../static/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js"></script>
+
+        <script src="../static/app-assets/vendors/js/extensions/swiper.min.js"></script>
+
+        <script src="../static/app-assets/js/scripts/configs/vertical-menu-light.min.js"></script>
+        <script src="../static/app-assets/js/core/app-menu.min.js"></script>
+        <script src="../static/app-assets/js/core/app.min.js"></script>
+        <script src="../static/app-assets/js/scripts/components.min.js"></script>
+        <script src="../static/app-assets/js/scripts/footer.min.js"></script>
+        <script src="../static/app-assets/js/scripts/customizer.min.js"></script>
+        <script src="../static/app-assets/js/scripts/pages/page-user-profile.min.js"></script>
+        <script src="../static/app-assets/js/custom.js"></script>
+        <script src="../static/app-assets/js/scripts/pages/app-chat.min.js"></script>
+        <script src="../static/app-assets/js/scripts/pages/app-chat.min.js"></script>
+        <scripts>
+            {{ moment.include_moment() }}
+            {{ moment.lang(g.locale) }}
+        </scripts>
+        <script>
+            function translate(sourceElem, destElem, sourceLang, destLang) {
+                $(destElem).html('<img src="{{ url_for('static', filename='loading.gif') }}">');
+                $.post('/translate', {
+                    text: $(sourceElem).text(),
+                    source_language: sourceLang,
+                    dest_language: destLang
+                }).done(function (response) {
+                    $(destElem).text(response['text'])
+                }).fail(function () {
+                    $(destElem).text("{{ _('Error: Could not contact server.') }}");
+                });
+            }
+            $(function () {
+                var timer = null;
+                var xhr = null;
+                $('.user_popup').hover(
+                    function (event) {
+                        // mouse in event handler
+                        var elem = $(event.currentTarget);
+                        timer = setTimeout(function () {
+                            timer = null;
+                            xhr = $.ajax(
+                                '/user/' + elem.first().text().trim() + '/popup').done(
+                                    function (data) {
+                                        xhr = null;
+                                        elem.popover({
+                                            trigger: 'manual',
+                                            html: true,
+                                            animation: false,
+                                            container: elem,
+                                            content: data
+                                        }).popover('show');
+                                        flask_moment_render_all();
+                                    }
+                                );
+                        }, 1000);
+                    },
+                    function (event) {
+                        // mouse out event handler
+                        var elem = $(event.currentTarget);
+                        if (timer) {
+                            clearTimeout(timer);
+                            timer = null;
+                        }
+                        else if (xhr) {
+                            xhr.abort();
+                            xhr = null;
+                        }
+                        else {
+                            elem.popover('destroy');
                         }
                     }
                 );
-            }, 10000);
-        });
-        {% endif %}
-    </script>
-    <!-- END: Page JS-->
+            });
+            function set_message_count(n) {
+                $('#message_count').text(n);
+                $('#message_count').css('visibility', n ? 'visible' : 'hidden');
+            }
+            function set_task_progress(task_id, progress) {
+                $('#' + task_id + '-progress').text(progress);
+            }
+            {% if current_user.is_authenticated %}
+            $(function () {
+                var since = 0;
+                setInterval(function () {
+                    $.ajax('{{ url_for('main.notifications') }}?since=' + since).done(
+                        function (notifications) {
+                            for (var i = 0; i < notifications.length; i++) {
+                                switch (notifications[i].name) {
+                                    case 'unread_message_count':
+                                        set_message_count(notifications[i].data);
+                                        break;
+                                    case 'task_progress':
+                                        set_task_progress(notifications[i].data.task_id,
+                                            notifications[i].data.progress);
+                                        break;
+                                }
+                                since = notifications[i].timestamp;
+                            }
+                        }
+                    );
+                }, 10000);
+            });
+            {% endif %}
+        </script>
+        <!-- END: Page JS-->
 
-</body>
+    </body>
+
 </html>

@@ -131,9 +131,10 @@ def follow():
         current_user.follow(user)
         db.session.commit()
         followers = user.followers.count()
-        print(followers)
+        following = current_user.followed.count()
+        print(followers, following)
         message = (_('You are now following %(username)s!', username=username))
-        return jsonify({'message': message, 'followers': followers})
+        return jsonify({'message': message, 'followers': followers, 'following':following})
 
 
 @bp.route('/unfollow/<username>', methods=['POST'])
