@@ -13,46 +13,6 @@
                 <h6 class="mb-0 text-bold-500">
                     <a href="{{ url_for('main.user', username=post.author.username) }}">
                         {{post.author.fname}} {{post.author.lname}}
-                        <table style="display: none;" class="table">
-                            <tr>
-                                <td width="64" style="border: 0px;"><img src="{{ post.author.avatar(64) }}"></td>
-                                <td style="border: 0px;">
-                                    <p>
-                                        <a href="{{ url_for('main.user', username=post.author.username) }}">
-                                            {{ post.author.username }}
-                                        </a>
-                                    </p>
-                                    <small>
-                                        {% if post.author.about_me %}<p>{{ post.author.about_me }}</p>{% endif %}
-                                        {% if post.author.last_seen %}
-                                        <p>{{ _('Last seen on') }}: {{ moment(post.author.last_seen).format('lll') }}
-                                        </p>
-                                        {% endif %}
-                                        <p>{{ _('%(count)d followers', count=post.author.followers.count()) }},
-                                            {{ _('%(count)d following', count=post.author.followed.count()) }}</p>
-                                        {% if post.author != current_user %}
-                                        {% if not current_user.is_following(post.author) %}
-                                        <p>
-                                        <form action="{{ url_for('main.follow', username=post.author.username) }}"
-                                            method="post">
-                                            {{ form.hidden_tag() }}
-                                            {{ form.submit(value=_('Follow'), class_='btn btn-default btn-sm') }}
-                                        </form>
-                                        </p>
-                                        {% else %}
-                                        <p>
-                                        <form action="{{ url_for('main.unfollow', username=post.author.username) }}"
-                                            method="post">
-                                            {{ form.hidden_tag() }}
-                                            {{ form.submit(value=_('Unfollow'), class_='btn btn-default btm-sm') }}
-                                        </form>
-                                        </p>
-                                        {% endif %}
-                                        {% endif %}
-                                    </small>
-                                </td>
-                            </tr>
-                        </table>
                     </a>
                 </h6>
                 <p class="text-muted"><small>{{ moment(post.timestamp).fromNow() }}</small></p>
@@ -78,7 +38,7 @@
                 <p id="p_unlikes_{{post.id}}" class="mb-0 ml-25">{{ post.unlikes.count() }}</p>
             </div>
             <div class="d-flex align-items-center">
-                <a onclick="focus_text_area('user-comment-textarea{{post.id}}')"
+                <a onclick="focus_text_area('user-comment-textarea', '{{post.id}}')"
                     class="cursor-pointer bx bx-comment-dots font-medium-4"></a>
                 <span class="ml-25">{{post.comments.count()}}</span>
                 <!-- user profile likes avatar start -->
@@ -104,29 +64,39 @@
     </div>
     <hr>
     <!-- user profile comments start -->
-    {% for comment in post.comments %}
-    <div class="card-header user-profile-header pt-0" style="padding-bottom: 0rem !important;">
-        <div class="avatar mr-50 align-top">
-            <img src="{{ comment.author.avatar(32) }}" alt="avtar image">
-        </div>
-        <div class="d-inline-block mt-25">
-            <h6 class="mb-0 text-bold-500 font-small-3">{{comment.author.fname}} {{comment.author.lname}}</h6>
-            <p class="text-muted"><small>{{ moment(comment.timestamp).fromNow() }}</small></p>
-        </div>
-    </div>
-    <div class="card-body py-0">
-        <p>{{comment.comment}}</p>
-    </div>
-    <hr style="margin-top: 0 !important">
-    {% endfor %}
-    <div id="dv_name_timestamp" style="display: none;" class="card-header user-profile-header pt-0">
-        <div class="avatar mr-50 align-top">
-            <img src="{{ current_user.avatar(32) }}" alt="avtar image">
-        </div>
-        <div class="d-inline-block mt-25">
-            <h6 class="mb-0 text-bold-500 font-small-3">{{current_user.fname}} {{current_user.lname}}</h6>
+    <div id="dv_comment_{{post.id}}" style="display: none;">
+        {% for comment in post.comments %}
 
+        <div class="card-header user-profile-header pt-0" style="padding-bottom: 0rem !important;">
+            <div class="avatar mr-50 align-top">
+                <img src="{{ comment.author.avatar(32) }}" alt="avtar image">
+            </div>
+            <div class="d-inline-block mt-25">
+                <h6 class="mb-0 text-bold-500 font-small-3">{{comment.author.fname}} {{comment.author.lname}}</h6>
+                <p class="text-muted"><small>{{ moment(comment.timestamp).fromNow() }}</small></p>
+            </div>
         </div>
+        <div class="card-body py-0">
+            <p>{{comment.comment}}</p>
+        </div>
+        <hr style="margin-top: 0 !important">
+
+        {% endfor %}
+    </div>
+    <div id="dv_temp" style="display: none;">
+        <div id="dv_temp_header" class="card-header user-profile-header pt-0">
+            <div class="avatar mr-50 align-top">
+                <img src="{{ current_user.avatar(32) }}" alt="avtar image">
+            </div>
+            <div class="d-inline-block mt-25">
+                <h6 class="mb-0 text-bold-500 font-small-3">{{current_user.fname}} {{current_user.lname}}</h6>
+                <p class="text-muted"><small>Now</small></p>
+            </div>
+        </div>
+        <div id="dv_temp_body" class="card-body py-0">
+            <p id="p_temp_body"></p>
+        </div>
+        <hr id="hr_temp" style="margin-top: 0 !important;">
     </div>
     {% if comment %}
     <div id="dv_comment_body" style="display: none;" class="card-body py-0">

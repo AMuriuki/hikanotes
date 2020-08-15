@@ -344,7 +344,7 @@
                                     <a class="dropdown-item" href="{{ url_for('main.index') }}"><i
                                             class="bx bx-home mr-50"></i> Home</a>
                                     {% endif %}
-                                    {% if (title == 'User Profile - Hikanotes') and (user != current_user) %}
+                                    {% if ((title == 'User Profile - Hikanotes') and (user != current_user)) or (title == 'Home - Hikanotes') %}
                                     <a class="dropdown-item"
                                         href="{{ url_for('main.user', username=current_user.username) }}"><i
                                             class="bx bx-user mr-50"></i> My Profile</a>

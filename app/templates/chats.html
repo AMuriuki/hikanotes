@@ -2,11 +2,11 @@
 
 {% block content %}
 <style>
-  html body .content{
+  html body .content {
     margin-left: 0% !important;
   }
 
-  .header-navbar.fixed-top{
+  .header-navbar.fixed-top {
     left: 0% !important;
   }
 </style>
@@ -106,96 +106,37 @@
               {% for message in messages %}
               <li>
                 <div class="d-flex align-items-center">
-                  <div class="avatar m-0 mr-50"><img src="{{message.author.avatar(36)}}"
-                      height="36" width="36" alt="sidebar user image">
+                  <div class="avatar m-0 mr-50"><img src="{{message.author.avatar(36)}}" height="36" width="36"
+                      alt="sidebar user image">
                     <span class="avatar-status-away"></span>
                   </div>
                   <div class="chat-sidebar-name">
-                    <h6 class="mb-0">{{message.author.fname}} {{message.author.lname}}</h6><span class="text-muted"> {{message.author.username}}</span>
+                    <h6 class="mb-0">{{message.author.fname}} {{message.author.lname}}</h6><span class="text-muted">
+                      {{message.author.username}}</span>
                   </div>
                 </div>
               </li>
               {% endfor %}
             </ul>
-            <h6 class="px-2 pt-2 pb-25 mb-0">CONTACTS (Followers)<i class="bx bx-plus float-right cursor-pointer"></i></h6>
+            <h6 class="px-2 pt-2 pb-25 mb-0">CONTACTS<i class="bx bx-plus float-right cursor-pointer"></i>
+            </h6>
             <ul class="chat-sidebar-list">
+              {% for contact in contacts %}
+              {% for message in messages %}
+              {% if message.author.username != contact.username %}
               <li>
                 <div class="d-flex align-items-center">
-                  <div class="avatar bg-info m-0 mr-50">
-                    <span class="avatar-content">JP</span>
-                    <span class="avatar-status-offline"></span>
-                  </div>
-                  <div class="chat-sidebar-name">
-                    <h6 class="mb-0">Jenny Perich</h6><span class="text-muted">candy canes.</span>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="d-flex align-items-center">
-                  <div class="avatar m-0 mr-50"><img src="../static/app-assets/images/portrait/small/avatar-s-5.jpg"
+                  <div class="avatar m-0 mr-50"><img src="{{contact.avatar(36)}}"
                       height="36" width="36" alt="sidebar user image">
-                    <span class="avatar-status-online"></span>
                   </div>
                   <div class="chat-sidebar-name">
-                    <h6 class="mb-0">Rock Montgomery</h6><span class="text-muted">powder gum</span>
+                    <h6 class="mb-0">{{contact.fname}} {{contact.lname}}</h6><span class="text-muted">{{contact.username}}</span>
                   </div>
                 </div>
               </li>
-              <li>
-                <div class="d-flex align-items-center">
-                  <div class="avatar m-0 mr-50"><img src="../static/app-assets/images/portrait/small/avatar-s-9.jpg"
-                      height="36" width="36" alt="sidebar user image">
-                    <span class="avatar-status-busy"></span>
-                  </div>
-                  <div class="chat-sidebar-name">
-                    <h6 class="mb-0">Heather Howell</h6><span class="text-muted">cheesecake toffee</span>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="d-flex align-items-center">
-                  <div class="avatar m-0 mr-50 bg-success">
-                    <span class="avatar-content">KR</span>
-                    <span class="avatar-status-offline"></span>
-                  </div>
-                  <div class="chat-sidebar-name">
-                    <h6 class="mb-0">Kelly Reyes</h6><span class="text-muted">gingerbread</span>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="d-flex align-items-center">
-                  <div class="avatar m-0 mr-50"><img src="../static/app-assets/images/portrait/small/avatar-s-14.jpg"
-                      height="36" width="36" alt="sidebar user image">
-                    <span class="avatar-status-online"></span>
-                  </div>
-                  <div class="chat-sidebar-name">
-                    <h6 class="mb-0">Vince Nelson</h6><span class="text-muted">Puddingdrops</span>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="d-flex align-items-center">
-                  <div class="avatar m-0 mr-50"><img src="../static/app-assets/images/portrait/small/avatar-s-3.jpg"
-                      height="36" width="36" alt="sidebar user image">
-                    <span class="avatar-status-offline"></span>
-                  </div>
-                  <div class="chat-sidebar-name">
-                    <h6 class="mb-0">Drake Elliott</h6><span class="text-muted">jelly helloi</span>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="d-flex align-items-center">
-                  <div class="avatar m-0 mr-50"><img src="../static/app-assets/images/portrait/small/avatar-s-7.jpg"
-                      height="36" width="36" alt="sidebar user image">
-                    <span class="avatar-status-online"></span>
-                  </div>
-                  <div class="chat-sidebar-name">
-                    <h6 class="mb-0">Kristopher Candy</h6><span class="text-muted">jujubes</span>
-                  </div>
-                </div>
-              </li>
+              {% endif %}
+              {% endfor %}
+              {% endfor %}
             </ul>
           </div>
         </div>
@@ -433,72 +374,6 @@
 </div>
 <!-- END: Content-->
 
-<!-- demo chat-->
-<div class="widget-chat-demo">
-  <!-- widget chat demo footer button start -->
-  <button class="btn btn-primary chat-demo-button glow px-1"><i class="livicon-evo"
-      data-options="name: comments.svg; style: lines; size: 24px; strokeColor: #fff; autoPlay: true; repeat: loop;"></i></button>
-  <!-- widget chat demo footer button ends -->
-  <!-- widget chat demo start -->
-  <div class="widget-chat widget-chat-demo d-none">
-    <div class="card mb-0">
-      <div class="card-header border-bottom p-0">
-        <div class="media m-75">
-          <a href="JavaScript:void(0);">
-            <div class="avatar mr-75">
-              <img src="../static/app-assets/images/portrait/small/avatar-s-2.jpg" alt="avtar images" width="32"
-                height="32">
-              <span class="avatar-status-online"></span>
-            </div>
-          </a>
-          <div class="media-body">
-            <h6 class="media-heading mb-0 pt-25"><a href="javaScript:void(0);">Kiara Cruiser</a></h6>
-            <span class="text-muted font-small-3">Active</span>
-          </div>
-          <i class="bx bx-x widget-chat-close float-right my-auto cursor-pointer"></i>
-        </div>
-      </div>
-      <div class="card-body widget-chat-container widget-chat-demo-scroll">
-        <div class="chat-content">
-          <div class="badge badge-pill badge-light-secondary my-1">today</div>
-          <div class="chat">
-            <div class="chat-body">
-              <div class="chat-message">
-                <p>How can we help? 😄</p>
-                <span class="chat-time">7:45 AM</span>
-              </div>
-            </div>
-          </div>
-          <div class="chat chat-left">
-            <div class="chat-body">
-              <div class="chat-message">
-                <p>Hey John, I am looking for the best admin template.</p>
-                <p>Could you please help me to find it out? 🤔</p>
-                <span class="chat-time">7:50 AM</span>
-              </div>
-            </div>
-          </div>
-          <div class="chat">
-            <div class="chat-body">
-              <div class="chat-message">
-                <p>Stack admin is the responsive bootstrap 4 admin template.</p>
-                <span class="chat-time">8:01 AM</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card-footer border-top p-1">
-        <form class="d-flex" onsubmit="widgetChatMessageDemo();" action="javascript:void(0);">
-          <input type="text" class="form-control chat-message-demo mr-75" placeholder="Type here...">
-          <button type="submit" class="btn btn-primary glow px-1"><i class="bx bx-paper-plane"></i></button>
-        </form>
-      </div>
-    </div>
-  </div>
-  <!-- widget chat demo ends -->
-
-</div>
 <div class="sidenav-overlay"></div>
 <div class="drag-target"></div>
 

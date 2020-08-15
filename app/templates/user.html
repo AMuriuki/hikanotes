@@ -38,10 +38,6 @@
                                                     class="d-none d-md-block">Feed</span></a>                                            
                                         </li>
                                         <li class="nav-item pb-0">
-                                            <!-- <a class="nav-link d-flex px-1" id="activity-tab" data-toggle="tab"
-                                                href="#activity" aria-controls="activity" role="tab"
-                                                aria-selected="false"><i class="bx bx-user"></i><span
-                                                    class="d-none d-md-block">Activity</span></a> -->
                                             {% if not current_user.is_following(user) %}
                                             <a class="nav-link d-flex px-1" id="follow-btn" onclick="follow('{{user.username}}')" style="cursor: pointer;"><i class="bx bx-user-plus"></i><span class="d-none d-md-block">Follow</span></a>
                                             {% else %}

@@ -105,7 +105,6 @@ def edit_profile():
     if request.method == "POST":
         current_user.about_me = request.form['about_me']
         db.session.commit()
-        print(current_user.about_me)
 
         # flash(_('Your changes have been saved.'))
     #     return redirect(url_for('main.edit_profile'))
@@ -132,7 +131,6 @@ def follow():
         db.session.commit()
         followers = user.followers.count()
         following = current_user.followed.count()
-        print(followers, following)
         message = (_('You are now following %(username)s!', username=username))
         return jsonify({'message': message, 'followers': followers, 'following':following})
 
@@ -190,12 +188,14 @@ def chats():
     # user = User.query.filter_by(username='supernatural').first_or_404()
     # chat = Chat(author=user, recipient=current_user,
     #                   body="Test message Two")
-    # print (chat)
     # db.session.add(chat)
     # db.session.commit()
     messages = current_user.messages_received.order_by(
         Chat.timestamp.desc())
-    print (messages)
+    following = current_user.followed
+    followers = current_user.followers
+    contacts = followers.union(following)
+    # print ((followers.union(following)).all())
     # user = User.query.filter_by(username=recipient).first_or_404()
     # form = MessageForm()
     # if form.validate_on_submit():
@@ -207,7 +207,7 @@ def chats():
     #     flash(_('Your message has been sent.'))
     #     return redirect(url_for('main.user', username=recipient))
     # return render_template('chats.html', title=_('Send Message'), form=form, recipient=recipient)
-    return render_template('chats.html', title=_('Chats - Hikanotes'), form=form, messages=messages)
+    return render_template('chats.html', title=_('Chats - Hikanotes'), form=form, messages=messages, contacts=contacts)
 
 
 @bp.route('/messages')
@@ -262,7 +262,6 @@ def like():
         likes = post.likes.count()
         unlikes = post.unlikes.count()
         db.session.commit()
-        print(likes)
     return jsonify({'likes': likes, 'unlikes': unlikes})
 
 
@@ -276,7 +275,6 @@ def unlike():
         unlikes = post.unlikes.count()
         likes = post.likes.count()
         db.session.commit()
-        print(unlikes)
     return jsonify({'unlikes': unlikes, 'likes': likes})
 
 
@@ -285,7 +283,6 @@ def unlike():
 def comment():
     if request.method == "POST":
         text = request.form['user_comment']
-        print (text)
         post_id = request.form['post_id']
         comment = Comment(comment=text, user_id=current_user.id, post_id=post_id)
         db.session.add(comment)

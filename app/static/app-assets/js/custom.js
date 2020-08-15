@@ -1,5 +1,4 @@
 function show_notifications() {
-    console.log("clicked...");
     var ul_notifications = document.getElementById("ul_notifications");
     if (ul_notifications.className === "dropdown-menu dropdown-menu-media dropdown-menu-right") {
         ul_notifications.className = "dropdown-menu dropdown-menu-media dropdown-menu-right show";
@@ -31,7 +30,6 @@ function like(post_id, like_post_id, unlike_post_id) {
     $.post('/like', {
         post_id: post_id
     }).done(function (response) {
-        console.log(response['likes']);
         p_likes.innerHTML = response['likes'];
         p_unlikes.innerHTML = response['unlikes'];
     }).fail(function () {
@@ -45,7 +43,6 @@ function unlike(post_id, like_post_id, unlike_post_id) {
     $.post('/unlike', {
         post_id: post_id
     }).done(function (response) {
-        console.log(response['unlikes']);
         p_unlikes.innerHTML = response['unlikes'];
         p_likes.innerHTML = response['likes'];
     }).fail(function () {
@@ -54,21 +51,22 @@ function unlike(post_id, like_post_id, unlike_post_id) {
 }
 
 
-function focus_text_area(focus) {
-    var user_comment_textarea = document.getElementById(focus);
+function focus_text_area(focus, post_id) {
+    var user_comment_textarea = document.getElementById(focus+post_id);
+    document.getElementById("dv_comment_"+post_id).style.display = "block";
     user_comment_textarea.focus();
 }
 
 
 function Comment(comment_input_id, post_id) {
     var user_comment = document.getElementById(comment_input_id).value;
-    console.log(user_comment, post_id);
     $.post('/comment', {
         user_comment: user_comment,
         post_id: post_id
     }).done(function (response) {
-        location.reload(true);
-        document.getElementById(comment_input_id).scrollIntoView();
+        document.getElementById("p_temp_body").innerHTML = user_comment;
+        document.getElementById("dv_temp").style.display = "block";
+        document.getElementById(comment_input_id).value = "";        
     })
 }
 
@@ -94,13 +92,11 @@ function Post_aboutMe() {
     document.getElementById("btn_editbio").style.setProperty("display", "block", "important");
     var about_me = document.getElementById("txt_about_me").value;
     var p_aboutme = document.getElementById("p_aboutme");
-    console.log(p_aboutme);
     $.post('/edit_profile', {
         about_me: about_me
     }).done(function (response) {
         document.getElementById("txt_about_me").style.display = "none";
         document.getElementById("btn_post_aboutMe").style.display = "none";
-        console.log(response['text']);
         p_aboutme.innerHTML = about_me;
         p_aboutme.style.display = "block";
     }).fail(function () {
@@ -136,11 +132,9 @@ function follow(username) {
     $.post('/follow', {
         username: username
     }).done(function (response) {
-        console.log(response)
         if (response['message'] === "You are now following " + username + "!") {
             if (document.title == "Explore - Hikanotes") {
                 var follow_btn = "follow-btn"+username
-                console.log(follow_btn);
                 document.getElementById(follow_btn).style.setProperty("display", "none", "important");
                 alert("You are now following " + username + "!");
                 document.getElementById("a_following").innerHTML = response['following'];
