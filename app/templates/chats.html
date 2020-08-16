@@ -9,6 +9,10 @@
   .header-navbar.fixed-top {
     left: 0% !important;
   }
+
+  .chat-application .chat-sidebar .chat-sidebar-list-wrapper li{
+    padding: 0rem 1.5rem !important;
+  }
 </style>
 <!-- BEGIN: Content-->
 <div class="app-content content">
@@ -105,16 +109,18 @@
             <ul class="chat-sidebar-list">
               {% for message in messages %}
               <li>
-                <div class="d-flex align-items-center">
-                  <div class="avatar m-0 mr-50"><img src="{{message.author.avatar(36)}}" height="36" width="36"
-                      alt="sidebar user image">
-                    <span class="avatar-status-away"></span>
+                <a onclick="start_chat('{{message.author.username}}')" style="cursor: pointer !important;">
+                  <div class="d-flex align-items-center">
+                    <div class="avatar m-0 mr-50"><img src="{{message.author.avatar(36)}}" height="36" width="36"
+                        alt="sidebar user image">
+                      <span class="avatar-status-away"></span>
+                    </div>
+                    <div class="chat-sidebar-name">
+                      <h6 class="mb-0">{{message.author.fname}} {{message.author.lname}}</h6><span class="text-muted">
+                        {{message.author.username}}</span>
+                    </div>
                   </div>
-                  <div class="chat-sidebar-name">
-                    <h6 class="mb-0">{{message.author.fname}} {{message.author.lname}}</h6><span class="text-muted">
-                      {{message.author.username}}</span>
-                  </div>
-                </div>
+                </a>
               </li>
               {% endfor %}
             </ul>
@@ -125,14 +131,17 @@
               {% for message in messages %}
               {% if message.author.username != contact.username %}
               <li>
-                <div class="d-flex align-items-center">
-                  <div class="avatar m-0 mr-50"><img src="{{contact.avatar(36)}}"
-                      height="36" width="36" alt="sidebar user image">
+                <a onclick="start_chat('{{contact.username}}')" style="cursor: pointer !important;">
+                  <div class="d-flex align-items-center">
+                    <div class="avatar m-0 mr-50"><img src="{{contact.avatar(36)}}" height="36" width="36"
+                        alt="sidebar user image">
+                    </div>
+                    <div class="chat-sidebar-name">
+                      <h6 class="mb-0">{{contact.fname}} {{contact.lname}}</h6><span
+                        class="text-muted">{{contact.username}}</span>
+                    </div>
                   </div>
-                  <div class="chat-sidebar-name">
-                    <h6 class="mb-0">{{contact.fname}} {{contact.lname}}</h6><span class="text-muted">{{contact.username}}</span>
-                  </div>
-                </div>
+                </a>
               </li>
               {% endif %}
               {% endfor %}
@@ -330,7 +339,7 @@
                   <form class="d-flex align-items-center" onsubmit="chatMessagesSend();" action="javascript:void(0);">
                     <i class="bx bx-face cursor-pointer"></i>
                     <i class="bx bx-paperclip ml-1 cursor-pointer"></i>
-                    <input type="text" class="form-control chat-message-send mx-1"
+                    <input id="text" type="text" class="form-control chat-message-send mx-1"
                       placeholder="Type your message here...">
                     <button type="submit" class="btn btn-primary glow send d-lg-flex"><i class="bx bx-paper-plane"></i>
                       <span class="d-none d-lg-block ml-1">Send</span></button>

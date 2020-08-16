@@ -155,3 +155,13 @@ function follow(username) {
 
     });
 }
+
+function start_chat(username){
+    $.post('/chats', {
+        username: username
+    }).done(function (response) {
+
+    }).fail(function (){
+
+    });
+}

@@ -1,6 +1,6 @@
 from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request, g, \
-    jsonify, current_app
+    jsonify, current_app, session
 from flask_login import current_user, login_required
 from flask_babel import _, get_locale
 from guess_language import guess_language
@@ -132,7 +132,7 @@ def follow():
         followers = user.followers.count()
         following = current_user.followed.count()
         message = (_('You are now following %(username)s!', username=username))
-        return jsonify({'message': message, 'followers': followers, 'following':following})
+        return jsonify({'message': message, 'followers': followers, 'following': following})
 
 
 @bp.route('/unfollow/<username>', methods=['POST'])
@@ -195,6 +195,10 @@ def chats():
     following = current_user.followed
     followers = current_user.followers
     contacts = followers.union(following)
+
+    if request.method == "POST":
+        session['name'] = request.form['username']
+        session['room'] = request.form['username']
     # print ((followers.union(following)).all())
     # user = User.query.filter_by(username=recipient).first_or_404()
     # form = MessageForm()
@@ -208,6 +212,14 @@ def chats():
     #     return redirect(url_for('main.user', username=recipient))
     # return render_template('chats.html', title=_('Send Message'), form=form, recipient=recipient)
     return render_template('chats.html', title=_('Chats - Hikanotes'), form=form, messages=messages, contacts=contacts)
+
+
+@bp.route('/start_chat', methods=['GET', 'POST'])
+@login_required
+def start_chat():
+    if request.method == "POST":
+        session['name'] = request.form['username']
+        session['room'] = request.form['username']
 
 
 @bp.route('/messages')
@@ -284,7 +296,8 @@ def comment():
     if request.method == "POST":
         text = request.form['user_comment']
         post_id = request.form['post_id']
-        comment = Comment(comment=text, user_id=current_user.id, post_id=post_id)
+        comment = Comment(
+            comment=text, user_id=current_user.id, post_id=post_id)
         db.session.add(comment)
         db.session.commit()
     return jsonify({'comment': text})
