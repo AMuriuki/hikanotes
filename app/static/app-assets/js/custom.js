@@ -52,8 +52,14 @@ function unlike(post_id, like_post_id, unlike_post_id) {
 
 
 function focus_text_area(focus, post_id) {
-    var user_comment_textarea = document.getElementById(focus+post_id);
-    document.getElementById("dv_comment_"+post_id).style.display = "block";
+    var user_comment_textarea = document.getElementById(focus + post_id);
+    console.log(document.getElementById("dv_comment_" + post_id).style.display);
+    if (document.getElementById("dv_comment_" + post_id).style.display == "none") {
+        document.getElementById("dv_comment_" + post_id).style.display = "block";
+    }
+    else if (document.getElementById("dv_comment_" + post_id).style.display == "block") {
+        document.getElementById("dv_comment_" + post_id).style.display = "none";
+    }
     user_comment_textarea.focus();
 }
 
@@ -66,7 +72,7 @@ function Comment(comment_input_id, post_id) {
     }).done(function (response) {
         document.getElementById("p_temp_body").innerHTML = user_comment;
         document.getElementById("dv_temp").style.display = "block";
-        document.getElementById(comment_input_id).value = "";        
+        document.getElementById(comment_input_id).value = "";
     })
 }
 
@@ -134,7 +140,7 @@ function follow(username) {
     }).done(function (response) {
         if (response['message'] === "You are now following " + username + "!") {
             if (document.title == "Explore - Hikanotes") {
-                var follow_btn = "follow-btn"+username
+                var follow_btn = "follow-btn" + username
                 document.getElementById(follow_btn).style.setProperty("display", "none", "important");
                 alert("You are now following " + username + "!");
                 document.getElementById("a_following").innerHTML = response['following'];
@@ -156,12 +162,23 @@ function follow(username) {
     });
 }
 
-function start_chat(username){
+function start_chat(username) {
     $.post('/chats', {
         username: username
     }).done(function (response) {
 
-    }).fail(function (){
+    }).fail(function () {
 
     });
+}
+
+function post_chat(input_id, username) {
+    var chat_message = document.getElementById(input_id).value;
+    $.post('/send_chat', {
+        chat_message: chat_message,
+        username: username        
+    }).done(function (response) {
+        console.log(response['message'], response['username']);
+    })
+
 }

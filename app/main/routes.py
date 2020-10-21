@@ -10,6 +10,8 @@ from app.main.forms import EditProfileForm, EmptyForm, PostForm, SearchForm, \
 from app.models import User, Post, Message, Notification, Comment, Chat
 from app.translate import translate
 from app.main import bp
+from app.main.events import text
+from sqlalchemy import or_
 
 
 @bp.before_app_request
@@ -190,15 +192,27 @@ def chats():
     #                   body="Test message Two")
     # db.session.add(chat)
     # db.session.commit()
-    messages = current_user.messages_received.order_by(
-        Chat.timestamp.desc())
+    # messages_received = current_user.messages_received.order_by(
+    #     Chat.timestamp.desc())
+    # messages_sent = current_user.messages_sent.order_by(
+    #     Chat.timestamp.desc())
+    messages = db.session.query(Chat).filter(or_(Chat.recipient_id == current_user.id, Chat.sender_id == current_user.id)).order_by(
+        Chat.timestamp.asc())
+    print (messages.all())
+    if messages.count() == 0:
+        messages = ""
     following = current_user.followed
     followers = current_user.followers
     contacts = followers.union(following)
 
     if request.method == "POST":
         session['name'] = request.form['username']
-        session['room'] = request.form['username']
+        session['room'] = request.form['username']+'-'+current_user.username
+
+    name = session.get('name', '')
+    room = session.get('room', '')
+    print(name, room)
+
     # print ((followers.union(following)).all())
     # user = User.query.filter_by(username=recipient).first_or_404()
     # form = MessageForm()
@@ -211,7 +225,7 @@ def chats():
     #     flash(_('Your message has been sent.'))
     #     return redirect(url_for('main.user', username=recipient))
     # return render_template('chats.html', title=_('Send Message'), form=form, recipient=recipient)
-    return render_template('chats.html', title=_('Chats - Hikanotes'), form=form, messages=messages, contacts=contacts)
+    return render_template('chats.html', title=_('Chats - Hikanotes'), form=form, messages=messages, contacts=contacts, name=name, room=room)
 
 
 @bp.route('/start_chat', methods=['GET', 'POST'])
@@ -220,6 +234,16 @@ def start_chat():
     if request.method == "POST":
         session['name'] = request.form['username']
         session['room'] = request.form['username']
+
+
+@bp.route('/send_chat', methods=['GET', 'POST'])
+@login_required
+def send_chat():
+    if request.method == "POST":
+        message = request.form['chat_message']
+        username = request.form['username']
+        print(message, username)
+        return jsonify({'message': message, 'username': username})
 
 
 @bp.route('/messages')

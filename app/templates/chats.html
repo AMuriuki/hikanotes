@@ -10,8 +10,8 @@
     left: 0% !important;
   }
 
-  .chat-application .chat-sidebar .chat-sidebar-list-wrapper li{
-    padding: 0rem 1.5rem !important;
+  body.vertical-layout.vertical-menu-modern.menu-expanded .footer{
+    margin-left: 0px !important;
   }
 </style>
 <!-- BEGIN: Content-->
@@ -105,9 +105,12 @@
                 <h6 class="mb-0"># Designers</h6>
               </li>
             </ul> -->
+            {% if messages %}
             <h6 class="px-2 pt-2 pb-25 mb-0">CHATS</h6>
+            {% endif %}
             <ul class="chat-sidebar-list">
               {% for message in messages %}
+              {% if message.author.username != current_user.username %}
               <li>
                 <a onclick="start_chat('{{message.author.username}}')" style="cursor: pointer !important;">
                   <div class="d-flex align-items-center">
@@ -122,16 +125,16 @@
                   </div>
                 </a>
               </li>
+              {% endif %}
               {% endfor %}
             </ul>
             <h6 class="px-2 pt-2 pb-25 mb-0">CONTACTS<i class="bx bx-plus float-right cursor-pointer"></i>
             </h6>
             <ul class="chat-sidebar-list">
               {% for contact in contacts %}
-              {% for message in messages %}
-              {% if message.author.username != contact.username %}
-              <li>
-                <a onclick="start_chat('{{contact.username}}')" style="cursor: pointer !important;">
+              <li
+                style="cursor: pointer !important; display: {% if messages %} {% for message in messages %} {% if message.author.username == contact.username %} none {% endif %} {% endfor %} {% endif %}">
+                <a onclick="start_chat('{{contact.username}}')">
                   <div class="d-flex align-items-center">
                     <div class="avatar m-0 mr-50"><img src="{{contact.avatar(36)}}" height="36" width="36"
                         alt="sidebar user image">
@@ -143,8 +146,6 @@
                   </div>
                 </a>
               </li>
-              {% endif %}
-              {% endfor %}
               {% endfor %}
             </ul>
           </div>
@@ -208,32 +209,35 @@
                 <div class="card-content">
                   <div class="card-body chat-container">
                     <div class="chat-content">
+                      {% for message in messages %}
+                      {% if message.author.username == current_user.username %}
                       <div class="chat">
                         <div class="chat-avatar">
                           <a class="avatar m-0">
-                            <img src="../static/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar"
+                            <img src="{{message.author.avatar(36)}}" alt="avatar"
                               height="36" width="36" />
                           </a>
                         </div>
-                        <div class="chat-body">
+                        <div class="chat-body">                          
                           <div class="chat-message">
-                            <p>How can we help? We're here for you! 😄</p>
-                            <span class="chat-time">7:45 AM</span>
-                          </div>
+                            <p>{{message.body}}</p>
+                            <span class="chat-time">{{moment(message.timestamp).format('lll')}}</span>
+                          </div>                          
                         </div>
                       </div>
-                      <div class="chat chat-left">
+                      {% endif %}
+                      {% if message.recipient.username != current_user.username %}
+                      <div class="chat chat-left">                      
                         <div class="chat-avatar">
                           <a class="avatar m-0">
-                            <img src="../static/app-assets/images/portrait/small/avatar-s-26.jpg" alt="avatar"
+                            <img src="{{message.recipient.avatar(36)}}" alt="avatar"
                               height="36" width="36" />
                           </a>
                         </div>
                         <div class="chat-body">
                           <div class="chat-message">
-                            <p>Hey John, I am looking for the best admin template.</p>
-                            <p>Could you please help me to find it out? 🤔</p>
-                            <span class="chat-time">7:50 AM</span>
+                            <p>{{message.body}}</p>
+                            <span class="chat-time">{{moment(message.timestamp).format('lll')}}</span>
                           </div>
                           <div class="chat-message">
                             <p>It should be Bootstrap 4 🤩 compatible.</p>
@@ -241,6 +245,8 @@
                           </div>
                         </div>
                       </div>
+                      {% endif %}
+                      {% endfor %}
                       <div class="badge badge-pill badge-light-secondary my-1">Yesterday</div>
                       <div class="chat">
                         <div class="chat-avatar">
@@ -336,14 +342,16 @@
                   </div>
                 </div>
                 <div class="card-footer chat-footer border-top px-2 pt-1 pb-0 mb-1">
-                  <form class="d-flex align-items-center" onsubmit="chatMessagesSend();" action="javascript:void(0);">
+                  <div class="d-flex align-items-center">
                     <i class="bx bx-face cursor-pointer"></i>
                     <i class="bx bx-paperclip ml-1 cursor-pointer"></i>
                     <input id="text" type="text" class="form-control chat-message-send mx-1"
                       placeholder="Type your message here...">
-                    <button type="submit" class="btn btn-primary glow send d-lg-flex"><i class="bx bx-paper-plane"></i>
-                      <span class="d-none d-lg-block ml-1">Send</span></button>
-                  </form>
+                    <button type="submit" onclick="post_chat('text', '{{current_user.username}}')"
+                      class="btn btn-primary glow send d-lg-flex"><i class="bx bx-paper-plane"></i>
+                      <span class="d-none d-lg-block ml-1">Send</span>
+                    </button>
+                  </div>
                 </div>
               </div>
               <!-- chat card ends -->
