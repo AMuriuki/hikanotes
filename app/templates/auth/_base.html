@@ -9,7 +9,7 @@
     <meta name="description" content="Hikanotes is an online medium for sharing content">
     <meta name="keywords" content="Hikanotes, Web App, Social Media, Hikanotes, Social Platform">
     <meta name="author" content="https://arnoldnderitu.com">
-    <title>Sign Up - Hikanotes</title>
+    <title>{% if title %} {{ title }} {% else %} {{ _('Welcome to Hikanotes') }}{% endif %}</title>
     <link rel="apple-touch-icon" href="../../static/app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="../../static/app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600%7CIBM+Plex+Sans:300,400,500,600,700"
