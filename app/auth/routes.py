@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, Markup
 from werkzeug.urls import url_parse
 from flask_login import login_user, logout_user, current_user
 from flask_babel import _
@@ -17,8 +17,11 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user is None or not user.check_password(form.password.data):
-            flash(_('Invalid username or password'))
+        if user is None:
+            flash(_(Markup('This email is not registered on Hikanotes! <a href="/auth/register" class="alert-link">Create an account</a> to proceed.')))
+            return redirect(url_for('auth.login'))
+        elif not user.check_password(form.password.data):
+            flash(_('The password you entered is not correct'))
             return redirect(url_for('auth.login'))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
@@ -47,7 +50,6 @@ def register():
         db.session.commit()
         flash(_('Congratulations, you are now a registered user!'))
         return redirect(url_for('auth.login'))
-    print (form.errors)
     return render_template('auth/register.html', title=_('Register'),
                            form=form)
 
